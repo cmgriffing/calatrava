@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Key manager generates a partition key 1`] = `"#FOO#USER_ID#abc123"`;

@@ -1,0 +1,11 @@
+{
+  "name": "@calatrava/boilerplate",
+  "version": "0.0.1",
+  "description": "A boilerplate starter for the Calatrava framework",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
