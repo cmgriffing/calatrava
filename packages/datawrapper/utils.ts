@@ -5,7 +5,7 @@ import omit from "lodash/omit";
 export function omitKeys<T extends Object>(
   object: T
 ): Omit<T, "partitionKey" | "sortKey" | "tertiaryKey"> {
-  return omit<T>(
+  return omit(
     object,
     "partitionKey",
     "sortKey",
