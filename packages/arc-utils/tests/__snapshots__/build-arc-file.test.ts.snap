@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Build Arc file from example 1`] = `
+"@app
+example-calatrava-project
+
+@http
+
+/login
+  method post
+  src src/http/auth/login
+
+/register
+  method post
+  src src/http/auth/register
+
+/verify
+  method post
+  src src/http/auth/verify
+
+/*
+  method options
+  src src/http/options
+
+
+
+
+@tables
+
+core
+  partitionKey *String
+  sortKey **String
+
+
+@tables-indexes
+
+core
+  sortKey *String
+  partitionKey **String
+  name sortKey
+
+core
+  tertiaryKey *String
+  partitionKey **String
+  name tertiaryKey
+
+
+@aws
+
+@aws
+timeout 10
+# profile default
+# region us-west-1
+
+"
+`;

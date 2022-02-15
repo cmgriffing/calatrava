@@ -1,0 +1,11 @@
+{
+  "appName": "example-calatrava-project",
+  "baseDirectory": "./arc",
+  "routesDirectory": "routes",
+  "tablesDirectory": "tables",
+  "tableIndexesDirectory": "table-indexes",
+  "awsConfigPath": "aws.arc",
+  "ws": false,
+  "preferencesTemplatePath": "preferences.template.arc",
+  "envVarListPath": "./env-var-list.json"
+}
