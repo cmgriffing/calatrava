@@ -1,24 +1,14 @@
 import { AnyZodObject, ZodObject, ZodTypeAny } from "zod";
 import zodToJsonSchema from "zod-to-json-schema";
 import * as fs from "fs-extra";
-import minimist from "minimist";
 import * as path from "path";
 
-async function main() {
-  const args = minimist(process.argv.slice(2));
-
+export async function zodToSchema(
+  requests: string,
+  responses: string,
+  out: string
+) {
   const cwd = process.cwd();
-  const { requests, responses, out } = args;
-
-  if (!out || !requests || !responses) {
-    throw new Error(
-      `All arguments must be passed: ${JSON.stringify({
-        requests,
-        responses,
-        out,
-      })}`
-    );
-  }
 
   const requestSchemas = await import(path.resolve(cwd, requests));
   const responseSchemas = await import(path.resolve(cwd, responses));
@@ -49,5 +39,3 @@ async function main() {
     );
   });
 }
-
-main();

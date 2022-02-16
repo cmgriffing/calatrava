@@ -73,12 +73,14 @@ importers:
       fs-extra: ^10.0.0
       glob: ^7.2.0
       jest: ^27.5.1
+      minimist: ^1.2.5
       mustache: ^4.2.0
       ts-jest: ^27.1.3
       typescript: ^4.5.3
     dependencies:
       fs-extra: 10.0.0
       glob: 7.2.0
+      minimist: 1.2.5
       mustache: 4.2.0
     devDependencies:
       '@types/fs-extra': 9.0.13
