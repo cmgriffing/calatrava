@@ -1,0 +1,23 @@
+{
+  "name": "@calatrava/middleware",
+  "version": "0.0.1",
+  "description": "A set of utilites for managing the underlying Architect functionality of the Calatrava framework",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@architect/functions": "^5.0.0",
+    "@aws-sdk/client-s3": "^3.44.0",
+    "@aws-sdk/s3-presigned-post": "^3.44.0",
+    "@aws-sdk/s3-request-presigner": "^3.44.0",
+    "@aws-sdk/signature-v4-crt": "^3.49.0",
+    "@calatrava/datawrapper": "workspace:*",
+    "zod": "^3.11.6"
+  },
+  "devDependencies": {
+    "@types/architect__functions": "^3.13.6"
+  }
+}
