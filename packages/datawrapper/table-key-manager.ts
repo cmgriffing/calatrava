@@ -1,5 +1,5 @@
 import * as jsStringEscape from "js-string-escape";
-import Case from "case";
+import * as Case from "case";
 import { DBKeys, QueryKeys } from "./types";
 
 export type TableKeysMap = {

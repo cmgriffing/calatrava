@@ -41,7 +41,7 @@ export type CleanRecord<T> = Omit<
 >;
 
 export interface WrappedDatastore<T> {
-  GET_EVERYTHING: () => Promise<any>;
+  // GET_EVERYTHING: () => Promise<any>;
   create: (putObject: DBRecord<T>) => Promise<T>;
   getById: (
     idValue: QueryKeys,

@@ -23,9 +23,6 @@ export function createDataWrapper<ModelType>(
   const tableQueryCreator = new TableQueryCreator(tableKeyMethods);
 
   return {
-    async GET_EVERYTHING() {
-      return datastore.scan();
-    },
     async create(putObject: DBRecord<ModelType>) {
       if (!Object.keys(putObject)?.length) {
         // empty putObject
