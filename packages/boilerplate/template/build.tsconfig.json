@@ -1,0 +1,21 @@
+{
+  "include": ["src/**/*.ts"],
+  "exclude": [],
+  "strict": true,
+  "experimentalDecorators": true,
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "noEmit": false,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "paths": {
+      "*": ["./node_modules/*"],
+      "@shared/*": ["./src/shared/*"]
+    }
+  }
+}

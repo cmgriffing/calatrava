@@ -7,5 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "case": "^1.6.3",
+    "fs-extra": "^10.0.0",
+    "minimist": "^1.2.5",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@calatrava/datawrapper": "workspace:~",
+    "@calatrava/middleware": "workspace:~",
+    "@calatrava/request-response": "workspace:~",
+    "@types/fs-extra": "^9.0.13",
+    "@types/mustache": "^4.1.2"
+  }
 }
