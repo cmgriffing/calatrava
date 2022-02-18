@@ -12,7 +12,7 @@ export async function buildArcFile(config: string) {
     routesDirectory,
     tablesDirectory,
     tableIndexesDirectory,
-    ws,
+    hasWebSocketSupport,
     awsConfigPath,
   } = fs.readJSONSync(config);
 
@@ -39,7 +39,7 @@ export async function buildArcFile(config: string) {
     routes: routesString,
     tables: tablesString,
     tableIndexes: tableIndexesString,
-    ws: ws ? "@ws" : "",
+    hasWebSocketSupport,
     aws: awsString,
   });
 

@@ -4,8 +4,10 @@
 @http
 {{{routes}}}
 
-{{{ws}}}
+{#hasWebSocketSupport}
+@ws
 
+{/hasWebSocketSupport}
 @tables
 {{{tables}}}
 

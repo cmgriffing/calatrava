@@ -5,7 +5,7 @@
   "tablesDirectory": "tables",
   "tableIndexesDirectory": "table-indexes",
   "awsConfigPath": "aws.arc",
-  "ws": false,
+  "hasWebSocketSupport": false,
   "preferencesTemplatePath": "preferences.template.arc",
   "envVarListPath": "./env-var-list.json"
 }
