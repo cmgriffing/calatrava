@@ -1,16 +1,21 @@
-import * as minimist from "minimist";
+import minimist from "minimist";
 import { scaffoldBoilerplate } from "../src/scaffold-boilerplate";
 
 async function main() {
   const args = minimist(process.argv.slice(2));
 
-  const { config } = args;
+  const { name, description, hasWebSocketSupport, outputFolder } = args;
 
-  if (!config) {
-    throw new Error("Config path not set for scaffold-boilerplate");
-  }
+  // if (!config) {
+  //   throw new Error("Config path not set for scaffold-boilerplate");
+  // }
 
-  await scaffoldBoilerplate(config);
+  await scaffoldBoilerplate({
+    name,
+    description,
+    hasWebSocketSupport,
+    outputFolder,
+  });
 }
 
 main();

@@ -4,13 +4,14 @@
   "description": "A boilerplate starter for the Calatrava framework",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node scripts/scaffold-boilerplate.ts --name kebab-it-all --hasWebSocketSupport true --outputFolder ./test/out --description \"A cool description about the app\""
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "case": "^1.6.3",
     "fs-extra": "^10.0.0",
+    "glob": "^7.2.0",
     "minimist": "^1.2.5",
     "mustache": "^4.2.0"
   },
@@ -19,6 +20,9 @@
     "@calatrava/middleware": "workspace:~",
     "@calatrava/request-response": "workspace:~",
     "@types/fs-extra": "^9.0.13",
-    "@types/mustache": "^4.1.2"
+    "@types/glob": "^7.2.0",
+    "@types/minimist": "^1.2.2",
+    "@types/mustache": "^4.1.2",
+    "typescript": "^4.5.5"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "appName": "{{{packageName}}}",
+  "baseDirectory": "./arc",
+  "routesDirectory": "routes",
+  "tablesDirectory": "tables",
+  "tableIndexesDirectory": "table-indexes",
+  "awsConfigPath": "aws.arc",
+  "hasWebSocketSupport": false,
+  "preferencesTemplatePath": "preferences.template.arc",
+  "envVarListPath": "./env-var-list.json"
+}
