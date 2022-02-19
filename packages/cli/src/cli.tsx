@@ -1,212 +1,92 @@
 #!/usr/bin/env node
-import React, { useState, useEffect } from "react";
-import { render, Text, Box } from "ink";
-import BigText from "ink-big-text";
-import TextInput from "ink-text-input";
-import Gradient from "ink-gradient";
-import SelectInput from "ink-select-input";
-import Spinner from "ink-spinner";
-import Case from "case";
+import Yargs, { Argv } from "yargs";
+import React from "react";
+import { render } from "ink";
+import { CLI } from "./init";
+import child_process from "child_process";
+import path from "path";
+import * as fs from "fs-extra";
+import { tsToZod } from "@calatrava/request-response";
 
-const CLI = () => {
-  const [name, setName] = useState("");
-  const [settingName, setSettingName] = useState(true);
+const cwd = process.cwd();
 
-  const [hasWebSocketSupport, setHasWebSocketSupport] = useState<boolean>();
-  const [settingHasWebSocketSupport, setSettingWebSocketSupport] =
-    useState(false);
+(
+  Yargs.scriptName("calatrava")
+    .usage("$0 <cmd> [args]")
+    .command("init", "Initialize a new project", function (_argv: Argv) {
+      render(<CLI />);
+    })
+    .command("env", "Get Architect env variables", function (_argv: Argv) {
+      const child = child_process.execSync("FORCE_COLOR=1 npx arc env", {
+        stdio: "pipe",
+      });
 
-  const [outputFolder, setOutputFolder] = useState("");
-  const [settingOutputFolder, setSettingOutputFolder] = useState(false);
+      const output = child.toString();
+      const lines = output
+        .split("\n")
+        .map((line) => {
+          if (line.indexOf("  |") > -1 && line.indexOf("None found!") === -1) {
+            const words = line.split(" ");
+            const lastWord = words[words.length - 1];
 
-  const [settingSettingsConfirmed, setSettingSettingsConfirmed] =
-    useState(false);
+            const wordWithoutColors = lastWord?.replace(
+              new RegExp("(\\x1B\\[\\d.m)", "gm"),
+              ""
+            );
 
-  const [scaffoldingProject, setScaffoldingProject] = useState(false);
+            const scrubbedWord = wordWithoutColors
+              ?.split("")
+              .map((character, index) => {
+                if (index < wordWithoutColors.length - 4) {
+                  return "*";
+                } else {
+                  return character;
+                }
+              })
+              .join("");
 
-  const [finished, setFinished] = useState(false);
+            return line.replace(wordWithoutColors || "", scrubbedWord || "");
+          }
+          return line;
+        })
+        .join("\n");
 
-  const [error, setError] = useState("");
+      console.log(lines);
+    }) as any
+)
+  .command(
+    "scaffold [config]",
+    "Scaffold out the zod validators and openapi yaml file",
+    (yargs: any) => {
+      yargs.positional("config", {
+        type: "string",
+        default: "./calatrava.config.json",
+        describe: "the path to the Calatrava config file",
+      });
+    },
+    function (argv: any) {
+      // let config = argv.config;
+      console.log("config", argv.config);
+      const configPath = path.resolve(cwd, argv.config);
+      console.log({ configPath });
 
-  useEffect(() => {
-    if (scaffoldingProject) {
-      setTimeout(() => {
-        setScaffoldingProject(false);
-        setFinished(true);
-      }, 5000);
+      if (!fs.existsSync(configPath)) {
+        console.error("config file must exist at configPath: ", configPath);
+        process.exit(-1);
+      }
+
+      // validate config (eventually)
+
+      const config = fs.readJSONSync(configPath);
+
+      console.log({ config });
+
+      // run ts-to-zod
+      // tsToZod()
+
+      // run zod-to-schema
+
+      // run build-openapi-yaml
     }
-  }, [scaffoldingProject]);
-
-  useEffect(() => {
-    if (finished) {
-      setTimeout(() => {
-        process.exit();
-      }, 0);
-    }
-  }, [finished]);
-
-  return (
-    <>
-      <Box alignItems="center" justifyContent="center">
-        <Gradient name="retro">
-          <BigText text="Calatrava" />
-        </Gradient>
-      </Box>
-
-      <Box>
-        <Text>
-          Calatrava is a wrapper around Architect that adds some more
-          functionality that is typically needed in full featured APIs.
-          (validation, dynamoDB wrapper, OpenAPI documentation)
-        </Text>
-      </Box>
-
-      {/* Get project name */}
-      {settingName && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>Enter a name:</Text>
-          </Box>
-          <TextInput
-            value={name}
-            onChange={setName}
-            onSubmit={() => {
-              if (name === "") {
-                // console.error("Name must not be empty");
-
-                setError("Name must not be empty.");
-
-                setTimeout(() => {
-                  process.exit(-1);
-                }, 0);
-              } else {
-                setSettingName(false);
-                setSettingWebSocketSupport(true);
-              }
-            }}
-          />
-        </Box>
-      )}
-
-      {!settingName && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>Name:</Text>
-          </Box>
-          <Text>{name}</Text>
-        </Box>
-      )}
-
-      {settingHasWebSocketSupport && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>Would you like to add WebSocket support?</Text>
-          </Box>
-          <SelectInput
-            items={[
-              { label: "Yes", value: true },
-              { label: "No", value: false },
-            ]}
-            onSelect={(selectedItem) => {
-              console.log({ selectedItem, hasWebSocketSupport });
-              setHasWebSocketSupport(selectedItem.value);
-              setSettingWebSocketSupport(false);
-              setSettingOutputFolder(true);
-            }}
-          />
-        </Box>
-      )}
-
-      {!settingHasWebSocketSupport && hasWebSocketSupport !== undefined && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>WebSockets?:</Text>
-          </Box>
-          <Text>{hasWebSocketSupport ? "Yes" : "No"}</Text>
-        </Box>
-      )}
-
-      {settingOutputFolder && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>Output folder:</Text>
-          </Box>
-          <TextInput
-            placeholder={`./${Case.kebab(name)}`}
-            value={outputFolder}
-            onChange={setOutputFolder}
-            onSubmit={() => {
-              if (outputFolder === "") {
-                setOutputFolder(Case.kebab(name));
-              }
-
-              setSettingOutputFolder(false);
-              setSettingSettingsConfirmed(true);
-            }}
-          />
-        </Box>
-      )}
-
-      {!settingName && !settingOutputFolder && !!outputFolder && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>Output folder:</Text>
-          </Box>
-          <Text>{outputFolder}</Text>
-        </Box>
-      )}
-
-      {/* Confirm settings */}
-
-      {settingSettingsConfirmed && (
-        <Box>
-          <Box marginRight={1}>
-            <Text>Do the settings above look right?</Text>
-          </Box>
-          <SelectInput
-            items={[
-              { label: "Yes", value: true },
-              { label: "No", value: false },
-            ]}
-            onSelect={(selectedItem) => {
-              console.log({ selectedItem, hasWebSocketSupport });
-              // setSettingsConfirmed(selectedItem.value);
-              setSettingSettingsConfirmed(false);
-              if (selectedItem.value) {
-                setSettingOutputFolder(true);
-                setScaffoldingProject(true);
-              } else {
-                console.log("settings unconfirmed. exiting for now");
-                process.exit();
-              }
-            }}
-          />
-        </Box>
-      )}
-
-      {scaffoldingProject && (
-        <Box>
-          <Box marginRight={1}>
-            <Text color="green">
-              <Spinner type="dots" />
-            </Text>
-          </Box>
-          <Text>Scaffolding</Text>
-        </Box>
-      )}
-
-      {finished && <Text>Allllllll done!!!!</Text>}
-
-      {!!error && (
-        <Box>
-          <Box marginRight={1}>
-            <Text color="red">Error:</Text>
-          </Box>
-          <Text>{error}</Text>
-        </Box>
-      )}
-    </>
-  );
-};
-
-render(<CLI />);
+  )
+  .help().argv;
