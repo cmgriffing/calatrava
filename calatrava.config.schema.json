@@ -1,0 +1,37 @@
+{
+  "$id": "https://raw.githubusercontent.com/cmgriffing/calatrava/main/calatrava.config.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Calatrava Configuration",
+  "description": "The configuration needed to run the Calatrava framework and its libraries.",
+  "required": ["latitude", "longitude"],
+  "type": "object",
+  "properties": {
+    "appName": {
+      "type": "string"
+    },
+    "arcBaseDirectory": {
+      "type": "string"
+    },
+    "arcRoutesDirectory": {
+      "type": "string"
+    },
+    "arcTablesDirectory": {
+      "type": "string"
+    },
+    "arcTableIndexesDirectory": {
+      "type": "string"
+    },
+    "awsConfigPath": {
+      "type": "string"
+    },
+    "hasWebSocketSupport": {
+      "type": "boolean"
+    },
+    "arcPreferencesTemplatePath": {
+      "type": "string"
+    },
+    "envVarsListPath": {
+      "type": "string"
+    }
+  }
+}
