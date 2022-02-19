@@ -37,6 +37,21 @@
     },
     "envVarsListPath": {
       "type": "string"
+    },
+    "requestTypesPath": {
+      "type": "string"
+    },
+    "requestSchemaPath": {
+      "type": "string"
+    },
+    "responseTypesPath": {
+      "type": "string"
+    },
+    "responseSchemaPath": {
+      "type": "string"
+    },
+    "openApiSchemaPath": {
+      "type": "string"
     }
   }
 }
