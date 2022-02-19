@@ -2,7 +2,9 @@
 default
 
 @http
-get /
+/hello
+  method get
+  src src/http/get
 
 # @aws
 # profile default

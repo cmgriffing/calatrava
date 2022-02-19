@@ -1,11 +1,12 @@
 {
+  "$schema": "https://raw.githubusercontent.com/cmgriffing/calatrava/main/calatrava.config.schema.json",
   "appName": "{{{packageName}}}",
-  "baseDirectory": "./arc",
-  "routesDirectory": "routes",
-  "tablesDirectory": "tables",
-  "tableIndexesDirectory": "table-indexes",
+  "arcBaseDirectory": "./arc",
+  "arcRoutesDirectory": "routes",
+  "arcTablesDirectory": "tables",
+  "arcTableIndexesDirectory": "table-indexes",
   "awsConfigPath": "aws.arc",
   "hasWebSocketSupport": false,
-  "preferencesTemplatePath": "preferences.template.arc",
-  "envVarListPath": "./env-var-list.json"
+  "arcPreferencesTemplatePath": "preferences.template.arc",
+  "envVarsListPath": "./env-var-list.json"
 }

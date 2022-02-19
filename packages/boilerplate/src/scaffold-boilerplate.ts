@@ -30,11 +30,12 @@ export async function scaffoldBoilerplate({
   }
 
   // crawl template folder, injecting values as needed
+  const templateLocation = path.resolve(__dirname, "../template/**/*");
+  console.log({ templateLocation });
+
   glob
     .sync(path.resolve(__dirname, "../template/**/*"), globConfig)
     .forEach((file) => {
-      console.log({ file });
-
       const fileContents = fs.readFileSync(file, { encoding: "utf8" });
 
       const parsedFile = Mustache.render(fileContents, {
@@ -47,10 +48,12 @@ export async function scaffoldBoilerplate({
 
       const [_, innerPath] = file.split("/template/");
 
-      const newFilePath = path.resolve(cwd, outputFolder, innerPath);
+      if (innerPath) {
+        const newFilePath = path.resolve(cwd, outputFolder, innerPath);
 
-      fs.ensureFileSync(newFilePath);
+        fs.ensureFileSync(newFilePath);
 
-      fs.outputFileSync(newFilePath, parsedFile);
+        fs.outputFileSync(newFilePath, parsedFile);
+      }
     });
 }
