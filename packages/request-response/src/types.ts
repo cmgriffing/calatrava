@@ -26,7 +26,7 @@ export interface RouteOptions {
 }
 
 // There is probably a better place for this
-export function Route(options: RouteOptions): Function {
+export function Route(_options: RouteOptions): Function {
   return () => {
     return;
   };

@@ -2,17 +2,19 @@
   "name": "@calatrava/request-response",
   "version": "0.0.1",
   "description": "A set of tools for request validation and openapi documentation for the Calatrava framework",
-  "main": "index.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "zod-to-json-schema": "ts-node scripts/zod-to-json-schema.ts --requests ./tests/request-schemas.ts --responses ./tests/response-schemas.ts --out schemas",
     "ts-to-zod:requests": "ts-node scripts/ts-to-zod --interfaces ./tests/request-types.ts --out ./tests/request-schemas.ts",
     "ts-to-zod:responses": "ts-node scripts/ts-to-zod --interfaces ./tests/response-types.ts --out ./tests/response-schemas.ts",
     "build-openapi-yaml": "ts-node scripts/build-openapi-yaml.ts --schema ./schemas --routes ./tests/routes/http --version 0.0.1 --title \"A New API\" --description \"some kind of description\" --out ./openapi.yml",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@sindresorhus/tsconfig": "^2.0.0",
     "@types/minimist": "^1.2.2",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.3",

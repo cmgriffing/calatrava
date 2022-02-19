@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { commonHeaders, RouteOptions } from "../../types";
+import { commonHeaders, RouteOptions } from "../types";
 
 const printer = ts.createPrinter({});
 
@@ -14,9 +14,11 @@ export function getRouteMetadata(
 
   while (allNodes.length > nodeIndex) {
     const currentNode = allNodes[nodeIndex];
-    currentNode.forEachChild((childNode) => {
-      allNodes.push(childNode);
-    });
+    if (currentNode) {
+      currentNode.forEachChild((childNode) => {
+        allNodes.push(childNode);
+      });
+    }
 
     nodeIndex += 1;
   }

@@ -1,5 +1,5 @@
 import * as arc from "@architect/functions";
-import { Route, commonHeaders } from "../../../../../types";
+import { Route, commonHeaders } from "../../../../../src/types";
 
 class Handler {
   @Route({

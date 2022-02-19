@@ -4,7 +4,7 @@ import * as path from "path";
 import * as ts from "typescript";
 import { getRouteMetadata } from "./build-openapi-yaml/get-route-metadata";
 import { OpenAPIV3 } from "openapi-types";
-import { RouteOptions } from "../types";
+import { RouteOptions } from "./types";
 import * as YAML from "yaml";
 
 export async function buildOpenApiYaml(
