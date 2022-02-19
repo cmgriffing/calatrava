@@ -5,7 +5,12 @@
   "description": "The configuration needed to run the Calatrava framework and its libraries.",
   "required": ["appName"],
   "type": "object",
+  "unevaluatedProperties": false,
+  "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
     "appName": {
       "type": "string"
     },
