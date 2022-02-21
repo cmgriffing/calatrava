@@ -26,118 +26,143 @@ const path = __importStar(require("path"));
 const ts = __importStar(require("typescript"));
 const get_route_metadata_1 = require("./build-openapi-yaml/get-route-metadata");
 const YAML = __importStar(require("yaml"));
-async function buildOpenApiYaml(schema, routes, version = "0.0.0", title = "", description = "", out = "openapi.yaml") {
-    const cwd = process.cwd();
-    const schemaFolder = path.resolve(cwd, schema);
-    const routesFolder = path.resolve(cwd, routes);
-    const handlers = glob.sync(`${routesFolder}/**/index.ts`);
-    const routeOptions = [];
-    handlers
-        .filter((handlerPath) => handlerPath.indexOf("node_modules") === -1)
-        .map((handlerPath) => path.resolve(handlerPath))
-        .map((handlerPath) => {
-        // parse http handlers using ts
-        const fileName = handlerPath.substring(handlerPath.lastIndexOf("/"));
-        const sourceText = fs.readFileSync(handlerPath, { encoding: "utf8" });
-        return ts.createSourceFile(fileName, sourceText, ts.ScriptTarget.Latest);
-    })
-        .map((sourceFile) => {
-        // map parsed handlers and extract metadata from Route
-        ts.forEachChild(sourceFile, (node) => {
-            if (ts.isClassDeclaration(node)) {
-                routeOptions.push(...(0, get_route_metadata_1.getRouteMetadata)(node, sourceFile));
-            }
-        });
-    });
-    // map routes to openApi path objects
-    // and build spec json adding paths
-    const openApiSchema = {
-        openapi: "3.0.3",
-        info: {
-            version,
-            title,
-            description,
-        },
-        paths: {},
-        components: {
-            schemas: {},
-        },
-    };
-    routeOptions.forEach((routeOptionObject) => {
-        if (!openApiSchema.paths[routeOptionObject.path]) {
-            openApiSchema.paths[routeOptionObject.path] =
-                {};
-        }
-        let requestSchema;
-        if (routeOptionObject === null || routeOptionObject === void 0 ? void 0 : routeOptionObject.requestJsonSchemaPath) {
-            const requestJson = fs.readFileSync(`${schemaFolder}/${routeOptionObject.requestJsonSchemaPath}`, { encoding: "utf8" });
-            requestSchema = JSON.parse(requestJson);
-            Object.entries(requestSchema["components/schemas"]).forEach(([key, value]) => {
-                openApiSchema.components.schemas[key] =
-                    value;
+const TJS = __importStar(require("typescript-json-schema"));
+async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, version = "0.0.0", title = "", description = "", out = "openapi.yaml") {
+    try {
+        const cwd = process.cwd();
+        const settings = {
+            required: true,
+            noExtraProps: true,
+        };
+        const inputFilePaths = [
+            path.resolve(cwd, requestTypesPath),
+            path.resolve(cwd, responseTypesPath),
+        ];
+        console.log({ inputFilePaths });
+        const tjsProgram = TJS.getProgramFromFiles(inputFilePaths, {});
+        const tjsGenerator = TJS.buildGenerator(tjsProgram, settings);
+        // console.log("symbols", tjsGenerator?.getUserSymbols());
+        const routesFolder = path.resolve(cwd, routes);
+        console.log({ routesFolder });
+        const handlers = glob.sync(`${routesFolder}/**/index.ts`);
+        console.log({ handlers });
+        const routeOptions = [];
+        handlers
+            .filter((handlerPath) => handlerPath.indexOf("node_modules") === -1)
+            .map((handlerPath) => path.resolve(handlerPath))
+            .map((handlerPath) => {
+            // parse http handlers using ts
+            const fileName = handlerPath.substring(handlerPath.lastIndexOf("/"));
+            const sourceText = fs.readFileSync(handlerPath, { encoding: "utf8" });
+            return ts.createSourceFile(fileName, sourceText, ts.ScriptTarget.Latest);
+        })
+            .map((sourceFile) => {
+            // map parsed handlers and extract metadata from Route
+            ts.forEachChild(sourceFile, (node) => {
+                if (ts.isClassDeclaration(node)) {
+                    routeOptions.push(...(0, get_route_metadata_1.getRouteMetadata)(node, sourceFile));
+                }
             });
-        }
-        const responses = {};
-        // set 200 response
-        const responseSchema = JSON.parse(fs.readFileSync(`${schemaFolder}/${routeOptionObject.responseJsonSchemaPath}`, {
-            encoding: "utf8",
-        }));
-        responses["200"] = {
-            description: "Response",
-            content: {
-                "application/json": {
-                    schema: {
-                        $ref: responseSchema.$ref,
-                    },
-                },
+        });
+        // map routes to openApi path objects
+        // and build spec json adding paths
+        const openApiSchema = {
+            openapi: "3.0.3",
+            info: {
+                version,
+                title,
+                description,
+            },
+            paths: {},
+            components: {
+                schemas: {},
             },
         };
-        Object.entries(responseSchema["components/schemas"]).forEach(([key, value]) => {
-            openApiSchema.components.schemas[key] =
-                value;
-        });
-        // set error responses
-        const errorSchema = JSON.parse(fs.readFileSync(`${schemaFolder}/${routeOptionObject.errorJsonSchemaPath}`, {
-            encoding: "utf8",
-        }));
-        Object.entries(errorSchema["components/schemas"]).forEach(([key, value]) => {
-            openApiSchema.components.schemas[key] =
-                value;
-        });
-        routeOptionObject.definedErrors.forEach((errorCode) => {
-            const definedError = {
-                description: "Error",
+        console.log({ routeOptions });
+        routeOptions.forEach((routeOptionObject) => {
+            if (!openApiSchema.paths[routeOptionObject.path]) {
+                openApiSchema.paths[routeOptionObject.path] =
+                    {};
+            }
+            let requestSchema;
+            if (routeOptionObject === null || routeOptionObject === void 0 ? void 0 : routeOptionObject.requestJsonSchema) {
+                requestSchema = tjsGenerator === null || tjsGenerator === void 0 ? void 0 : tjsGenerator.getSchemaForSymbol(routeOptionObject.requestJsonSchema);
+                if (!requestSchema) {
+                    throw new Error("Could not generate request schema");
+                }
+                console.log({ requestSchema });
+                requestSchema === null || requestSchema === void 0 ? true : delete requestSchema.$schema;
+                openApiSchema.components.schemas[routeOptionObject.requestJsonSchema] = requestSchema;
+            }
+            const responses = {};
+            // set 200 response
+            console.log("before grabbing schema for symbol");
+            const responseSchema = tjsGenerator === null || tjsGenerator === void 0 ? void 0 : tjsGenerator.getSchemaForSymbol(routeOptionObject.responseJsonSchema);
+            console.log("after grabbing schema for symbol");
+            if (!responseSchema) {
+                throw new Error("Could not generate request schema");
+            }
+            responses["200"] = {
+                description: "Response",
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: errorSchema.$ref,
+                            $ref: `#/components/schemas/${routeOptionObject.responseJsonSchema}`,
                         },
                     },
                 },
             };
-            responses[errorCode] = definedError;
-        });
-        const pathObject = {
-            responses,
-            tags: routeOptionObject.tags,
-        };
-        if (requestSchema) {
-            pathObject.requestBody = {
-                required: true,
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: requestSchema.$ref,
+            responseSchema === null || responseSchema === void 0 ? true : delete responseSchema.$schema;
+            openApiSchema.components.schemas[routeOptionObject.responseJsonSchema] = responseSchema;
+            // set error responses
+            const errorSchema = tjsGenerator === null || tjsGenerator === void 0 ? void 0 : tjsGenerator.getSchemaForSymbol(routeOptionObject.errorJsonSchema);
+            errorSchema === null || errorSchema === void 0 ? true : delete errorSchema.$schema;
+            openApiSchema.components.schemas[routeOptionObject.errorJsonSchema] =
+                errorSchema;
+            routeOptionObject.definedErrors.forEach((errorCode) => {
+                const definedError = {
+                    description: "Error",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: `#/components/schemas/${routeOptionObject.errorJsonSchema}`,
+                            },
                         },
                     },
-                },
+                };
+                responses[errorCode] = definedError;
+            });
+            const pathObject = {
+                responses,
+                tags: routeOptionObject.tags,
             };
-        }
-        openApiSchema.paths[routeOptionObject.path][routeOptionObject.method.toLowerCase()] = pathObject;
-    });
-    // convert json to yaml
-    const yaml = YAML.stringify(openApiSchema);
-    // output yaml file
-    fs.outputFile(path.resolve(cwd, out), yaml);
+            if (requestSchema) {
+                pathObject.requestBody = {
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: `#/components/schemas/${routeOptionObject.requestJsonSchema}`,
+                            },
+                        },
+                    },
+                };
+            }
+            openApiSchema.paths[routeOptionObject.path][routeOptionObject.method.toLowerCase()] = pathObject;
+        });
+        // convert json to yaml
+        const yaml = YAML.stringify(openApiSchema);
+        // // output yaml file
+        fs.outputFile(path.resolve(cwd, out), yaml);
+    }
+    catch (e) {
+        console.log({ e });
+    }
 }
 exports.buildOpenApiYaml = buildOpenApiYaml;
+// generate json schema from request-types
+// generate json schema from response-types
+// comb routes
+// get route schemas from generated generators
+// add schemas to openAPiSchema if not present
+// build openapi yaml

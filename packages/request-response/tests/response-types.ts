@@ -150,7 +150,6 @@ export interface ImageSearchResponse {
         likes: string;
       };
     };
-    current_user_collections?: null[] | null;
     urls: {
       raw: string;
       full: string;

@@ -16,8 +16,8 @@ export interface RouteOptions {
     };
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "OPTIONS";
     definedErrors: (HTTPClientErrorResponses | HTTPServerErrorResponses)[];
-    requestJsonSchemaPath?: string;
-    responseJsonSchemaPath: string;
-    errorJsonSchemaPath: string | "errorResponseSchema.json";
+    requestJsonSchema?: string;
+    responseJsonSchema: string;
+    errorJsonSchema: string | "ErrorResponse";
 }
 export declare function Route(_options: RouteOptions): Function;

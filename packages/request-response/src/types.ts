@@ -20,9 +20,9 @@ export interface RouteOptions {
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "OPTIONS";
   definedErrors: (HTTPClientErrorResponses | HTTPServerErrorResponses)[];
   // Maybe we could combine the schema paths into a common interpolatable variable. (postUser)
-  requestJsonSchemaPath?: string;
-  responseJsonSchemaPath: string;
-  errorJsonSchemaPath: string | "errorResponseSchema.json";
+  requestJsonSchema?: string;
+  responseJsonSchema: string;
+  errorJsonSchema: string | "ErrorResponse";
 }
 
 // There is probably a better place for this

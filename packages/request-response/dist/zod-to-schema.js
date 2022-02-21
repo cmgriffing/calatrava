@@ -27,24 +27,31 @@ const zod_to_json_schema_1 = __importDefault(require("zod-to-json-schema"));
 const fs = __importStar(require("fs-extra"));
 const path = __importStar(require("path"));
 async function zodToSchema(requests, responses, out) {
-    const cwd = process.cwd();
-    const requestSchemas = await Promise.resolve().then(() => __importStar(require(path.resolve(cwd, requests))));
-    const responseSchemas = await Promise.resolve().then(() => __importStar(require(path.resolve(cwd, responses))));
-    Object.entries(requestSchemas).forEach(([key, schema]) => {
-        const jsonSchema = (0, zod_to_json_schema_1.default)(schema, {
-            name: key,
-            target: "openApi3",
-            definitionPath: "components/schemas",
+    try {
+        console.log("zodToSchema starting", { requests, responses, out });
+        const cwd = process.cwd();
+        const requestSchemas = await Promise.resolve().then(() => __importStar(require(path.resolve(cwd, requests))));
+        const responseSchemas = await Promise.resolve().then(() => __importStar(require(path.resolve(cwd, responses))));
+        Object.entries(requestSchemas).forEach(([key, schema]) => {
+            const jsonSchema = (0, zod_to_json_schema_1.default)(schema, {
+                name: key,
+                target: "openApi3",
+                definitionPath: "components/schemas",
+            });
+            console.log("jsonSchema", jsonSchema);
+            fs.outputFile(path.resolve(cwd, out, `${key}.json`), JSON.stringify(jsonSchema, null, 2));
         });
-        fs.outputFile(path.resolve(cwd, out, `${key}.json`), JSON.stringify(jsonSchema, null, 2));
-    });
-    Object.entries(responseSchemas).forEach(([key, schema]) => {
-        const jsonSchema = (0, zod_to_json_schema_1.default)(schema, {
-            name: key,
-            target: "openApi3",
-            definitionPath: "components/schemas",
+        Object.entries(responseSchemas).forEach(([key, schema]) => {
+            const jsonSchema = (0, zod_to_json_schema_1.default)(schema, {
+                name: key,
+                target: "openApi3",
+                definitionPath: "components/schemas",
+            });
+            fs.outputFile(path.resolve(cwd, out, `${key}.json`), JSON.stringify(jsonSchema, null, 2));
         });
-        fs.outputFile(path.resolve(cwd, out, `${key}.json`), JSON.stringify(jsonSchema, null, 2));
-    });
+    }
+    catch (e) {
+        console.log({ e });
+    }
 }
 exports.zodToSchema = zodToSchema;

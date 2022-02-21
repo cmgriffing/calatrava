@@ -24,22 +24,27 @@ const tsToZodCore = __importStar(require("ts-to-zod"));
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs-extra"));
 async function tsToZod(interfaces, out) {
-    const cwd = process.cwd();
-    const sourceText = fs.readFileSync(path.resolve(cwd, interfaces), {
-        encoding: "utf8",
-    });
-    if (!sourceText) {
-        throw new Error("sourceText from interfaces file must not be empty");
+    try {
+        const cwd = process.cwd();
+        const sourceText = fs.readFileSync(path.resolve(cwd, interfaces), {
+            encoding: "utf8",
+        });
+        if (!sourceText) {
+            throw new Error("sourceText from interfaces file must not be empty");
+        }
+        const { getZodSchemasFile, getIntegrationTestFile, errors } = tsToZodCore.generate({ sourceText });
+        console.log({ getZodSchemasFile, getIntegrationTestFile, errors });
+        console.log(getZodSchemasFile(""));
+        const outputPath = path.resolve(cwd, out);
+        fs.ensureFileSync(outputPath);
+        const splitInterfacesPath = interfaces.split("/");
+        const relativeInterfacesPath = `./${splitInterfacesPath[splitInterfacesPath.length - 1]}`
+            .replace(".tsx", "")
+            .replace(".ts", "");
+        fs.outputFileSync(outputPath, getZodSchemasFile(relativeInterfacesPath));
     }
-    const { getZodSchemasFile, getIntegrationTestFile, errors } = tsToZodCore.generate({ sourceText });
-    console.log({ getZodSchemasFile, getIntegrationTestFile, errors });
-    console.log(getZodSchemasFile(""));
-    const outputPath = path.resolve(cwd, out);
-    fs.ensureFileSync(outputPath);
-    const splitInterfacesPath = interfaces.split("/");
-    const relativeInterfacesPath = `./${splitInterfacesPath[splitInterfacesPath.length - 1]}`
-        .replace(".tsx", "")
-        .replace(".ts", "");
-    fs.outputFileSync(outputPath, getZodSchemasFile(relativeInterfacesPath));
+    catch (e) {
+        console.log({ e });
+    }
 }
 exports.tsToZod = tsToZod;

@@ -13,28 +13,28 @@ export enum PollType {
 // END DUPLICATES
 
 export interface LoginRequest {
-  /*
+  /**
    * @format email
    */
   email: string;
 
-  /*
+  /**
    * @maxLength 32
    */
   password: string;
 }
 
 export interface RegisterRequest {
-  /*
+  /**
    * @maxLength 20
    */
   name: string;
-  /*
+  /**
    * @format email
    */
   email: string;
 
-  /*
+  /**
    * @minLength 32
    * @maxLength 32
    * @pattern ^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$
@@ -44,7 +44,7 @@ export interface RegisterRequest {
 }
 
 export interface UpdateUserRequest {
-  /*
+  /**
    * @minLength 3
    * @maxLength 20
    */
@@ -57,7 +57,7 @@ export interface UserVerificationRequest {
 
 export interface PostPollRequest {
   teamId: string;
-  /*
+  /**
    * @minLength 3
    * @maxLength 20
    */
@@ -68,7 +68,7 @@ export interface PostPollRequest {
 export type UpdatePollRequest = Omit<PostPollRequest, "teamId">;
 
 export interface PostMealRequest {
-  /*
+  /**
    * @minLength 1
    * @maxLength 20
    */
@@ -85,7 +85,7 @@ export interface PostMealRequest {
 export type UpdateMealRequest = Omit<Partial<PostMealRequest>, "pollId">;
 
 export interface PostRestaurantRequest {
-  /*
+  /**
    * @minLength 1
    * @maxLength 20
    */
@@ -100,7 +100,7 @@ export type UpdateRestaurantRequest = Omit<
 >;
 
 export interface PostTeamRequest {
-  /*
+  /**
    * @minLength 1
    * @maxLength 20
    */
@@ -118,7 +118,7 @@ export interface UploadImageRequest {
 }
 
 export interface PostTeammateRequest {
-  /*
+  /**
    * @format email
    */
   email: string;
@@ -133,19 +133,19 @@ export interface ImageSearchRequest {
 }
 
 export interface RestaurantSearchRequest {
-  /*
+  /**
    * @minLength 1
    * @maxLength 20
    */
   searchQuery: string;
-  /*
-   * minimum -180
-   * maximum 180
+  /**
+   * @minimum -180
+   * @maximum 180
    */
   latitude?: number;
-  /*
-   * minimum -180
-   * maximum 180
+  /**
+   * @minimum -180
+   * @maximum 180
    */
   longitude?: number;
 

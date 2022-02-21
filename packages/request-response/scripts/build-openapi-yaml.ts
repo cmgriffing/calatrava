@@ -4,11 +4,16 @@ import { buildOpenApiYaml } from "../src/build-openapi-yaml";
 async function main() {
   const args = minimist(process.argv.slice(2));
 
-  const cwd = process.cwd();
-  const { schema, routes, version, title, description, out } = args;
+  // const cwd = process.cwd();
+  const { requests, responses, routes, version, title, description, out } =
+    args;
 
-  if (!schema) {
-    throw new Error("Schema directory path must exist");
+  if (!requests) {
+    throw new Error("Requests path is required");
+  }
+
+  if (!responses) {
+    throw new Error("Responses path is required");
   }
 
   if (!routes) {
@@ -31,7 +36,15 @@ async function main() {
     throw new Error("Out path is required.");
   }
 
-  await buildOpenApiYaml(schema, routes, version, title, description, out);
+  await buildOpenApiYaml(
+    requests,
+    responses,
+    routes,
+    version,
+    title,
+    description,
+    out
+  );
 }
 
 main();
