@@ -5,20 +5,12 @@
   "description": "The configuration needed to run the Calatrava framework and its libraries.",
   "required": [
     "appName",
-    "arcBaseDirectory",
-    "arcRoutesDirectory",
-    "arcTablesDirectory",
-    "arcTableIndexesDirectory",
-    "arcPreferencesTemplatePath",
     "httpRoutesDirectory",
     "awsConfigPath",
     "hasWebSocketSupport",
     "envVarsListPath",
-    "requestTypesPath",
-    "requestSchemaPath",
-    "responseTypesPath",
-    "responseSchemaPath",
-    "openApiSchemaPath"
+    "arc",
+    "scaffolding"
   ],
   "type": "object",
   "unevaluatedProperties": false,
@@ -30,17 +22,61 @@
     "appName": {
       "type": "string"
     },
-    "arcBaseDirectory": {
-      "type": "string"
+    "arc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseDirectory",
+        "routesDirectory",
+        "tablesDirectory",
+        "tableIndexesDirectory",
+        "preferencesTemplatePath"
+      ],
+      "properties": {
+        "baseDirectory": {
+          "type": "string"
+        },
+        "routesDirectory": {
+          "type": "string"
+        },
+        "tablesDirectory": {
+          "type": "string"
+        },
+        "tableIndexesDirectory": {
+          "type": "string"
+        },
+        "preferencesTemplatePath": {
+          "type": "string"
+        }
+      }
     },
-    "arcRoutesDirectory": {
-      "type": "string"
-    },
-    "arcTablesDirectory": {
-      "type": "string"
-    },
-    "arcTableIndexesDirectory": {
-      "type": "string"
+    "scaffolding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requestTypesPath",
+        "requestSchemaPath",
+        "responseTypesPath",
+        "responseSchemaPath",
+        "openApiSchemaPath"
+      ],
+      "properties": {
+        "requestTypesPath": {
+          "type": "string"
+        },
+        "requestSchemaPath": {
+          "type": "string"
+        },
+        "responseTypesPath": {
+          "type": "string"
+        },
+        "responseSchemaPath": {
+          "type": "string"
+        },
+        "openApiSchemaPath": {
+          "type": "string"
+        }
+      }
     },
     "awsConfigPath": {
       "type": "string"
@@ -48,28 +84,10 @@
     "hasWebSocketSupport": {
       "type": "boolean"
     },
-    "arcPreferencesTemplatePath": {
-      "type": "string"
-    },
     "httpRoutesDirectory": {
       "type": "string"
     },
     "envVarsListPath": {
-      "type": "string"
-    },
-    "requestTypesPath": {
-      "type": "string"
-    },
-    "requestSchemaPath": {
-      "type": "string"
-    },
-    "responseTypesPath": {
-      "type": "string"
-    },
-    "responseSchemaPath": {
-      "type": "string"
-    },
-    "openApiSchemaPath": {
       "type": "string"
     }
   }
