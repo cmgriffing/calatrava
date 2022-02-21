@@ -10,6 +10,7 @@
     "arcTablesDirectory",
     "arcTableIndexesDirectory",
     "arcPreferencesTemplatePath",
+    "httpRoutesDirectory",
     "awsConfigPath",
     "hasWebSocketSupport",
     "envVarsListPath",
@@ -48,6 +49,9 @@
       "type": "boolean"
     },
     "arcPreferencesTemplatePath": {
+      "type": "string"
+    },
+    "httpRoutesDirectory": {
       "type": "string"
     },
     "envVarsListPath": {
