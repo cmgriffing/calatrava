@@ -253,18 +253,3 @@ export const CLI = () => {
     </>
   );
 };
-
-// render(<CLI />);
-
-process.on("unhandledRejection", (error: any) => {
-  // Will print "unhandledRejection err is not defined"
-  console.log("unhandledRejection", error.message);
-});
-
-process.on("uncaughtException", (err: any, origin: any) => {
-  // fs.writeSync(
-  //   process.stderr.fd,
-  //   `Caught exception: ${err}\n` + `Exception origin: ${origin}`
-  // );
-  console.log("uncaught", err, origin);
-});

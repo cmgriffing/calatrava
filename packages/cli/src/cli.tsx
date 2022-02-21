@@ -6,7 +6,8 @@ import { CLI } from "./init";
 import child_process from "child_process";
 import path from "path";
 import * as fs from "fs-extra";
-import { tsToZod } from "@calatrava/request-response";
+import { buildOpenApiYaml, tsToZod } from "@calatrava/request-response";
+import { CalatravaConfiguration } from "./calatrava-config";
 
 const cwd = process.cwd();
 
@@ -64,29 +65,37 @@ const cwd = process.cwd();
         describe: "the path to the Calatrava config file",
       });
     },
-    function (argv: any) {
-      // let config = argv.config;
-      console.log("config", argv.config);
-      const configPath = path.resolve(cwd, argv.config);
-      console.log({ configPath });
+    async function (argv: any) {
+      try {
+        // let config = argv.config;
+        console.log("config", argv.config);
+        const configPath = path.resolve(cwd, argv.config);
+        console.log({ configPath });
 
-      if (!fs.existsSync(configPath)) {
-        console.error("config file must exist at configPath: ", configPath);
-        process.exit(-1);
+        if (!fs.existsSync(configPath)) {
+          console.error("config file must exist at configPath: ", configPath);
+          process.exit(-1);
+        }
+
+        // validate config (eventually)
+
+        const config: CalatravaConfiguration = fs.readJSONSync(configPath);
+
+        console.log({ config });
+
+        // run ts-to-zod
+        await tsToZod(config.requestTypesPath, config.requestSchemaPath);
+        await tsToZod(config.responseTypesPath, config.responseSchemaPath);
+
+        // run build-openapi-yaml
+        await buildOpenApiYaml(
+          config.requestTypesPath,
+          config.responseTypesPath,
+          config.httpRoutesDirectory
+        );
+      } catch (e) {
+        console.log({ e });
       }
-
-      // validate config (eventually)
-
-      const config = fs.readJSONSync(configPath);
-
-      console.log({ config });
-
-      // run ts-to-zod
-      // tsToZod()
-
-      // run zod-to-schema
-
-      // run build-openapi-yaml
     }
   )
   .help().argv;

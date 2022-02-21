@@ -1,3 +1,10 @@
+// DUPLICATED FROM types.ts
+export interface DatastoreRecord {
+  createdAt: number;
+  modifiedAt: number;
+}
+// END DUPLICATES
+
 export interface ErrorResponse {
   message?: string;
 }

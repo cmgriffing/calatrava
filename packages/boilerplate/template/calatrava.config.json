@@ -8,5 +8,10 @@
   "awsConfigPath": "aws.arc",
   "hasWebSocketSupport": false,
   "arcPreferencesTemplatePath": "preferences.template.arc",
-  "envVarsListPath": "./env-var-list.json"
+  "envVarsListPath": "./env-var-list.json",
+  "requestTypesPath": "./src/shared/request-types.ts",
+  "requestSchemaPath": "./src/shared/request-schemas.ts",
+  "responseTypesPath": "./src/shared/response-types.ts",
+  "responseSchemaPath": "./src/shared/response-schemas.ts",
+  "openApiSchemaPath": "./schema"
 }

@@ -8,8 +8,10 @@
     "node": ">=10"
   },
   "scripts": {
+    "generate-config-interface": "json2ts ../../calatrava.config.schema.json ./src/calatrava-config.d.ts",
     "dev": "nodemon --exec \"pnpm run build\" --watch src -e tsx",
     "build": "tsc && chmod +x dist/cli.js",
+    "prebuild": "pnpm run generate-config-interface",
     "start": "pnpm run build && dist/cli.js",
     "pretest": "pnpm run build",
     "test": "xo && ava"
@@ -53,6 +55,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs-extra": "^10.0.0",
     "ink-testing-library": "^2.1.0",
+    "json-schema-to-typescript": "^10.1.5",
     "nodemon": "^2.0.15",
     "typescript": "^4.5.5",
     "webpack": "^5.69.1",
