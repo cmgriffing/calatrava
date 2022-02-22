@@ -6,7 +6,6 @@
   "required": [
     "appName",
     "httpRoutesDirectory",
-    "awsConfigPath",
     "hasWebSocketSupport",
     "envVarsListPath",
     "arc",
@@ -30,6 +29,7 @@
         "routesDirectory",
         "tablesDirectory",
         "tableIndexesDirectory",
+        "awsConfigPath",
         "preferencesTemplatePath"
       ],
       "properties": {
@@ -46,6 +46,9 @@
           "type": "string"
         },
         "preferencesTemplatePath": {
+          "type": "string"
+        },
+        "awsConfigPath": {
           "type": "string"
         }
       }
@@ -78,9 +81,6 @@
         }
       }
     },
-    "awsConfigPath": {
-      "type": "string"
-    },
     "hasWebSocketSupport": {
       "type": "boolean"
     },
@@ -89,6 +89,22 @@
     },
     "envVarsListPath": {
       "type": "string"
+    },
+    "email": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "templateJsonPath", "templateIdPath"],
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "templateJsonPath": {
+          "type": "string"
+        },
+        "templateIdPath": {
+          "type": "string"
+        }
+      }
     }
   }
 }
