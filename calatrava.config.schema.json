@@ -93,12 +93,20 @@
     "email": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["provider", "templateJsonPath", "templateIdPath"],
+      "required": [
+        "provider",
+        "templateJsonPath",
+        "templateEnumPath",
+        "templateIdPath"
+      ],
       "properties": {
         "provider": {
           "type": "string"
         },
         "templateJsonPath": {
+          "type": "string"
+        },
+        "templateEnumPath": {
           "type": "string"
         },
         "templateIdPath": {
