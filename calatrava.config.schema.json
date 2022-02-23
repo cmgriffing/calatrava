@@ -111,6 +111,9 @@
         },
         "templateIdPath": {
           "type": "string"
+        },
+        "mjmlDirectory": {
+          "type": "string"
         }
       }
     }
