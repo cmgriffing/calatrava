@@ -1,0 +1,14 @@
+{
+  "inviteNewUser": {
+    "template": "invite-new-user.mjml",
+    "subject": "You have been invited to a 👉&titleName👈 Team"
+  },
+  "inviteExistingUser": {
+    "template": "invite-existing-user.mjml",
+    "subject": "You have been invited to a 👉&titleName👈 Team"
+  },
+  "verify": {
+    "template": "verify.mjml",
+    "subject": "Please verify your email address for 👉&titleName👈"
+  }
+}

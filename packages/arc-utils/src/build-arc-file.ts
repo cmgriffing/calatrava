@@ -34,14 +34,19 @@ export async function buildArcFile(config: string) {
     }
   );
 
-  const renderedTemplate = Mustache.render(templateFile, {
-    appName,
-    routes: routesString,
-    tables: tablesString,
-    tableIndexes: tableIndexesString,
-    hasWebSocketSupport,
-    aws: awsString,
-  });
+  const renderedTemplate = Mustache.render(
+    templateFile,
+    {
+      appName,
+      routes: routesString,
+      tables: tablesString,
+      tableIndexes: tableIndexesString,
+      hasWebSocketSupport,
+      aws: awsString,
+    },
+    undefined,
+    ["👉", "👈"]
+  );
 
   fs.outputFileSync(path.resolve(cwd, "./app.arc"), renderedTemplate);
 

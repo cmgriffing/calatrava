@@ -1,0 +1,32 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-text align="center" color="#555" />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#eee">
+    <mj-include
+      path="./src/shared/email-templates/mjml/components/header.mjml"
+    />
+
+    <mj-section background-color="#fff">
+      <mj-column>
+        <mj-text align="center">
+          <h2>VERIFY</h2>
+          <span>Click here to verify your account.<span>
+          <a href="{{var:verificationLink:""}}">{{var:verificationLink:""}}</a>
+          <span>{{var:verificationToken:""}}</span>
+        </mj-text>
+      </mj-column>
+
+      <mj-column>
+        <mj-image width="200px" src="http://placehold.it/200x200"></mj-image>
+      </mj-column>
+    </mj-section>
+
+    <mj-include
+      path="./src/shared/email-templates/mjml/components/footer.mjml"
+    />
+  </mj-body>
+</mjml>

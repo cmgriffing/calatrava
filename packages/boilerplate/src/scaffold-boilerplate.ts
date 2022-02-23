@@ -38,13 +38,18 @@ export async function scaffoldBoilerplate({
     .forEach((file) => {
       const fileContents = fs.readFileSync(file, { encoding: "utf8" });
 
-      const parsedFile = Mustache.render(fileContents, {
-        hasWebSocketSupport,
-        packageName,
-        description,
-        titleName,
-        camelName,
-      });
+      const parsedFile = Mustache.render(
+        fileContents,
+        {
+          hasWebSocketSupport,
+          packageName,
+          description,
+          titleName,
+          camelName,
+        },
+        undefined,
+        ["👉", "👈"]
+      );
 
       const [_, innerPath] = file.split("/template/");
 

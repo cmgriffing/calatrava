@@ -1,17 +1,28 @@
 {
   "$schema": "https://raw.githubusercontent.com/cmgriffing/calatrava/main/calatrava.config.schema.json",
-  "appName": "{{{packageName}}}",
-  "arcBaseDirectory": "./arc",
-  "arcRoutesDirectory": "routes",
-  "arcTablesDirectory": "tables",
-  "arcTableIndexesDirectory": "table-indexes",
-  "awsConfigPath": "aws.arc",
+  "appName": "👉&packageName👈",
+  "arc": {
+    "baseDirectory": "./arc",
+    "routesDirectory": "routes",
+    "tablesDirectory": "tables",
+    "tableIndexesDirectory": "table-indexes",
+    "awsConfigPath": "aws.arc",
+    "preferencesTemplatePath": "preferences.template.arc"
+  },
+  "scaffolding": {
+    "requestTypesPath": "./src/shared/request-types.ts",
+    "requestSchemaPath": "./src/shared/request-schemas.ts",
+    "responseTypesPath": "./src/shared/response-types.ts",
+    "responseSchemaPath": "./src/shared/response-schemas.ts",
+    "openApiSchemaPath": "./schema"
+  },
   "hasWebSocketSupport": false,
-  "arcPreferencesTemplatePath": "preferences.template.arc",
   "envVarsListPath": "./env-var-list.json",
-  "requestTypesPath": "./src/shared/request-types.ts",
-  "requestSchemaPath": "./src/shared/request-schemas.ts",
-  "responseTypesPath": "./src/shared/response-types.ts",
-  "responseSchemaPath": "./src/shared/response-schemas.ts",
-  "openApiSchemaPath": "./schema"
+  "email": {
+    "provider": "mailjet",
+    "templateJsonPath": "./src/shared/email/templates.json",
+    "templateIdPath": "./src/shared/email/email-template-id-map.ts",
+    "templateEnumPath": "./src/shared/email/email-templates.ts",
+    "mjmlDirectory": "./src/shared/email/mjml"
+  }
 }

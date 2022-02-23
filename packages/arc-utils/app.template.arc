@@ -1,18 +1,18 @@
 @app
-{{{appName}}}
+👉&appName👈
 
 @http
-{{{routes}}}
+👉&routes👈
 
 {#hasWebSocketSupport}
 @ws
 
 {/hasWebSocketSupport}
 @tables
-{{{tables}}}
+👉&tables👈
 
 @tables-indexes
-{{{tableIndexes}}}
+👉&tableIndexes👈
 
 @aws
-{{{aws}}}
+👉&aws👈
