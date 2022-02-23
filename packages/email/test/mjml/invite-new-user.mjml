@@ -1,0 +1,38 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-text align="center" color="#555" />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#eee">
+    <mj-include
+      path="./src/shared/email-templates/mjml/components/header.mjml"
+    />
+
+    <mj-section background-color="#fff">
+      <mj-column>
+        <mj-text align="center">
+          <h2>INVITE</h2>
+          <p>
+            You have been invited to a group in Mealection by
+            {{var:inviterEmail:""}}.
+          </p>
+          <a href="{{var:acceptLink:""}}">{{var:acceptLink:""}}</a>
+          <p>
+            If you don't recognize this user, please let us know and we
+            apologize for the spam. {{var:reportSpamLink:""}}
+          </p>
+        </mj-text>
+      </mj-column>
+
+      <mj-column>
+        <mj-image width="200px" src="http://placehold.it/200x200"></mj-image>
+      </mj-column>
+    </mj-section>
+
+    <mj-include
+      path="./src/shared/email-templates/mjml/components/footer.mjml"
+    />
+  </mj-body>
+</mjml>

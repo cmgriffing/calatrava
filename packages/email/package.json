@@ -1,0 +1,30 @@
+{
+  "name": "@calatrava/email",
+  "version": "0.0.1",
+  "description": "A set of tools for working with transactional emails for the Calatrava framework",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "foo": "ts-node ./scripts/build-email-templates.ts --provider mailjet --templateJsonPath ./test/templates.json --mjmlDirectory ./test/mjml --outputTemplatePath ./test/email-templates.ts --templateEnumPath ./test/email-templates-map.ts",
+    "hmm": "ts-node ./test/testing.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^2.0.0",
+    "@types/minimist": "^1.2.2",
+    "@types/mjml": "^4.7.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "@calatrava/utils": "workspace:*",
+    "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
+    "fs-extra": "^10.0.0",
+    "glob": "^7.2.0",
+    "minimist": "^1.2.5",
+    "mjml": "^4.12.0"
+  }
+}

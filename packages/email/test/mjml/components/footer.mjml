@@ -1,0 +1,5 @@
+<mj-section>
+  <mj-column>
+    <mj-text> This is the footer </mj-text>
+  </mj-column>
+</mj-section>

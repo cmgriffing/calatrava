@@ -1,0 +1,14 @@
+{
+  "inviteNewUser": {
+    "template": "invite-new-user.mjml",
+    "subject": "You have been invited to a Mealection Team"
+  },
+  "inviteExistingUser": {
+    "template": "invite-existing-user.mjml",
+    "subject": "You have been invited to a Mealection Team"
+  },
+  "verify": {
+    "template": "verify.mjml",
+    "subject": "Please verify your email address for Mealection"
+  }
+}
