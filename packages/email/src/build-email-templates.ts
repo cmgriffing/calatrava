@@ -91,18 +91,6 @@ export async function buildEmailTemplates(
       })
       .join(",\n");
 
-    console.log(
-      "paths",
-      { outputTemplatePath, templateEnumPath },
-      path.resolve(cwd, outputTemplatePath),
-      path.resolve(cwd, templateEnumPath)
-    );
-
-    // const relativePath = path.relative(
-    //   path.resolve(cwd, outputTemplatePath),
-    //   path.resolve(cwd, templateEnumPath)
-    // );
-
     const extension = path.extname(templateEnumPath);
 
     const relativePath = path

@@ -24,6 +24,7 @@
   "dependencies": {
     "@architect/env": "^3.0.0",
     "@calatrava/boilerplate": "workspace:~",
+    "@calatrava/email": "workspace:~",
     "@calatrava/request-response": "workspace:~",
     "case": "^1.6.3",
     "get-pty-output": "^0.8.2",

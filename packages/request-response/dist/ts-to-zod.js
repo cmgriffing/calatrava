@@ -32,9 +32,7 @@ async function tsToZod(interfaces, out) {
         if (!sourceText) {
             throw new Error("sourceText from interfaces file must not be empty");
         }
-        const { getZodSchemasFile, getIntegrationTestFile, errors } = tsToZodCore.generate({ sourceText });
-        console.log({ getZodSchemasFile, getIntegrationTestFile, errors });
-        console.log(getZodSchemasFile(""));
+        const { getZodSchemasFile } = tsToZodCore.generate({ sourceText });
         const outputPath = path.resolve(cwd, out);
         fs.ensureFileSync(outputPath);
         const splitInterfacesPath = interfaces.split("/");

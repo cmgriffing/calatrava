@@ -38,15 +38,11 @@ async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, ver
             path.resolve(cwd, requestTypesPath),
             path.resolve(cwd, responseTypesPath),
         ];
-        console.log({ inputFilePaths });
         const tjsProgram = TJS.getProgramFromFiles(inputFilePaths, {});
         const tjsGenerator = TJS.buildGenerator(tjsProgram, settings);
-        // console.log("symbols", tjsGenerator?.getUserSymbols());
         const routesFolder = path.resolve(cwd, routes);
-        console.log({ routesFolder });
-        const handlers = glob.sync(`${routesFolder}/**/index.ts`);
-        console.log({ handlers });
         const routeOptions = [];
+        const handlers = glob.sync(`${routesFolder}/**/index.ts`);
         handlers
             .filter((handlerPath) => handlerPath.indexOf("node_modules") === -1)
             .map((handlerPath) => path.resolve(handlerPath))
@@ -78,7 +74,6 @@ async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, ver
                 schemas: {},
             },
         };
-        console.log({ routeOptions });
         routeOptions.forEach((routeOptionObject) => {
             if (!openApiSchema.paths[routeOptionObject.path]) {
                 openApiSchema.paths[routeOptionObject.path] =
@@ -90,15 +85,12 @@ async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, ver
                 if (!requestSchema) {
                     throw new Error("Could not generate request schema");
                 }
-                console.log({ requestSchema });
                 requestSchema === null || requestSchema === void 0 ? true : delete requestSchema.$schema;
                 openApiSchema.components.schemas[routeOptionObject.requestJsonSchema] = requestSchema;
             }
             const responses = {};
             // set 200 response
-            console.log("before grabbing schema for symbol");
             const responseSchema = tjsGenerator === null || tjsGenerator === void 0 ? void 0 : tjsGenerator.getSchemaForSymbol(routeOptionObject.responseJsonSchema);
-            console.log("after grabbing schema for symbol");
             if (!responseSchema) {
                 throw new Error("Could not generate request schema");
             }
@@ -160,9 +152,3 @@ async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, ver
     }
 }
 exports.buildOpenApiYaml = buildOpenApiYaml;
-// generate json schema from request-types
-// generate json schema from response-types
-// comb routes
-// get route schemas from generated generators
-// add schemas to openAPiSchema if not present
-// build openapi yaml

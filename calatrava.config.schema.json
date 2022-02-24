@@ -9,7 +9,8 @@
     "hasWebSocketSupport",
     "envVarsListPath",
     "arc",
-    "scaffolding"
+    "scaffolding",
+    "email"
   ],
   "type": "object",
   "unevaluatedProperties": false,
@@ -97,7 +98,8 @@
         "provider",
         "templateJsonPath",
         "templateEnumPath",
-        "templateIdPath"
+        "templateIdPath",
+        "mjmlDirectory"
       ],
       "properties": {
         "provider": {
