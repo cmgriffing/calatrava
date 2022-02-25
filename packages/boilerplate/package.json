@@ -1,12 +1,15 @@
 {
   "name": "@calatrava/boilerplate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A boilerplate starter for the Calatrava framework",
   "main": "./dist/scaffold-boilerplate.js",
   "scripts": {
     "build": "tsc",
     "test": "ts-node scripts/scaffold-boilerplate.ts --name kebab-it-all --hasWebSocketSupport true --outputFolder ./test/out --description \"A cool description about the app\""
   },
+  "files": [
+    "dist/**/*"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -18,7 +21,7 @@
   },
   "devDependencies": {
     "@calatrava/datawrapper": "workspace:~",
-    "@calatrava/middleware": "0.0.2",
+    "@calatrava/middleware": "0.0.3",
     "@calatrava/request-response": "workspace:~",
     "@sindresorhus/tsconfig": "^2.0.0",
     "@types/fs-extra": "^9.0.13",

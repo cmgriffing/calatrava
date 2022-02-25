@@ -1,11 +1,15 @@
 {
   "name": "@calatrava/datawrapper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A DynamoDB data wrapper for the Calatrava framework",
   "main": "index.ts",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -15,6 +19,7 @@
     "nanoid": "^3.2.0"
   },
   "devDependencies": {
+    "@sindresorhus/tsconfig": "^2.0.0",
     "@types/jest": "^27.4.0",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.3",

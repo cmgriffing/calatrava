@@ -49,6 +49,7 @@ importers:
 
   packages/arc-utils:
     specifiers:
+      '@sindresorhus/tsconfig': ^2.0.0
       '@types/fs-extra': ^9.0.13
       '@types/glob': ^7.2.0
       '@types/jest': ^27.4.0
@@ -66,6 +67,7 @@ importers:
       minimist: 1.2.5
       mustache: 4.2.0
     devDependencies:
+      '@sindresorhus/tsconfig': 2.0.0
       '@types/fs-extra': 9.0.13
       '@types/glob': 7.2.0
       '@types/jest': 27.4.0
@@ -77,7 +79,7 @@ importers:
   packages/boilerplate:
     specifiers:
       '@calatrava/datawrapper': workspace:~
-      '@calatrava/middleware': workspace:~
+      '@calatrava/middleware': 0.0.2
       '@calatrava/request-response': workspace:~
       '@sindresorhus/tsconfig': ^2.0.0
       '@types/fs-extra': ^9.0.13
@@ -113,8 +115,8 @@ importers:
       '@ava/typescript': ^3.0.1
       '@babel/core': ^7.17.5
       '@babel/preset-react': ^7.16.7
-      '@calatrava/boilerplate': workspace:~
-      '@calatrava/email': workspace:~
+      '@calatrava/boilerplate': 0.0.2
+      '@calatrava/email': 0.0.2
       '@calatrava/request-response': workspace:~
       '@sindresorhus/tsconfig': ^2.0.0
       '@types/ink-big-text': ^1.2.1
@@ -211,6 +213,7 @@ importers:
 
   packages/datawrapper:
     specifiers:
+      '@sindresorhus/tsconfig': ^2.0.0
       '@types/jest': ^27.4.0
       case: ^1.6.3
       jest: ^27.5.1
@@ -225,6 +228,7 @@ importers:
       lodash: 4.17.21
       nanoid: 3.2.0
     devDependencies:
+      '@sindresorhus/tsconfig': 2.0.0
       '@types/jest': 27.4.0
       jest: 27.5.1
       ts-jest: 27.1.3_1e2406a8ca2ae3dc934d01f9ee2aebbb
@@ -269,6 +273,7 @@ importers:
       '@aws-sdk/s3-request-presigner': ^3.44.0
       '@aws-sdk/signature-v4-crt': ^3.49.0
       '@calatrava/datawrapper': workspace:*
+      '@sindresorhus/tsconfig': ^2.0.0
       '@types/architect__functions': ^3.13.6
       zod: ^3.11.6
     dependencies:
@@ -280,6 +285,7 @@ importers:
       '@calatrava/datawrapper': link:../datawrapper
       zod: 3.11.6
     devDependencies:
+      '@sindresorhus/tsconfig': 2.0.0
       '@types/architect__functions': 3.13.6
 
   packages/request-response:

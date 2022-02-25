@@ -1,11 +1,15 @@
 {
   "name": "@calatrava/middleware",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A set of utilites for managing the underlying Architect functionality of the Calatrava framework",
   "main": "index.ts",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -18,6 +22,7 @@
     "zod": "^3.11.6"
   },
   "devDependencies": {
+    "@sindresorhus/tsconfig": "^2.0.0",
     "@types/architect__functions": "^3.13.6"
   }
 }
