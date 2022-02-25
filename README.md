@@ -1,6 +1,6 @@
-# Turborepo starter with pnpm
+# Calatrava
 
-This is an official starter turborepo.
+Calatrava is a wrapper around Architect that adds boilerplate and packages to allow developers to spin up AWS Lambda powered APIs quickly and easily.
 
 ## What's inside?
 
@@ -9,10 +9,14 @@ This turborepo uses [pnpm](https://pnpm.io) as a packages manager. It includes t
 ### Apps and Packages
 
 - `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
 - `config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `@calatrava/middleware`: Route middleware to reduce repetition from common tasks such as token handling or request validation
+- `@calatrava/cli`: The main package that handles encapsulating functionality from several of the packages in this repo.
+- `@calatrava/boilerplate`: A template used to initialize a new project.
+- `@calatrava/scaffold`: Utilities for creating request validation and openapi.yaml schema
+- `@calatrava/arc-utils`: Utilities for making the app.arc and preferences.arc files more manageable
+- `@calatrava/email`: Wrappers around handling MJML templates for various email providers
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
@@ -26,14 +30,12 @@ This turborepo has some additional tools already setup for you:
 
 ## Setup
 
-This repository is used in the `npx create-turbo@latest` command, and selected when choosing which package manager you wish to use with your monorepo (PNPM).
-
 ### Build
 
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd calatrava
 pnpm run build
 ```
 
@@ -42,36 +44,16 @@ pnpm run build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd calatrava
 pnpm run dev
 ```
 
-### Remote Caching
+## License
 
-Turborepo can use a technique known as [Remote Caching (Beta)](https://turborepo.org/docs/features/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Copyright 2022 cmgriffing
 
-By default, Turborepo will cache locally. To enable Remote Caching (Beta) you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-```
-cd my-turborepo
-pnpx turbo login
-```
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-pnpx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turborepo.org/docs/features/pipelines)
-- [Caching](https://turborepo.org/docs/features/caching)
-- [Remote Caching (Beta)](https://turborepo.org/docs/features/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/features/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
