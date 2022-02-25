@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[2564],{720:function(a){a.exports=JSON.parse('{"allTagsPath":"/calatrava/blog/tags","slug":"/calatrava/blog/tags/facebook","name":"facebook","count":1,"permalink":"/calatrava/blog/tags/facebook"}')}}]);

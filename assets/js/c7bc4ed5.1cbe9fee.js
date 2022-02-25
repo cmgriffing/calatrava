@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[800],{9619:function(a){a.exports=JSON.parse('{"allTagsPath":"/calatrava/blog/tags","slug":"/calatrava/blog/tags/hello","name":"hello","count":2,"permalink":"/calatrava/blog/tags/hello"}')}}]);
