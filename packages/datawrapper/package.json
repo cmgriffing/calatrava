@@ -2,7 +2,7 @@
   "name": "@calatrava/datawrapper",
   "version": "0.0.3",
   "description": "A DynamoDB data wrapper for the Calatrava framework",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@sindresorhus/tsconfig": "^2.0.0",
     "@types/jest": "^27.4.0",
+    "@types/js-string-escape": "^1.0.1",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.3"

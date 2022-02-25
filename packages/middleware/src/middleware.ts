@@ -5,7 +5,7 @@ import {
   tables,
 } from "@architect/functions";
 import { S3Client } from "@aws-sdk/client-s3";
-import { createPresignedPost, PresignedPost } from "@aws-sdk/s3-presigned-post";
+import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 
 import {
   BaseUser,
@@ -22,21 +22,20 @@ import {
   Datastore,
   DBKeys,
   TableKeyManager,
-  TableQueryCreator,
 } from "@calatrava/datawrapper";
 import { attachCommonHeaders } from "./common";
 
 export const createGetTables = function (tableKeyManager: TableKeyManager) {
   return async function getTables(
     req: HttpRequest,
-    context: any
+    _context: any
   ): Promise<HttpResponse | void> {
     const data = await tables();
 
     (req as unknown as HttpRequestWithTables).tables = {
       get<T>(prop: string, tableName: string = "core") {
         const table = data[tableName] as unknown as Datastore;
-        return createDataWrapper<T>(prop, table, data._doc, tableKeyManager);
+        return createDataWrapper<T>(prop, table, data["_doc"], tableKeyManager);
       },
     };
   } as HttpHandler;
@@ -49,17 +48,17 @@ export const createGetUser = function <User>(
 ) {
   return async function getUser(
     req: HttpRequestWithTables,
-    context: any
+    _context: any
   ): Promise<HttpResponse | void> {
     try {
-      if (!req.headers.authorization) {
+      if (!req.headers["authorization"]) {
         return attachCommonHeaders({
           statusCode: 401,
           json: {},
         });
       }
 
-      const token = req.headers.authorization.substring("Bearer ".length);
+      const token = req.headers["authorization"].substring("Bearer ".length);
       const usersTable = req.tables.get<User>(usersTableKey);
 
       const decodedToken = decodeToken(token);
@@ -91,7 +90,7 @@ export const createGetUserTeams = function <
   Team extends BaseTeam,
   Teammate extends BaseTeammate
 >(teamsKey: string, teammatesKey: string) {
-  return async function (req: HttpRequestWithUser<User>, context: any) {
+  return async function (req: HttpRequestWithUser<User>, _context: any) {
     const teamsTable = req.tables.get<Team>(teamsKey);
     const teammatesTable = req.tables.get<Teammate>(teammatesKey);
 
@@ -104,7 +103,7 @@ export const createGetUserTeams = function <
 
       const joinedTeamsPromise = teammatesTable
         .getAllById({ userId: req.user.userId }, {}, DBKeys.Sort)
-        .then((teammateRecords) => {
+        .then((teammateRecords: Teammate[]) => {
           const teamIds = teammateRecords.map(
             (teammateRecord) => teammateRecord.teamId
           );
@@ -120,6 +119,8 @@ export const createGetUserTeams = function <
         await ownedTeamsPromise;
       (req as HttpRequestWithTeams<Team, User>).joinedTeams =
         await joinedTeamsPromise;
+
+      return;
     } catch (e) {
       console.log("Error fetching teams");
       console.log(e);
@@ -136,7 +137,7 @@ export const createGetUserTeams = function <
 export function isValidRequest(schema: any) {
   return async function (
     req: HttpRequestWithTables,
-    context: any
+    _context: any
   ): Promise<HttpResponse | void> {
     try {
       schema.strict().parse(req.body);
@@ -153,12 +154,16 @@ export function isValidRequest(schema: any) {
 }
 
 export const logDatabase = function (tableName: string) {
-  return async function (req: HttpRequestWithTables): Promise<HttpResponse> {
+  return async function (
+    _req: HttpRequestWithTables
+  ): Promise<HttpResponse | undefined> {
     try {
       const data = await tables();
-      const everything = data[tableName].scan({});
+      const everything = data?.[tableName]?.scan({});
 
       console.log("EVERYTHING", JSON.stringify(everything, null, 2));
+
+      return;
     } catch (e) {
       console.log("Error logging EVERYTHING");
       console.log(e);
@@ -179,7 +184,7 @@ export function createGetPresignedPost<Team, User>(
   return function getPresignedPost<T>(tableName: string) {
     return async function (
       req: HttpRequestWithSignableEntity<T, Team, User>,
-      context: any
+      _context: any
     ) {
       const { fileSize } = req.body;
 
@@ -209,6 +214,8 @@ export function createGetPresignedPost<Team, User>(
 
       (req as HttpRequestWithPresignedPost<T, Team, User>).presignedPost =
         presignedPost;
+
+      return;
     } as HttpHandler;
   };
 }

@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse } from "@architect/functions";
+import { HttpResponse } from "@architect/functions";
 import { WrappedDatastore } from "@calatrava/datawrapper";
 import { WebSocketIncomingMessage } from "./request-types";
 

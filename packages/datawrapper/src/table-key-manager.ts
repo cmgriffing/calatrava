@@ -1,6 +1,6 @@
-import * as jsStringEscape from "js-string-escape";
+import jsStringEscape from "js-string-escape";
 import * as Case from "case";
-import { DBKeys, QueryKeys } from "./types";
+import { DBKeys } from "./types";
 
 export type TableKeysMap = {
   [key: string]: { [value in DBKeys]?: string[] };
@@ -46,7 +46,7 @@ export class TableKeyManager {
         keyValueMap: { [key: string]: string | number | boolean }
       ) => {
         // validate keyValueMap
-        const allowedKeyNames = this.tableKeysMap[table][dbKey];
+        const allowedKeyNames = this.tableKeysMap?.[table]?.[dbKey] || [];
 
         allowedKeyNames.forEach((keyName) => {
           if (!keyValueMap[keyName]) {

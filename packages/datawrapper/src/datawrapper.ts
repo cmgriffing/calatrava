@@ -1,4 +1,4 @@
-import * as jsStringEscape from "js-string-escape";
+import jsStringEscape from "js-string-escape";
 import { nanoid } from "nanoid";
 import {
   Datastore,
@@ -16,7 +16,7 @@ import { TableQueryCreator } from "./table-query-creator";
 export function createDataWrapper<ModelType>(
   datastoreName: string,
   datastore: Datastore,
-  documentClient: any,
+  _documentClient: any,
   tableKeyManager: TableKeyManager
 ): WrappedDatastore<ModelType> {
   const tableKeyMethods = tableKeyManager.getTable(datastoreName);
@@ -31,12 +31,12 @@ export function createDataWrapper<ModelType>(
 
       return datastore.put(putObject).then(omitKeys);
     },
-    async getById(idValue, index = DBKeys.Partition, secondaryId) {
+    async getById(idValue, index = DBKeys.Partition, _secondaryId) {
       return this.getAllById(idValue, {}, index).then((result: any) => {
         return result[0];
       });
     },
-    async getByIndex(idValue, index = DBKeys.Partition, secondaryId) {
+    async getByIndex(idValue, index = DBKeys.Partition, _secondaryId) {
       return this.getAllById(idValue, { indexKey: index }, index).then(
         (result: any) => {
           return result[0];
@@ -129,9 +129,9 @@ export function createDataWrapper<ModelType>(
       idKey: string,
       index = DBKeys.Partition
     ) {
-      const options: { index?: DBKeys } = { index: undefined };
+      const options: GetAllOptions = { indexKey: undefined };
       if (index !== DBKeys.Partition) {
-        options.index = index;
+        options.indexKey = index;
       }
       const itemsGroupedByKey = await Promise.all(
         idValues.map((idValue) => {

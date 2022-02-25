@@ -25,15 +25,15 @@ export async function setEnvVarsCircleCI(config: string) {
 
   let envFileString = "";
 
-  ENV_KEYS.forEach((key) => {
-    const value = process.env[`${CIRCLE_BRANCH.toUpperCase()}_${key}`];
+  ENV_KEYS.forEach((key: string) => {
+    const value = process.env[`${CIRCLE_BRANCH?.toUpperCase() || ""}_${key}`];
 
     console.log("Setting ENV VAR: ", key);
-    const addedKeyResult = child_process.spawnSync(`arc`, [
+    child_process.spawnSync(`arc`, [
       "env",
-      CIRCLE_BRANCH,
+      CIRCLE_BRANCH || "",
       key,
-      value,
+      value || "",
     ]);
 
     envFileString += `${key}=${value}\n`;

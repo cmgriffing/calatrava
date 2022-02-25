@@ -1,11 +1,11 @@
-import * as jsStringEscape from "js-string-escape";
-import { QueryKeys, DBKeys, GetAllOptions } from "./types";
+import jsStringEscape from "js-string-escape";
+import { QueryKeys, DBKeys, GetAllOptions, TableKeyMethods } from "./types";
 import { escapeQueryKeys } from "./utils";
 
 export class TableQueryCreator {
-  private tableKeyMethods;
+  private tableKeyMethods: TableKeyMethods;
 
-  constructor(tableKeyMethods) {
+  constructor(tableKeyMethods: TableKeyMethods) {
     this.tableKeyMethods = tableKeyMethods;
   }
 
@@ -120,8 +120,8 @@ export class TableQueryCreator {
       baseExpressionString += `#key${index} = :value${index}`;
 
       updateRequest.UpdateExpression = baseExpressionString;
-      updateRequest.ExpressionAttributeNames[`#key${index}`] = key;
-      updateRequest.ExpressionAttributeValues[`:value${index}`] = value;
+      updateRequest.ExpressionAttributeNames[`#key${index}`] = key || "";
+      updateRequest.ExpressionAttributeValues[`:value${index}`] = value || "";
     });
 
     if (secondaryId) {

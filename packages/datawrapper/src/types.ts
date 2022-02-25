@@ -57,7 +57,7 @@ export interface WrappedDatastore<T> {
     ignoreKey?: string,
     ignoreValue?: string,
     index?: DBKeys
-  ) => Promise<T>;
+  ) => Promise<T | undefined>;
   scanIdsByFilter: (options?: GetAllOptions) => Promise<T[]>;
   getAllById: (
     idValue: QueryKeys,
@@ -82,4 +82,11 @@ export interface WrappedDatastore<T> {
     secondaryId: QueryKeys,
     index?: DBKeys
   ) => Promise<T>;
+}
+
+export interface TableKeyMethods {
+  getTableKey: (
+    dbKey: DBKeys,
+    keyValueMap: { [key: string]: string | number | boolean }
+  ) => string;
 }

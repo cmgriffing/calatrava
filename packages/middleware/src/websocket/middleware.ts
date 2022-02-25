@@ -2,12 +2,7 @@
  * WebSocketMiddleware
  */
 
-import {
-  HttpHandler,
-  HttpRequest,
-  HttpResponse,
-  tables,
-} from "@architect/functions";
+import { HttpResponse, tables } from "@architect/functions";
 import {
   createDataWrapper,
   Datastore,
@@ -38,7 +33,7 @@ export function createGetWebSocketTables(tableKeyManager: TableKeyManager) {
     (req as WebSocketRequestWithTables).tables = {
       get<T>(prop: string, tableName: string = "core") {
         const table = data[tableName] as unknown as Datastore;
-        return createDataWrapper<T>(prop, table, data._doc, tableKeyManager);
+        return createDataWrapper<T>(prop, table, data["_doc"], tableKeyManager);
       },
     };
   } as WebSocketHandler;
@@ -104,6 +99,8 @@ export const isValidWebSocketRequest = async function (req: WebSocketRequest) {
     }
 
     validator.strict().parse(req.body);
+
+    return;
   } catch (e) {
     console.log("Error validating request body");
     console.log(e);

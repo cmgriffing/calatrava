@@ -1,5 +1,5 @@
 import { CleanRecord, QueryKeys } from "./types";
-import * as jsStringEscape from "js-string-escape";
+import jsStringEscape from "js-string-escape";
 import omit from "lodash/omit";
 
 export function omitKeys<T extends Object>(

@@ -18,7 +18,7 @@
     "@aws-sdk/s3-presigned-post": "^3.44.0",
     "@aws-sdk/s3-request-presigner": "^3.44.0",
     "@aws-sdk/signature-v4-crt": "^3.49.0",
-    "@calatrava/datawrapper": "workspace:*",
+    "@calatrava/datawrapper": "workspace:~",
     "zod": "^3.11.6"
   },
   "devDependencies": {
