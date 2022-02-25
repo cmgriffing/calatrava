@@ -1,0 +1,20 @@
+{
+  "name": "@calatrava/email",
+  "entries": [
+    {
+      "date": "Fri, 25 Feb 2022 21:56:57 GMT",
+      "tag": "@calatrava/email_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@calatrava/email",
+            "comment": "Bump @calatrava/utils to v0.0.1",
+            "commit": "f4ced6f1407e90daa30257247bbe749ef08a3faf"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -23,8 +23,8 @@
   "license": "MIT",
   "dependencies": {
     "@architect/env": "^3.0.0",
-    "@calatrava/boilerplate": "workspace:~",
-    "@calatrava/email": "workspace:~",
+    "@calatrava/boilerplate": "0.0.1",
+    "@calatrava/email": "0.0.1",
     "@calatrava/request-response": "workspace:~",
     "case": "^1.6.3",
     "get-pty-output": "^0.8.2",

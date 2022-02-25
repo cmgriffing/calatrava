@@ -1,0 +1,32 @@
+{
+  "name": "@calatrava/boilerplate",
+  "entries": [
+    {
+      "date": "Fri, 25 Feb 2022 21:56:57 GMT",
+      "tag": "@calatrava/boilerplate_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@calatrava/boilerplate",
+            "comment": "Bump @calatrava/datawrapper to v0.0.1",
+            "commit": "f4ced6f1407e90daa30257247bbe749ef08a3faf"
+          },
+          {
+            "author": "beachball",
+            "package": "@calatrava/boilerplate",
+            "comment": "Bump @calatrava/middleware to v0.0.1",
+            "commit": "f4ced6f1407e90daa30257247bbe749ef08a3faf"
+          },
+          {
+            "author": "beachball",
+            "package": "@calatrava/boilerplate",
+            "comment": "Bump @calatrava/request-response to v0.0.1",
+            "commit": "f4ced6f1407e90daa30257247bbe749ef08a3faf"
+          }
+        ]
+      }
+    }
+  ]
+}
