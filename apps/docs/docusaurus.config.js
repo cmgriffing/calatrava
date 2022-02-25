@@ -6,16 +6,16 @@ const darkCodeTheme = require("prism-react-renderer/themes/synthwave84");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
+  title: "Calatrava",
+  tagline:
+    "A wrapper around Architect that adds some needed bells and whistles",
   url: "https://cmgriffing.github.io/calatrava",
   baseUrl: "/calatrava/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "cmgriffing", // Usually your GitHub org/user name.
-  projectName: "calatrava", // Usually your repo name.
-
+  organizationName: "cmgriffing",
+  projectName: "calatrava",
   presets: [
     [
       "classic",
@@ -23,15 +23,13 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
           editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+            "https://github.com/cmgriffing/calatrava/tree/main/apps/docs/",
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
           editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+            "https://github.com/cmgriffing/calatrava/tree/main/apps/docs/blog/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -44,21 +42,36 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "My Site",
+        title: "Calatrava",
         logo: {
-          alt: "My Site Logo",
+          alt: "Calatrava",
           src: "img/logo.svg",
         },
         items: [
           {
-            type: "doc",
-            docId: "intro",
+            to: "/docs/intro",
+            // type: "doc",
+            // docId: "intro",
             position: "left",
             label: "Tutorial",
           },
+          {
+            to: "/docs/cli",
+            // type: "doc",
+            // docId: "cli",
+            position: "left",
+            label: "CLI",
+          },
+          {
+            to: "/docs/packages",
+            // type: "doc",
+            // docId: "packages",
+            position: "left",
+            label: "Packages",
+          },
           { to: "/blog", label: "Blog", position: "left" },
           {
-            href: "https://github.com/facebook/docusaurus",
+            href: "https://github.com/cmgriffing/calatrava",
             label: "GitHub",
             position: "right",
           },
@@ -74,6 +87,14 @@ const config = {
                 label: "Tutorial",
                 to: "/docs/intro",
               },
+              {
+                label: "CLI",
+                to: "/docs/cli",
+              },
+              {
+                label: "Packages",
+                to: "/docs/packages",
+              },
             ],
           },
           {
@@ -81,15 +102,7 @@ const config = {
             items: [
               {
                 label: "Stack Overflow",
-                href: "https://stackoverflow.com/questions/tagged/docusaurus",
-              },
-              {
-                label: "Discord",
-                href: "https://discordapp.com/invite/docusaurus",
-              },
-              {
-                label: "Twitter",
-                href: "https://twitter.com/docusaurus",
+                href: "https://stackoverflow.com/questions/tagged/calatrava",
               },
             ],
           },
@@ -102,12 +115,16 @@ const config = {
               },
               {
                 label: "GitHub",
-                href: "https://github.com/facebook/docusaurus",
+                href: "https://github.com/cmgriffing/calatrava",
+              },
+              {
+                label: "Attribution",
+                to: "/attribution",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Calatrava, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
