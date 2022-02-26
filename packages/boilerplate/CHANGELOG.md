@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.9
+
+### Patch Changes
+
+- Inject proper versions into boilerplate on init time
+
 ## 0.0.8
 
 ### Patch Changes

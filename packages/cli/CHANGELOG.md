@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.11
+
+### Patch Changes
+
+- Inject proper versions into boilerplate on init time
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.9
+
 ## 0.0.10
 
 ### Patch Changes

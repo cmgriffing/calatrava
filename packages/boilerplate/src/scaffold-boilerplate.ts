@@ -1,3 +1,4 @@
+import axios from "axios";
 import Case from "case";
 import fs from "fs-extra";
 import glob from "glob";
@@ -15,64 +16,92 @@ export async function scaffoldBoilerplate({
   outputFolder: string;
   description: string;
 }) {
-  try {
-    const cwd = process.cwd();
-    console.log({ cwd });
+  const cwd = process.cwd();
 
-    const packageName = Case.kebab(name);
-    const titleName = Case.title(name);
-    const camelName = Case.camel(name);
+  const packageName = Case.kebab(name);
+  const titleName = Case.title(name);
+  const camelName = Case.camel(name);
 
-    const globConfig: glob.IOptions = {
-      nodir: true,
-    };
+  const globConfig: glob.IOptions = {
+    nodir: true,
+  };
 
-    if (!hasWebSocketSupport) {
-      globConfig.ignore = "**/websocket/*";
-    }
+  if (!hasWebSocketSupport) {
+    globConfig.ignore = "**/websocket/*";
+  }
 
-    // crawl template folder, injecting values as needed
-    const templateLocation = path.resolve(__dirname, "../template/**/*");
-    console.log({ templateLocation });
+  // crawl template folder, injecting values as needed
+  const templateLocation = path.resolve(__dirname, "../template/**/*");
 
-    const files = glob.sync(
-      path.resolve(__dirname, "../template/**/*"),
-      globConfig
+  const files = glob.sync(templateLocation, globConfig);
+
+  files.forEach((file) => {
+    const fileContents = fs.readFileSync(file, { encoding: "utf8" });
+
+    const parsedFile = Mustache.render(
+      fileContents,
+      {
+        hasWebSocketSupport,
+        packageName,
+        description,
+        titleName,
+        camelName,
+      },
+      undefined,
+      ["👉", "👈"]
     );
 
-    console.log({ files });
+    const [_, innerPath] = file.split("/template/");
 
-    files.forEach((file) => {
-      const fileContents = fs.readFileSync(file, { encoding: "utf8" });
+    if (innerPath) {
+      const newFilePath = path.resolve(cwd, outputFolder, innerPath);
 
-      const parsedFile = Mustache.render(
-        fileContents,
-        {
-          hasWebSocketSupport,
-          packageName,
-          description,
-          titleName,
-          camelName,
-        },
-        undefined,
-        ["👉", "👈"]
-      );
+      fs.ensureFileSync(newFilePath);
 
-      const [_, innerPath] = file.split("/template/");
+      fs.outputFileSync(newFilePath, parsedFile);
+    }
+  });
 
-      console.log({ innerPath, outputFolder });
+  // parse package json from output folder
+  const packageJsonPath = path.resolve(cwd, outputFolder, "package.json");
 
-      if (innerPath) {
-        const newFilePath = path.resolve(cwd, outputFolder, innerPath);
+  const packageJson = fs.readJSONSync(packageJsonPath);
 
-        console.log({ newFilePath });
+  packageJson.dependencies = await getDependencyVersions(
+    packageJson.dependencies
+  );
 
-        fs.ensureFileSync(newFilePath);
+  packageJson.devDependencies = await getDependencyVersions(
+    packageJson.devDependencies
+  );
 
-        fs.outputFileSync(newFilePath, parsedFile);
+  fs.writeJSONSync(packageJsonPath, packageJson, { spaces: 2 });
+}
+
+async function getDependencyVersions(dependencies: { [key: string]: string }) {
+  const versions: { [key: string]: string } = {};
+
+  await Promise.all(
+    Object.entries(dependencies).map(async ([name, rawVersion]) => {
+      if (name.indexOf("@calatrava") > -1) {
+        const versionPrefix = (rawVersion as string).split(":")[1] || "~";
+        const baseName = name.split("/")[1] || "";
+
+        const externalPackageJsonUrl = `https://raw.githubusercontent.com/cmgriffing/calatrava/main/packages/${baseName}/package.json`;
+
+        const externalPackageJson = (await axios.get(externalPackageJsonUrl))
+          .data;
+
+        const packageVersion = `${versionPrefix}${externalPackageJson.version}`;
+
+        versions[name] = packageVersion;
       }
-    });
-  } catch (e) {
-    console.log("Error running boilerplate: ", e);
-  }
+    })
+  );
+
+  Object.entries(versions).forEach(([packageName, version]) => {
+    dependencies[packageName] = version;
+  });
+
+  return dependencies;
 }
