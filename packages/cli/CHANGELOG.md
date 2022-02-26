@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.10
+
+### Patch Changes
+
+- 88c0782: Add template files to published package
+- Updated dependencies [88c0782]
+  - @calatrava/boilerplate@0.0.8
+
 ## 0.0.9
 
 ### Patch Changes

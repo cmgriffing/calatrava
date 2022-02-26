@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.8
+
+### Patch Changes
+
+- 88c0782: Add template files to published package
+
 ## 0.0.7
 
 ### Patch Changes
