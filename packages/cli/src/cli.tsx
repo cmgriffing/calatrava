@@ -17,7 +17,11 @@ Yargs.scriptName("calatrava")
   .command("init", "Initialize a new project", function (_argv: Argv) {
     console.log("cwd", process.cwd());
 
-    render(<CLI />);
+    try {
+      render(<CLI />);
+    } catch (e) {
+      console.log("error in init", { e });
+    }
   })
   // env
   .command("env", "Get Architect env variables", function (_argv: Argv) {

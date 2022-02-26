@@ -35,38 +35,43 @@ export async function scaffoldBoilerplate({
     const templateLocation = path.resolve(__dirname, "../template/**/*");
     console.log({ templateLocation });
 
-    glob
-      .sync(path.resolve(__dirname, "../template/**/*"), globConfig)
-      .forEach((file) => {
-        const fileContents = fs.readFileSync(file, { encoding: "utf8" });
+    const files = glob.sync(
+      path.resolve(__dirname, "../template/**/*"),
+      globConfig
+    );
 
-        const parsedFile = Mustache.render(
-          fileContents,
-          {
-            hasWebSocketSupport,
-            packageName,
-            description,
-            titleName,
-            camelName,
-          },
-          undefined,
-          ["👉", "👈"]
-        );
+    console.log({ files });
 
-        const [_, innerPath] = file.split("/template/");
+    files.forEach((file) => {
+      const fileContents = fs.readFileSync(file, { encoding: "utf8" });
 
-        console.log({ innerPath, outputFolder });
+      const parsedFile = Mustache.render(
+        fileContents,
+        {
+          hasWebSocketSupport,
+          packageName,
+          description,
+          titleName,
+          camelName,
+        },
+        undefined,
+        ["👉", "👈"]
+      );
 
-        if (innerPath) {
-          const newFilePath = path.resolve(cwd, outputFolder, innerPath);
+      const [_, innerPath] = file.split("/template/");
 
-          console.log({ newFilePath });
+      console.log({ innerPath, outputFolder });
 
-          fs.ensureFileSync(newFilePath);
+      if (innerPath) {
+        const newFilePath = path.resolve(cwd, outputFolder, innerPath);
 
-          fs.outputFileSync(newFilePath, parsedFile);
-        }
-      });
+        console.log({ newFilePath });
+
+        fs.ensureFileSync(newFilePath);
+
+        fs.outputFileSync(newFilePath, parsedFile);
+      }
+    });
   } catch (e) {
     console.log("Error running boilerplate: ", e);
   }

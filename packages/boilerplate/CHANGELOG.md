@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.7
+
+### Patch Changes
+
+- More logging
+
 ## 0.0.6
 
 ### Patch Changes
