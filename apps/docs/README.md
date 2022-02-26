@@ -2,6 +2,10 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
+###
+
+Color scheme: https://coolors.co/797ef6-4adede-1aa7ec-1e2f97-e0e0e0
+
 ### Installation
 
 ```
