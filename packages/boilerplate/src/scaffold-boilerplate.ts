@@ -54,8 +54,12 @@ export async function scaffoldBoilerplate({
 
       const [_, innerPath] = file.split("/template/");
 
+      console.log({ innerPath, outputFolder });
+
       if (innerPath) {
         const newFilePath = path.resolve(cwd, outputFolder, innerPath);
+
+        console.log({ newFilePath });
 
         fs.ensureFileSync(newFilePath);
 
