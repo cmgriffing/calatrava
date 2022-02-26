@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.4
+
+### Patch Changes
+
+- add logging statements for debugging
+
 ## 0.0.3
 
 ### Patch Changes

@@ -16,6 +16,7 @@ export async function scaffoldBoilerplate({
   description: string;
 }) {
   const cwd = process.cwd();
+  console.log({ cwd });
 
   const packageName = Case.kebab(name);
   const titleName = Case.title(name);

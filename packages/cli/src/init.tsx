@@ -33,7 +33,13 @@ export const CLI = () => {
 
   useEffect(() => {
     if (scaffoldingProject) {
-      console.log("scaffolding", { scaffoldBoilerplate });
+      console.log("scaffolding", {
+        scaffoldBoilerplate,
+        name,
+        hasWebSocketSupport: hasWebSocketSupport ?? false,
+        description,
+        outputFolder,
+      });
       scaffoldBoilerplate({
         name,
         hasWebSocketSupport: hasWebSocketSupport ?? false,

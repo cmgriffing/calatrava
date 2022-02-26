@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/boilerplate",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A boilerplate starter for the Calatrava framework",
   "main": "./dist/scaffold-boilerplate.js",
   "scripts": {

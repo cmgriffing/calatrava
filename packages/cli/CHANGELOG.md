@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.6
+
+### Patch Changes
+
+- add logging statements for debugging
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.4
+
 ## 0.0.4
 
 ### Patch Changes
