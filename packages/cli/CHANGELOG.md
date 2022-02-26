@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.8
+
+### Patch Changes
+
+- adding try catch to boilerplate
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.6
+
 ## 0.0.6
 
 ### Patch Changes

@@ -115,7 +115,7 @@ importers:
       '@ava/typescript': ^3.0.1
       '@babel/core': ^7.17.5
       '@babel/preset-react': ^7.16.7
-      '@calatrava/boilerplate': 0.0.4
+      '@calatrava/boilerplate': 0.0.6
       '@calatrava/email': 0.0.3
       '@calatrava/request-response': workspace:~
       '@sindresorhus/tsconfig': ^2.0.0
@@ -151,7 +151,7 @@ importers:
       yargs: ^17.3.1
     dependencies:
       '@architect/env': 3.0.0
-      '@calatrava/boilerplate': 0.0.4
+      '@calatrava/boilerplate': link:../boilerplate
       '@calatrava/email': link:../email
       '@calatrava/request-response': link:../request-response
       case: 1.6.3
@@ -2759,16 +2759,6 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
-
-  /@calatrava/boilerplate/0.0.4:
-    resolution: {integrity: sha512-IMrmcE8o+AQkh7jQrBxpqyviUHbY9xl0gh1pVmhedy16+2SvmGmyR5Bb8ok/kPHbfP7kHiwlL1Qj1dQGv5Ujcg==}
-    dependencies:
-      case: 1.6.3
-      fs-extra: 10.0.0
-      glob: 7.2.0
-      minimist: 1.2.5
-      mustache: 4.2.0
-    dev: false
 
   /@changesets/apply-release-plan/5.0.5:
     resolution: {integrity: sha512-CxL9dkhzjHiVmXCyHgsLCQj7i/coFTMv/Yy0v6BC5cIWZkQml+lf7zvQqAcFXwY7b54HxRWZPku02XFB53Q0Uw==}

@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.6
+
+### Patch Changes
+
+- adding try catch to boilerplate
+
 ## 0.0.4
 
 ### Patch Changes
