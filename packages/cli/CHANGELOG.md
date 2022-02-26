@@ -1,5 +1,11 @@
 # @calatrava/cli
 
+## 0.0.4
+
+### Patch Changes
+
+- add log statement to debug cli init issues
+
 ## 0.0.3
 
 ### Patch Changes

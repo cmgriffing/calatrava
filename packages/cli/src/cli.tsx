@@ -15,6 +15,8 @@ Yargs.scriptName("calatrava")
   .usage("$0 <cmd> [args]")
   // init
   .command("init", "Initialize a new project", function (_argv: Argv) {
+    console.log("cwd", process.cwd());
+
     render(<CLI />);
   })
   // env
