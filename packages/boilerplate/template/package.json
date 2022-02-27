@@ -4,9 +4,9 @@
   "description": "👉&description👈",
   "scripts": {
     "-------------- Init --------------": "",
-    "init": "npm-run-all -s build:arc-config init:arc init:rename",
+    "init": "@calatrava/cli arc",
     "-------------- Scaffold --------------": "",
-    "scaffold": "npm-run-all -s scaffold:schema scaffold:openapi",
+    "scaffold": "@calatrava/cli scaffold",
     "-------------- Build --------------": "",
     "build:dev": "npm-run-all -s init:arc  build:arc-config build:ts",
     "build:staging": "npm-run-all -s build:arc-config build:preferences:circleci init:email scaffold:schema init:shared build:ts",
@@ -48,6 +48,7 @@
   "devDependencies": {
     "@architect/architect": "^9.4.1",
     "@architect/env": "^2.0.6",
+    "@calatrava/cli": "workspace:~",
     "@types/architect": "^0.1.0",
     "@types/architect__functions": "^3.13.6",
     "@types/bcrypt": "^5.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/arc-utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A set of utilites for managing the underlying Architect functionality of the Calatrava framework",
   "main": "index.ts",
   "scripts": {

@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.12
+
+### Patch Changes
+
+- Use custom delimiter in all packages
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.10
+  - @calatrava/request-response@0.0.4
+
 ## 0.0.11
 
 ### Patch Changes

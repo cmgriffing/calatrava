@@ -30,6 +30,8 @@ export async function buildOpenApiYaml(
       path.resolve(cwd, responseTypesPath),
     ];
 
+    console.log({ inputFilePaths });
+
     const tjsProgram = TJS.getProgramFromFiles(inputFilePaths, {});
     const tjsGenerator = TJS.buildGenerator(tjsProgram, settings);
 
@@ -84,6 +86,12 @@ export async function buildOpenApiYaml(
       }
 
       let requestSchema: any;
+      console.log(
+        "routeOptionObject.requestJsonSchema",
+        routeOptionObject.requestJsonSchema,
+        { routeOptionObject }
+      );
+
       if (routeOptionObject?.requestJsonSchema) {
         requestSchema = tjsGenerator?.getSchemaForSymbol(
           routeOptionObject.requestJsonSchema

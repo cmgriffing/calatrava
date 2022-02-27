@@ -41,7 +41,7 @@ export interface UserVerificationRequest {
   verificationToken: string;
 }
 
-{#hasTeams}
+👉#hasTeams👈
 export interface PostTeamRequest {
   /*
    * @minLength 1
@@ -73,16 +73,16 @@ export interface ReportInviteRequest {
   reporterUserId: string;
 }
 
-{/hasTeams}
+👉/hasTeams👈
 export interface ReportUserRequest {
   // eventually make enum
   reason: string;
   detail?: string;
 }
 
-{#hasS3}
+👉#hasS3👈
+
 export interface UploadImageRequest {
   fileSize: number;
 }
-
-{/hasS3}
+👉/hasS3👈

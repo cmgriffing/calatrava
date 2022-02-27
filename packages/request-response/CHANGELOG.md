@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.4
+
+### Patch Changes
+
+- Use custom delimiter in all packages
+
 ## 0.0.3
 
 ### Patch Changes

@@ -21,7 +21,7 @@ export interface PostUserResponse {
   };
 }
 
-{#hasTeams}
+👉#hasTeams👈
 export interface PostTeamResponse extends DatastoreRecord {
   teamId: string;
   userId: string;
@@ -40,8 +40,8 @@ export interface PostTeammateResponse extends DatastoreRecord {
   accepted: boolean;
 }
 
-{/hasTeams}
-{#hasS3}
+👉/hasTeams👈
+👉#hasS3👈
 export interface GetImageResponse {
   presignedUrl: string;
 }
@@ -59,4 +59,4 @@ export interface PresignedPostResponse {
   };
 }
 
-{/hasS3}
+👉/hasS3👈

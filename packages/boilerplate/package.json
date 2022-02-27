@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/boilerplate",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A boilerplate starter for the Calatrava framework",
   "main": "./dist/index.js",
   "scripts": {

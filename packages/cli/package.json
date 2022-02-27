@@ -1,8 +1,8 @@
 {
   "name": "@calatrava/cli",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A CLI tool to manage apps built with the Calatrava framework",
-  "main": "index.ts",
+  "main": "dist/cli.js",
   "bin": "dist/cli.js",
   "engines": {
     "node": ">=10"
@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "@architect/env": "^3.0.0",
-    "@calatrava/boilerplate": "0.0.9",
+    "@calatrava/boilerplate": "0.0.10",
     "@calatrava/email": "0.0.3",
     "@calatrava/request-response": "workspace:~",
     "case": "^1.6.3",

@@ -1,10 +1,10 @@
 
 export enum Tables {
   Users = "users",
-{#hasTeams}
+👉#hasTeams👈
   Teams = "teams",
   Teammates = "teammates",
-{/hasTeams}
+👉/hasTeams👈
 }
 
 export interface DatastoreRecord {
@@ -21,7 +21,7 @@ export interface User extends DatastoreRecord {
   verified: boolean;
 }
 
-{#hasTeams}
+👉#hasTeams👈
 export interface Team extends DatastoreRecord {
   teamId: string;
   ownerId: string;
@@ -34,12 +34,12 @@ export interface Teammate extends DatastoreRecord {
   accepted: boolean;
   inviteToken: string;
 }
-{/hasTeams}
+👉/hasTeams👈
 
 export interface TableTypes {
   [Tables.Users]: User;
-{#hasTeams}
+👉#hasTeams👈
   [Tables.Teams]: Team;
   [Tables.Teammates]: Teammate;
-{/hasTeams}
+👉/hasTeams👈
 }

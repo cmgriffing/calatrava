@@ -4,10 +4,10 @@
 @http
 👉&routes👈
 
-{#hasWebSocketSupport}
+👉#hasWebSocketSupport👈
 @ws
 
-{/hasWebSocketSupport}
+👉/hasWebSocketSupport👈
 @tables
 👉&tables👈
 

@@ -8,6 +8,6 @@ const tableKeyManager = new TableKeyManager();
 
 export const getTables = createGetTables(tableKeyManager);
 export const getUser = createGetUser<User>(Tables.Users, decodeToken);
-{#hasTeams}
+👉#hasTeams👈
 export getUserTeams = createGetUserTeams<User, Team, Teammate>(Tables.Teams, Tables.Teammates);
-{/hasTeams}
+👉/hasTeams👈

@@ -18,6 +18,7 @@
   },
   "hasWebSocketSupport": false,
   "envVarsListPath": "./env-var-list.json",
+  "httpRoutesDirectory": "./src/http",
   "email": {
     "provider": "mailjet",
     "templateJsonPath": "./src/shared/email/templates.json",
