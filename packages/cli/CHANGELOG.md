@@ -1,5 +1,11 @@
 # @calatrava/cli
 
+## 0.0.15
+
+### Patch Changes
+
+- add more debug logging
+
 ## 0.0.14
 
 ### Patch Changes

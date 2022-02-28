@@ -16,6 +16,10 @@ import {
 } from "@calatrava/arc-utils";
 import { debug } from "@calatrava/utils";
 
+const { DEBUG } = process.env;
+
+console.log({ DEBUG });
+
 const cwd = process.cwd();
 Yargs.scriptName("calatrava")
   .usage("$0 <cmd> [args]")
@@ -84,12 +88,15 @@ Yargs.scriptName("calatrava")
     },
     async function (argv: any) {
       try {
+        debug("CLI arc: building arc file");
         await buildArcFile(argv.config);
+        debug("CLI arc: building preferences file");
         await buildPreferencesFile(argv.config);
 
-        const cwd = process.cwd();
+        debug("CLI arc: running arc init");
         child_process.spawnSync(`arc`, ["init"], { cwd });
 
+        debug("CLI arc: running copyShared");
         await copyShared();
       } catch (e) {
         debug("CLI arc: Caught exception: ", { e });
