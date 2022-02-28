@@ -7,9 +7,9 @@ export async function buildPreferencesFile(config: string) {
   try {
     const cwd = process.cwd();
 
-    const { preferencesTemplatePath } = fs.readJSONSync(
-      path.resolve(cwd, config)
-    );
+    const {
+      arc: { preferencesTemplatePath },
+    } = fs.readJSONSync(path.resolve(cwd, config));
 
     const templateFile = fs.readFileSync(
       path.resolve(cwd, preferencesTemplatePath),

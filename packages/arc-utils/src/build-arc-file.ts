@@ -10,12 +10,14 @@ export async function buildArcFile(config: string) {
 
     const {
       appName,
-      baseDirectory,
-      routesDirectory,
-      tablesDirectory,
-      tableIndexesDirectory,
+      arc: {
+        baseDirectory,
+        routesDirectory,
+        tablesDirectory,
+        tableIndexesDirectory,
+        awsConfigPath,
+      },
       hasWebSocketSupport,
-      awsConfigPath,
     } = fs.readJSONSync(path.resolve(cwd, config));
 
     debug("Build Arc File: Config values", {

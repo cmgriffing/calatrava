@@ -1,5 +1,11 @@
 # @calatrava/arc-utils
 
+## 0.0.7
+
+### Patch Changes
+
+- use proper config prop paths for arc stuff
+
 ## 0.0.6
 
 ### Patch Changes

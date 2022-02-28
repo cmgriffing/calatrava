@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.16
+
+### Patch Changes
+
+- use proper config prop paths for arc stuff
+- Updated dependencies
+  - @calatrava/arc-utils@0.0.7
+
 ## 0.0.15
 
 ### Patch Changes
