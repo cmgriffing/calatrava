@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import glob from "glob";
 import path from "path";
 import Mustache from "mustache";
+import { debug } from "@calatrava/utils";
 
 export async function scaffoldBoilerplate({
   name,
@@ -16,66 +17,70 @@ export async function scaffoldBoilerplate({
   outputFolder: string;
   description: string;
 }) {
-  const cwd = process.cwd();
+  try {
+    const cwd = process.cwd();
 
-  const packageName = Case.kebab(name);
-  const titleName = Case.title(name);
-  const camelName = Case.camel(name);
+    const packageName = Case.kebab(name);
+    const titleName = Case.title(name);
+    const camelName = Case.camel(name);
 
-  const globConfig: glob.IOptions = {
-    nodir: true,
-  };
+    const globConfig: glob.IOptions = {
+      nodir: true,
+    };
 
-  if (!hasWebSocketSupport) {
-    globConfig.ignore = "**/websocket/*";
-  }
+    if (!hasWebSocketSupport) {
+      globConfig.ignore = "**/websocket/*";
+    }
 
-  // crawl template folder, injecting values as needed
-  const templateLocation = path.resolve(__dirname, "../template/**/*");
+    // crawl template folder, injecting values as needed
+    const templateLocation = path.resolve(__dirname, "../template/**/*");
 
-  const files = glob.sync(templateLocation, globConfig);
+    const files = glob.sync(templateLocation, globConfig);
 
-  files.forEach((file) => {
-    const fileContents = fs.readFileSync(file, { encoding: "utf8" });
+    files.forEach((file) => {
+      const fileContents = fs.readFileSync(file, { encoding: "utf8" });
 
-    const parsedFile = Mustache.render(
-      fileContents,
-      {
-        hasWebSocketSupport,
-        packageName,
-        description,
-        titleName,
-        camelName,
-      },
-      undefined,
-      ["👉", "👈"]
+      const parsedFile = Mustache.render(
+        fileContents,
+        {
+          hasWebSocketSupport,
+          packageName,
+          description,
+          titleName,
+          camelName,
+        },
+        undefined,
+        ["👉", "👈"]
+      );
+
+      const [_, innerPath] = file.split("/template/");
+
+      if (innerPath) {
+        const newFilePath = path.resolve(cwd, outputFolder, innerPath);
+
+        fs.ensureFileSync(newFilePath);
+
+        fs.outputFileSync(newFilePath, parsedFile);
+      }
+    });
+
+    // parse package json from output folder
+    const packageJsonPath = path.resolve(cwd, outputFolder, "package.json");
+
+    const packageJson = fs.readJSONSync(packageJsonPath);
+
+    packageJson.dependencies = await getDependencyVersions(
+      packageJson.dependencies
     );
 
-    const [_, innerPath] = file.split("/template/");
+    packageJson.devDependencies = await getDependencyVersions(
+      packageJson.devDependencies
+    );
 
-    if (innerPath) {
-      const newFilePath = path.resolve(cwd, outputFolder, innerPath);
-
-      fs.ensureFileSync(newFilePath);
-
-      fs.outputFileSync(newFilePath, parsedFile);
-    }
-  });
-
-  // parse package json from output folder
-  const packageJsonPath = path.resolve(cwd, outputFolder, "package.json");
-
-  const packageJson = fs.readJSONSync(packageJsonPath);
-
-  packageJson.dependencies = await getDependencyVersions(
-    packageJson.dependencies
-  );
-
-  packageJson.devDependencies = await getDependencyVersions(
-    packageJson.devDependencies
-  );
-
-  fs.writeJSONSync(packageJsonPath, packageJson, { spaces: 2 });
+    fs.writeJSONSync(packageJsonPath, packageJson, { spaces: 2 });
+  } catch (e: any) {
+    debug("Scaffold boilerplate: Caught exception: ", e);
+  }
 }
 
 async function getDependencyVersions(dependencies: { [key: string]: string }) {

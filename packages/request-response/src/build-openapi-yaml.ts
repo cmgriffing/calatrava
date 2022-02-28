@@ -7,6 +7,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { RouteOptions } from "./types";
 import * as YAML from "yaml";
 import * as TJS from "typescript-json-schema";
+import { debug } from "@calatrava/utils";
 
 export async function buildOpenApiYaml(
   requestTypesPath: string,
@@ -189,6 +190,6 @@ export async function buildOpenApiYaml(
     // // output yaml file
     fs.outputFile(path.resolve(cwd, out), yaml);
   } catch (e) {
-    console.log({ e });
+    debug("Build openapi yaml: Caught exception: ", { e });
   }
 }

@@ -14,6 +14,7 @@ import {
   buildPreferencesFile,
   copyShared,
 } from "@calatrava/arc-utils";
+import { debug } from "@calatrava/utils";
 
 const cwd = process.cwd();
 Yargs.scriptName("calatrava")
@@ -25,46 +26,50 @@ Yargs.scriptName("calatrava")
     try {
       render(<CLI />);
     } catch (e) {
-      console.log("error in init", { e });
+      debug("CLI init: Caught exception: ", { e });
     }
   })
   // env
   .command("env", "Get Architect env variables", function (_argv: Argv) {
-    const child = child_process.execSync("FORCE_COLOR=1 npx arc env", {
-      stdio: "pipe",
-    });
+    try {
+      const child = child_process.execSync("FORCE_COLOR=1 npx arc env", {
+        stdio: "pipe",
+      });
 
-    const output = child.toString();
-    const lines = output
-      .split("\n")
-      .map((line) => {
-        if (line.indexOf("  |") > -1 && line.indexOf("None found!") === -1) {
-          const words = line.split(" ");
-          const lastWord = words[words.length - 1];
+      const output = child.toString();
+      const lines = output
+        .split("\n")
+        .map((line) => {
+          if (line.indexOf("  |") > -1 && line.indexOf("None found!") === -1) {
+            const words = line.split(" ");
+            const lastWord = words[words.length - 1];
 
-          const wordWithoutColors = lastWord?.replace(
-            new RegExp("(\\x1B\\[\\d.m)", "gm"),
-            ""
-          );
+            const wordWithoutColors = lastWord?.replace(
+              new RegExp("(\\x1B\\[\\d.m)", "gm"),
+              ""
+            );
 
-          const scrubbedWord = wordWithoutColors
-            ?.split("")
-            .map((character, index) => {
-              if (index < wordWithoutColors.length - 4) {
-                return "*";
-              } else {
-                return character;
-              }
-            })
-            .join("");
+            const scrubbedWord = wordWithoutColors
+              ?.split("")
+              .map((character, index) => {
+                if (index < wordWithoutColors.length - 4) {
+                  return "*";
+                } else {
+                  return character;
+                }
+              })
+              .join("");
 
-          return line.replace(wordWithoutColors || "", scrubbedWord || "");
-        }
-        return line;
-      })
-      .join("\n");
+            return line.replace(wordWithoutColors || "", scrubbedWord || "");
+          }
+          return line;
+        })
+        .join("\n");
 
-    console.log(lines);
+      console.log(lines);
+    } catch (e) {
+      debug("CLI env: Caught exception: ", { e });
+    }
   })
   // arc
   .command(
@@ -78,13 +83,17 @@ Yargs.scriptName("calatrava")
       });
     },
     async function (argv: any) {
-      await buildArcFile(argv.config);
-      await buildPreferencesFile(argv.config);
+      try {
+        await buildArcFile(argv.config);
+        await buildPreferencesFile(argv.config);
 
-      const cwd = process.cwd();
-      child_process.spawnSync(`arc`, ["init"], { cwd });
+        const cwd = process.cwd();
+        child_process.spawnSync(`arc`, ["init"], { cwd });
 
-      await copyShared();
+        await copyShared();
+      } catch (e) {
+        debug("CLI arc: Caught exception: ", { e });
+      }
     }
   )
   // scaffold
@@ -122,7 +131,7 @@ Yargs.scriptName("calatrava")
           httpRoutesDirectory
         );
       } catch (e) {
-        console.log({ e });
+        debug("CLI init: Caught exception: ", { e });
       }
     }
   )
@@ -160,8 +169,8 @@ Yargs.scriptName("calatrava")
           templateIdPath,
           templateEnumPath
         );
-      } catch (e: any) {
-        console.log({ e });
+      } catch (e) {
+        debug("CLI scaffold: Caught exception: ", { e });
       }
     }
   )

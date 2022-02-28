@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/arc-utils",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A set of utilites for managing the underlying Architect functionality of the Calatrava framework",
   "main": "dist/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@calatrava/utils": "workspace:~",
     "fs-extra": "^10.0.0",
     "glob": "^7.2.0",
     "minimist": "^1.2.5",

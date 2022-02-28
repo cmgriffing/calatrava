@@ -1,5 +1,17 @@
 # @calatrava/cli
 
+## 0.0.14
+
+### Patch Changes
+
+- add debug util and use it in all packages
+- Updated dependencies
+  - @calatrava/arc-utils@0.0.6
+  - @calatrava/boilerplate@0.0.12
+  - @calatrava/email@0.0.4
+  - @calatrava/request-response@0.0.5
+  - @calatrava/utils@0.0.4
+
 ## 0.0.13
 
 ### Patch Changes

@@ -1,4 +1,4 @@
-import { getEnvVariable } from "@calatrava/utils";
+import { getEnvVariable, debug } from "@calatrava/utils";
 import * as fs from "fs-extra";
 import path from "path";
 import { MailjetService } from "./services/mailjet";
@@ -109,6 +109,6 @@ ${idMapContents}
 
     console.log("Process finished.");
   } catch (e) {
-    console.log({ e });
+    debug("Build email templates: Caught exception: ", { e });
   }
 }

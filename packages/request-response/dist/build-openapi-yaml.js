@@ -27,6 +27,7 @@ const ts = __importStar(require("typescript"));
 const get_route_metadata_1 = require("./build-openapi-yaml/get-route-metadata");
 const YAML = __importStar(require("yaml"));
 const TJS = __importStar(require("typescript-json-schema"));
+const utils_1 = require("@calatrava/utils");
 async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, version = "0.0.0", title = "", description = "", out = "openapi.yaml") {
     try {
         const cwd = process.cwd();
@@ -150,7 +151,7 @@ async function buildOpenApiYaml(requestTypesPath, responseTypesPath, routes, ver
         fs.outputFile(path.resolve(cwd, out), yaml);
     }
     catch (e) {
-        console.log({ e });
+        (0, utils_1.debug)("Build openapi yaml: Caught exception: ", { e });
     }
 }
 exports.buildOpenApiYaml = buildOpenApiYaml;

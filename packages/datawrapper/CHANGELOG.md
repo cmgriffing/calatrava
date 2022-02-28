@@ -1,5 +1,13 @@
 # @calatrava/datawrapper
 
+## 0.0.4
+
+### Patch Changes
+
+- add debug util and use it in all packages
+- Updated dependencies
+  - @calatrava/utils@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes

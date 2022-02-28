@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/request-response",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A set of tools for request validation and openapi documentation for the Calatrava framework",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "typescript": "^4.5.3"
   },
   "dependencies": {
+    "@calatrava/utils": "workspace:~",
     "fs-extra": "^10.0.0",
     "glob": "^7.2.0",
     "minimist": "^1.2.5",

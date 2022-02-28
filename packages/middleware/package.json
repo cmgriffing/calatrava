@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/middleware",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A set of utilites for managing the underlying Architect functionality of the Calatrava framework",
   "main": "index.ts",
   "scripts": {
@@ -19,6 +19,7 @@
     "@aws-sdk/s3-request-presigner": "^3.44.0",
     "@aws-sdk/signature-v4-crt": "^3.49.0",
     "@calatrava/datawrapper": "workspace:~",
+    "@calatrava/utils": "workspace:~",
     "zod": "^3.11.6"
   },
   "devDependencies": {

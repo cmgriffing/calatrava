@@ -1,5 +1,13 @@
 # @calatrava/boilerplate
 
+## 0.0.12
+
+### Patch Changes
+
+- add debug util and use it in all packages
+- Updated dependencies
+  - @calatrava/utils@0.0.4
+
 ## 0.0.11
 
 ### Patch Changes
