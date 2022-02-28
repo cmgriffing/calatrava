@@ -1,23 +1,11 @@
 import fs from "fs-extra";
 import child_process from "child_process";
-import Mustache from "mustache";
 import * as path from "path";
 
 export async function setEnvVarsCircleCI(config: string) {
-  const { preferencesTemplatePath, envVarListPath } = fs.readJSONSync(config);
-
   const cwd = process.cwd();
 
-  const templateFile = fs.readFileSync(
-    path.resolve(cwd, preferencesTemplatePath),
-    {
-      encoding: "utf8",
-    }
-  );
-
-  const renderedTemplate = Mustache.render(templateFile, {});
-
-  fs.outputFileSync(path.resolve(cwd, "./preferences.arc"), renderedTemplate);
+  const { envVarListPath } = fs.readJSONSync(path.resolve(cwd, config));
 
   const ENV_KEYS = fs.readJsonSync(path.resolve(cwd, envVarListPath));
 

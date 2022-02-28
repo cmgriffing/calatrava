@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.13
+
+### Patch Changes
+
+- add arc cli command and clean up boilerplate commands
+- Updated dependencies
+  - @calatrava/arc-utils@0.0.5
+  - @calatrava/boilerplate@0.0.11
+
 ## 0.0.12
 
 ### Patch Changes

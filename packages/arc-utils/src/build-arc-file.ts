@@ -14,7 +14,7 @@ export async function buildArcFile(config: string) {
     tableIndexesDirectory,
     hasWebSocketSupport,
     awsConfigPath,
-  } = fs.readJSONSync(config);
+  } = fs.readJSONSync(path.resolve(cwd, config));
 
   const routesString = concatenateArcFiles(routesDirectory);
   const tablesString = concatenateArcFiles(tablesDirectory);

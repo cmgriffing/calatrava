@@ -9,6 +9,11 @@ import * as fs from "fs-extra";
 import { buildOpenApiYaml, tsToZod } from "@calatrava/request-response";
 import { buildEmailTemplates, EmailProvider } from "@calatrava/email";
 import { CalatravaConfiguration } from "./calatrava-config";
+import {
+  buildArcFile,
+  buildPreferencesFile,
+  copyShared,
+} from "@calatrava/arc-utils";
 
 const cwd = process.cwd();
 Yargs.scriptName("calatrava")
@@ -61,6 +66,27 @@ Yargs.scriptName("calatrava")
 
     console.log(lines);
   })
+  // arc
+  .command(
+    "arc",
+    "Build app.arc and preferences.arc",
+    (yargs: any) => {
+      yargs.positional("config", {
+        type: "string",
+        default: "./calatrava.config.json",
+        describe: "the path to the Calatrava config file",
+      });
+    },
+    async function (argv: any) {
+      await buildArcFile(argv.config);
+      await buildPreferencesFile(argv.config);
+
+      const cwd = process.cwd();
+      child_process.spawnSync(`arc`, ["init"], { cwd });
+
+      await copyShared();
+    }
+  )
   // scaffold
   .command(
     "scaffold [config]",

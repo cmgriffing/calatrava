@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.11
+
+### Patch Changes
+
+- add arc cli command and clean up boilerplate commands
+
 ## 0.0.10
 
 ### Patch Changes
