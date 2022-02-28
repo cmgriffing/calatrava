@@ -1,5 +1,11 @@
 # @calatrava/arc-utils
 
+## 0.0.8
+
+### Patch Changes
+
+- rebuild dependencies and republish
+
 ## 0.0.7
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.17
+
+### Patch Changes
+
+- rebuild dependencies and republish
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.13
+  - @calatrava/arc-utils@0.0.8
+
 ## 0.0.16
 
 ### Patch Changes
