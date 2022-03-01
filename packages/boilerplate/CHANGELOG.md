@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.18
+
+### Patch Changes
+
+- fix: update architect and add GET endpoint to boilerplate
+
 ## 0.0.17
 
 ### Patch Changes

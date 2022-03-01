@@ -29,7 +29,7 @@
     "debug:ls:shared": "ls -a src/shared"
   },
   "dependencies": {
-    "@architect/functions": "^4.0.0",
+    "@architect/functions": "^5.0.0",
     "@aws-sdk/client-s3": "^3.44.0",
     "@aws-sdk/s3-presigned-post": "^3.44.0",
     "@aws-sdk/s3-request-presigner": "^3.44.0",
@@ -50,8 +50,8 @@
     "zod": "^3.5.1"
   },
   "devDependencies": {
-    "@architect/architect": "^9.4.1",
-    "@architect/env": "^2.0.6",
+    "@architect/architect": "^10.0.0",
+    "@architect/env": "^3.0.0",
     "@calatrava/cli": "workspace:~",
     "@types/architect": "^0.1.0",
     "@types/architect__functions": "^3.13.6",

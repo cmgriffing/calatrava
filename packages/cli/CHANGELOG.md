@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.23
+
+### Patch Changes
+
+- fix: update architect and add GET endpoint to boilerplate
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.18
+
 ## 0.0.22
 
 ### Patch Changes
