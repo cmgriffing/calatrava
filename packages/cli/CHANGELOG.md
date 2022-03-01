@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.19
+
+### Patch Changes
+
+- add tables and table-indexes for core boilerplate
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.15
+
 ## 0.0.18
 
 ### Patch Changes

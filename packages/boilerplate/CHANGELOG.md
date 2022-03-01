@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.15
+
+### Patch Changes
+
+- add tables and table-indexes for core boilerplate
+
 ## 0.0.14
 
 ### Patch Changes
