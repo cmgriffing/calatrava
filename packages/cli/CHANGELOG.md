@@ -1,5 +1,17 @@
 # @calatrava/cli
 
+## 0.0.24
+
+### Patch Changes
+
+- 8839035: clean up console logs and change releveant logs into debug logs
+- Updated dependencies [8839035]
+  - @calatrava/arc-utils@0.0.11
+  - @calatrava/email@0.0.5
+  - @calatrava/request-response@0.0.7
+  - @calatrava/boilerplate@0.0.19
+  - @calatrava/utils@0.0.5
+
 ## 0.0.23
 
 ### Patch Changes

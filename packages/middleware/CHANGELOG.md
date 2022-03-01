@@ -1,5 +1,14 @@
 # @calatrava/middleware
 
+## 0.0.6
+
+### Patch Changes
+
+- 8839035: clean up console logs and change releveant logs into debug logs
+- Updated dependencies [8839035]
+  - @calatrava/datawrapper@0.0.6
+  - @calatrava/utils@0.0.5
+
 ## 0.0.5
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @calatrava/email
 
+## 0.0.5
+
+### Patch Changes
+
+- 8839035: clean up console logs and change releveant logs into debug logs
+- Updated dependencies [8839035]
+  - @calatrava/utils@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
