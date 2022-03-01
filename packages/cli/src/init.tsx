@@ -7,6 +7,7 @@ import SelectInput from "ink-select-input";
 import Spinner from "ink-spinner";
 import Case from "case";
 import { scaffoldBoilerplate } from "@calatrava/boilerplate";
+import { debug } from "@calatrava/utils";
 
 export const CLI = () => {
   const [name, setName] = useState("");
@@ -36,7 +37,7 @@ export const CLI = () => {
 
   useEffect(() => {
     if (scaffoldingProject) {
-      console.log("scaffolding", {
+      debug("CLI INIT: Scaffolding", {
         scaffoldBoilerplate,
         name,
         hasWebSocketSupport: hasWebSocketSupport ?? false,
@@ -162,7 +163,6 @@ export const CLI = () => {
               { label: "No", value: false },
             ]}
             onSelect={(selectedItem) => {
-              console.log({ selectedItem, hasTeams });
               setHasTeams(selectedItem.value);
               setSettingHasTeams(false);
               setSettingHasWebSocketSupport(true);
@@ -191,7 +191,6 @@ export const CLI = () => {
               { label: "No", value: false },
             ]}
             onSelect={(selectedItem) => {
-              console.log({ selectedItem, hasWebSocketSupport });
               setHasWebSocketSupport(selectedItem.value);
               setSettingHasWebSocketSupport(false);
               setSettingOutputFolder(true);
@@ -252,14 +251,12 @@ export const CLI = () => {
               { label: "No", value: false },
             ]}
             onSelect={(selectedItem) => {
-              console.log({ selectedItem, hasWebSocketSupport });
-              // setSettingsConfirmed(selectedItem.value);
               setSettingSettingsConfirmed(false);
               if (selectedItem.value) {
                 setSettingOutputFolder(true);
                 setScaffoldingProject(true);
               } else {
-                console.log("settings unconfirmed. exiting for now");
+                console.log("Settings unconfirmed. Exiting...");
                 process.exit();
               }
             }}

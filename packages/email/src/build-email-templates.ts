@@ -25,7 +25,7 @@ export async function buildEmailTemplates(
   templateEnumPath: string
 ) {
   try {
-    console.log("Getting existing templates and versions...");
+    debug("Email: Getting existing templates and versions...");
 
     const cwd = process.cwd();
 
@@ -48,7 +48,7 @@ export async function buildEmailTemplates(
     let existingTemplates: { [key: string]: EmailTemplate } =
       await emailService.getExistingTemplates();
 
-    console.log("Evaluating local templates...");
+    debug("Email: Evaluating local templates...");
 
     const templateMetadata: {
       [key: string]: TemplateMetadata;
@@ -103,11 +103,11 @@ ${idMapContents}
 }
 `;
 
-    console.log("Writing TypeScript ID map for templates.");
+    debug("Email: Writing TypeScript ID map for templates.");
 
     fs.outputFileSync(path.resolve(cwd, outputTemplatePath), tsFileContents);
 
-    console.log("Process finished.");
+    debug("Email: Process finished.");
   } catch (e) {
     debug("Build email templates: Caught exception: ", { e });
   }

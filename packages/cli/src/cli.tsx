@@ -17,16 +17,12 @@ import {
 } from "@calatrava/arc-utils";
 import { debug } from "@calatrava/utils";
 
-const { DEBUG } = process.env;
-
-console.log({ DEBUG });
-
 const cwd = process.cwd();
 Yargs.scriptName("calatrava")
   .usage("$0 <cmd> [args]")
   // init
   .command("init", "Initialize a new project", function (_argv: Argv) {
-    console.log("cwd", process.cwd());
+    debug("cwd", process.cwd());
 
     try {
       render(<CLI />);

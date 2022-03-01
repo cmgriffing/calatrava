@@ -18,7 +18,7 @@ export async function setEnvVarsCircleCI(config: string) {
     ENV_KEYS.forEach((key: string) => {
       const value = process.env[`${CIRCLE_BRANCH?.toUpperCase() || ""}_${key}`];
 
-      console.log("Setting ENV VAR: ", key);
+      debug("Setting ENV VAR: ", key);
       child_process.spawnSync(`arc`, [
         "env",
         CIRCLE_BRANCH || "",

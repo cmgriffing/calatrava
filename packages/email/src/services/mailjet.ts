@@ -1,3 +1,4 @@
+import { debug } from "@calatrava/utils";
 import Axios, { AxiosInstance } from "axios";
 import mjml2html = require("mjml");
 import { EmailService, EmailTemplates } from "../types";
@@ -30,7 +31,7 @@ export const MailjetService: EmailService = {
               await axios
                 .get(`/template/${template.ID}/detailcontent`)
                 .catch((error: any) => {
-                  console.log(
+                  debug(
                     "Catching 404 from detailcontent if no content has been uploaded yet.",
                     error
                   );
@@ -90,7 +91,7 @@ export const MailjetService: EmailService = {
       templateContent
     ) {
       if (existingTemplates[templateName]?.content !== templateContent) {
-        console.log(`Creating new version for "${templateName}"...`);
+        debug(`Creating new version for "${templateName}"...`);
 
         // update template content
         const newTemplateVersion = (
@@ -106,8 +107,7 @@ export const MailjetService: EmailService = {
             }
           )
         ).data;
-
-        console.log({ newTemplateVersion });
+        debug({ newTemplateVersion });
       }
     };
   },

@@ -1,4 +1,3 @@
-import * as minimist from "minimist";
 import fs from "fs-extra";
 import path from "path";
 import glob from "glob";
@@ -7,8 +6,6 @@ throw new Error("Unimplemented");
 
 async function main() {
   const sharedFolder = path.resolve("src/shared");
-
-  console.log({ sharedFolder });
 
   glob
     .sync("src/**/index.ts", {

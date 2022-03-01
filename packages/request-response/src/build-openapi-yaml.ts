@@ -31,7 +31,7 @@ export async function buildOpenApiYaml(
       path.resolve(cwd, responseTypesPath),
     ];
 
-    console.log({ inputFilePaths });
+    debug("Build OpenAPI Yaml: ", { inputFilePaths });
 
     const tjsProgram = TJS.getProgramFromFiles(inputFilePaths, {});
     const tjsGenerator = TJS.buildGenerator(tjsProgram, settings);
@@ -87,8 +87,8 @@ export async function buildOpenApiYaml(
       }
 
       let requestSchema: any;
-      console.log(
-        "routeOptionObject.requestJsonSchema",
+      debug(
+        "Build OpenAPI Yaml: routeOptionObject.requestJsonSchema: ",
         routeOptionObject.requestJsonSchema,
         { routeOptionObject }
       );

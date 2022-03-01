@@ -21,10 +21,10 @@ export async function copyShared() {
 
         const nodeModulesFolderPath = `${targetFolderPath}/node_modules/@architect/shared`;
 
-        console.log(`Found shared path: `, nodeModulesFolderPath);
+        debug(`Found shared path: `, nodeModulesFolderPath);
 
         if (!fs.existsSync(nodeModulesFolderPath)) {
-          console.log(`Writing shared path: `, nodeModulesFolderPath);
+          debug(`Writing shared path: `, nodeModulesFolderPath);
           const indexOfLastSlash = nodeModulesFolderPath.lastIndexOf("/");
           const architectFolder = nodeModulesFolderPath.substring(
             0,

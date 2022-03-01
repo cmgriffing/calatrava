@@ -7,7 +7,6 @@ main().catch((error) => {
 
 async function main() {
   try {
-    console.log("Hmmmmmmm");
     const args = minimist(process.argv.slice(2));
 
     const {

@@ -9,7 +9,6 @@ export async function printDebugData(
   template: string,
   dynamicData: Object
 ) {
-  console.log("DEBUG MODE ENABLED");
   const data = {
     axios,
     emailTemplateIdMap,

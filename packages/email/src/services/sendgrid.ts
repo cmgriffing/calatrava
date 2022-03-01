@@ -4,6 +4,7 @@ import Axios, { AxiosInstance } from "axios";
 import mjml2html = require("mjml");
 import { EmailTemplate, EmailTemplates, EmailService } from "../types";
 import { printDebugData } from "../utils";
+import { debug } from "@calatrava/utils";
 
 export const SendgridService: EmailService = {
   createAxios(SENDGRID_API_KEY: string) {
@@ -82,7 +83,7 @@ export const SendgridService: EmailService = {
       templateContent
     ) {
       if (existingTemplates[templateName]?.content !== templateContent) {
-        console.log(`Creating new version for "${templateName}"...`);
+        debug(`Email: Creating new version for "${templateName}"...`);
 
         // update template content
         const newTemplateVersion = (
@@ -96,7 +97,7 @@ export const SendgridService: EmailService = {
             }
           )
         ).data;
-        console.log({ newTemplateVersion });
+        debug({ newTemplateVersion });
       }
     };
   },
