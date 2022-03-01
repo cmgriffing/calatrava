@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.20
+
+### Patch Changes
+
+- fix import issues and missing arguments in boilerplate
+- Updated dependencies
+  - @calatrava/boilerplate@0.0.16
+  - @calatrava/request-response@0.0.6
+
 ## 0.0.19
 
 ### Patch Changes

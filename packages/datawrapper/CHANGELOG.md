@@ -1,5 +1,11 @@
 # @calatrava/datawrapper
 
+## 0.0.5
+
+### Patch Changes
+
+- fix import issues and missing arguments in boilerplate
+
 ## 0.0.4
 
 ### Patch Changes

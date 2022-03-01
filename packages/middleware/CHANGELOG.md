@@ -1,5 +1,13 @@
 # @calatrava/middleware
 
+## 0.0.5
+
+### Patch Changes
+
+- fix import issues and missing arguments in boilerplate
+- Updated dependencies
+  - @calatrava/datawrapper@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes

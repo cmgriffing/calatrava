@@ -1,12 +1,12 @@
 import * as arc from "@architect/functions";
 import { HttpResponse } from "@architect/functions";
 import {
-  getTables,
-  getUser,
   attachCommonHeaders,
   commonHeaders,
-} from "@architect/shared/middleware";
-import { Route } from "@architect/shared/types";
+  HttpRequestWithUser,
+} from "@calatrava/middleware";
+import { getTables, getUser } from "@calatrava/middleware";
+import { Route } from "@calatrava/request-response";
 
 class Handler {
   @Route({

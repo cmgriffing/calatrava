@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.6
+
+### Patch Changes
+
+- fix import issues and missing arguments in boilerplate
+
 ## 0.0.5
 
 ### Patch Changes

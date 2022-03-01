@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.16
+
+### Patch Changes
+
+- fix import issues and missing arguments in boilerplate
+
 ## 0.0.15
 
 ### Patch Changes

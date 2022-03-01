@@ -1,8 +1,8 @@
 {
   "name": "@calatrava/middleware",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A set of utilites for managing the underlying Architect functionality of the Calatrava framework",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
