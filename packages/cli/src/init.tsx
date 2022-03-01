@@ -135,7 +135,7 @@ export const CLI = () => {
                 }, 0);
               } else {
                 setSettingDescription(false);
-                setSettingHasWebSocketSupport(true);
+                setSettingHasTeams(true);
               }
             }}
           />

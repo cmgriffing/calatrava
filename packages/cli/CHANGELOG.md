@@ -1,5 +1,11 @@
 # @calatrava/cli
 
+## 0.0.22
+
+### Patch Changes
+
+- change which question gets asked after name
+
 ## 0.0.21
 
 ### Patch Changes
