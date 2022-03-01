@@ -1,7 +1,14 @@
 
 import { createGetTables, createGetUser, createGetUserTeams } from "@calatrava/middleware";
 import { TableKeyManager, DBKeys } from "@calatrava/datawrapper";
-import { Tables, User, Team, Teammate } from "./types";
+import {
+  Tables,
+  User,
+👉#hasTeams👈
+  Team,
+  Teammate,
+👉/hasTeams👈
+} from "./types";
 import { decodeToken } from "./token";
 
 const tableKeysMap = {

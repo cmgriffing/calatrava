@@ -19,9 +19,9 @@ class Handler {
       ...commonHeaders,
     },
     method: "POST",
-    requestJsonSchemaPath: "SET_REQUEST_SCHEMA_HERE",
-    responseJsonSchemaPath: "SET_RESPONSE_SCHEMA_HERE",
-    errorJsonSchemaPath: "errorResponseSchema.json",
+    requestJsonSchema: "SET_REQUEST_SCHEMA_HERE",
+    responseJsonSchema: "SET_RESPONSE_SCHEMA_HERE",
+    errorJsonSchema: "errorResponseSchema.json",
     definedErrors: [400, 500], // ADD EXTRA RESPONSE CODES
   })
   static get() {

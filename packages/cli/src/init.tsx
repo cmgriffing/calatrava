@@ -15,8 +15,11 @@ export const CLI = () => {
   const [description, setDescription] = useState("");
   const [settingDescription, setSettingDescription] = useState(false);
 
+  const [hasTeams, setHasTeams] = useState<boolean>();
+  const [settingHasTeams, setSettingHasTeams] = useState(false);
+
   const [hasWebSocketSupport, setHasWebSocketSupport] = useState<boolean>();
-  const [settingHasWebSocketSupport, setSettingWebSocketSupport] =
+  const [settingHasWebSocketSupport, setSettingHasWebSocketSupport] =
     useState(false);
 
   const [outputFolder, setOutputFolder] = useState("");
@@ -132,7 +135,7 @@ export const CLI = () => {
                 }, 0);
               } else {
                 setSettingDescription(false);
-                setSettingWebSocketSupport(true);
+                setSettingHasWebSocketSupport(true);
               }
             }}
           />
@@ -145,6 +148,35 @@ export const CLI = () => {
             <Text>Description:</Text>
           </Box>
           <Text>{description}</Text>
+        </Box>
+      )}
+
+      {settingHasTeams && (
+        <Box>
+          <Box marginRight={1}>
+            <Text>Would you like to add Teams support?</Text>
+          </Box>
+          <SelectInput
+            items={[
+              { label: "Yes", value: true },
+              { label: "No", value: false },
+            ]}
+            onSelect={(selectedItem) => {
+              console.log({ selectedItem, hasTeams });
+              setHasTeams(selectedItem.value);
+              setSettingHasTeams(false);
+              setSettingHasWebSocketSupport(true);
+            }}
+          />
+        </Box>
+      )}
+
+      {!settingHasTeams && hasTeams !== undefined && (
+        <Box>
+          <Box marginRight={1}>
+            <Text>WebSockets?:</Text>
+          </Box>
+          <Text>{hasTeams ? "Yes" : "No"}</Text>
         </Box>
       )}
 
@@ -161,7 +193,7 @@ export const CLI = () => {
             onSelect={(selectedItem) => {
               console.log({ selectedItem, hasWebSocketSupport });
               setHasWebSocketSupport(selectedItem.value);
-              setSettingWebSocketSupport(false);
+              setSettingHasWebSocketSupport(false);
               setSettingOutputFolder(true);
             }}
           />
@@ -188,7 +220,7 @@ export const CLI = () => {
             onChange={setOutputFolder}
             onSubmit={() => {
               if (outputFolder === "") {
-                setOutputFolder(Case.kebab(name));
+                setOutputFolder(`./${Case.kebab(name)}`);
               }
 
               setSettingOutputFolder(false);

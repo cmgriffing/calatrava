@@ -1,5 +1,11 @@
 # @calatrava/arc-utils
 
+## 0.0.10
+
+### Patch Changes
+
+- add init step for hasTeams and conditionally import teams stuff
+
 ## 0.0.9
 
 ### Patch Changes

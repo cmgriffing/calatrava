@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.21
+
+### Patch Changes
+
+- add init step for hasTeams and conditionally import teams stuff
+- Updated dependencies
+  - @calatrava/arc-utils@0.0.10
+  - @calatrava/boilerplate@0.0.17
+
 ## 0.0.20
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @calatrava/boilerplate
 
+## 0.0.17
+
+### Patch Changes
+
+- add init step for hasTeams and conditionally import teams stuff
+
 ## 0.0.16
 
 ### Patch Changes

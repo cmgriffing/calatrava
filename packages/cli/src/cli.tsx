@@ -13,6 +13,7 @@ import {
   buildArcFile,
   buildPreferencesFile,
   copyShared,
+  renameIndexFiles,
 } from "@calatrava/arc-utils";
 import { debug } from "@calatrava/utils";
 
@@ -98,6 +99,9 @@ Yargs.scriptName("calatrava")
 
         debug("CLI arc: running copyShared");
         await copyShared();
+
+        debug("CLI arc: running renameIndexFiles");
+        await renameIndexFiles();
       } catch (e) {
         debug("CLI arc: Caught exception: ", { e });
       }

@@ -1,3 +1,3 @@
 /hello
   method get
-  src src/http/get
+  src src/http/hello
