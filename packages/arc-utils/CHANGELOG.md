@@ -1,5 +1,11 @@
 # @calatrava/arc-utils
 
+## 0.0.9
+
+### Patch Changes
+
+- add missing arc template files to boilerplate and arc-utils
+
 ## 0.0.8
 
 ### Patch Changes
