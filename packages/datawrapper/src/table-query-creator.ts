@@ -120,8 +120,8 @@ export class TableQueryCreator {
       baseExpressionString += `#key${index} = :value${index}`;
 
       updateRequest.UpdateExpression = baseExpressionString;
-      updateRequest.ExpressionAttributeNames[`#key${index}`] = key || "";
-      updateRequest.ExpressionAttributeValues[`:value${index}`] = value || "";
+      updateRequest.ExpressionAttributeNames[`#key${index}`] = key ?? "";
+      updateRequest.ExpressionAttributeValues[`:value${index}`] = value ?? "";
     });
 
     if (secondaryId) {
