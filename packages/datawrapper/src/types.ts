@@ -21,7 +21,7 @@ export type BatchGetKeys = {
 };
 
 export interface QueryKeys {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 export interface GetAllOptions {
