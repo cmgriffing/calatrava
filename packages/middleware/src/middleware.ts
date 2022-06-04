@@ -159,7 +159,7 @@ export const logDatabase = function (tableName: string) {
   ): Promise<HttpResponse | undefined> {
     try {
       const data = await tables();
-      const everything = data?.[tableName]?.scan({});
+      const everything = await data?.[tableName]?.scan({});
 
       console.log("EVERYTHING", JSON.stringify(everything, null, 2));
 
