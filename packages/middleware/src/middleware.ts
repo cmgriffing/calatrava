@@ -44,7 +44,8 @@ export const createGetTables = function (tableKeyManager: TableKeyManager) {
 // requires tables to be fetched first
 export const createGetUser = function <User>(
   usersTableKey: string,
-  decodeToken: Function
+  decodeToken: Function,
+  extraValidation?: (user: User) => Promise<HttpResponse | void>
 ) {
   return async function getUser(
     req: HttpRequestWithTables,
@@ -70,6 +71,13 @@ export const createGetUser = function <User>(
           statusCode: 401,
           json: {},
         });
+      }
+
+      if (extraValidation) {
+        const extraValidationError = await extraValidation(user);
+        if (extraValidationError) {
+          return extraValidationError;
+        }
       }
 
       (req as HttpRequestWithUser<User>).user = user;
