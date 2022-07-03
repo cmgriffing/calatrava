@@ -1,16 +1,11 @@
 import { getEnvVariable, debug } from "@calatrava/utils";
 import * as fs from "fs-extra";
 import path from "path";
-import { MailjetService } from "./services/mailjet";
-import { SendgridService } from "./services/sendgrid";
 
 import { EmailProvider, EmailTemplate } from "./types";
 import { EmailClient } from "./email-client";
 
-const EmailProviderMap = {
-  [EmailProvider.Mailjet]: MailjetService,
-  [EmailProvider.Sendgrid]: SendgridService,
-};
+import { emailProviderMap } from "./email-providers";
 
 interface TemplateMetadata {
   template: string;
@@ -32,7 +27,7 @@ export async function buildEmailTemplates(
     const accessKey = getEnvVariable("EMAIL_ACCESS_KEY");
     const secretKey = getEnvVariable("EMAIL_SECRET_KEY");
 
-    if (!EmailProviderMap[emailProvider]) {
+    if (!emailProviderMap[emailProvider]) {
       throw new Error(`Email provider not recognized: ${emailProvider}`);
     }
 
