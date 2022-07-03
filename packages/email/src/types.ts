@@ -1,6 +1,7 @@
 import { AxiosInstance } from "axios";
 
 export enum EmailProvider {
+  Mailgun = "mailgun",
   Mailjet = "mailjet",
   Sendgrid = "sendgrid",
 }
