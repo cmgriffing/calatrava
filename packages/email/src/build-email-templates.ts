@@ -82,7 +82,7 @@ export async function buildEmailTemplates(
 
     const idMapContents = Object.entries(existingTemplates)
       .map(([templateKey, existingTemplate]: [string, { id: string }]) => {
-        return `  :${templateKey}": "${existingTemplate.id}"`;
+        return `  "${templateKey}": "${existingTemplate.id}"`;
       })
       .join(",\n");
 
