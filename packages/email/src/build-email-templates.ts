@@ -1,6 +1,7 @@
 import { getEnvVariable, debug } from "@calatrava/utils";
 import * as fs from "fs-extra";
 import path from "path";
+import Case from "case";
 
 import { EmailProvider, EmailTemplate } from "./types";
 import { EmailClient } from "./email-client";
@@ -82,7 +83,7 @@ export async function buildEmailTemplates(
 
     const idMapContents = Object.entries(existingTemplates)
       .map(([templateKey, existingTemplate]: [string, { id: string }]) => {
-        return `  ${templateKey}: "${existingTemplate.id}"`;
+        return `  ${Case.pascal(templateKey)}: "${existingTemplate.id}"`;
       })
       .join(",\n");
 
