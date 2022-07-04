@@ -3,6 +3,7 @@ import Axios, { AxiosInstance } from "axios";
 import mjml2html = require("mjml");
 import { EmailService, EmailTemplates } from "../types";
 import { printDebugData } from "../utils";
+import FormData from "form-data";
 
 const MAILGUN_DOMAIN = process.env["MAILGUN_DOMAIN"];
 
@@ -48,11 +49,13 @@ export const MailgunService: EmailService = {
                 })
             ).data.template;
 
-            existingTemplates[template.name] = {
-              id: template.name,
-              version: templateVersion.version.tag,
-              content: templateVersion.version.template,
-            };
+            if (templateVersion.version) {
+              existingTemplates[template.name] = {
+                id: template.name,
+                version: templateVersion.version.tag,
+                content: templateVersion.version.template,
+              };
+            }
           })
         );
       }
