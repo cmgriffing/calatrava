@@ -15,13 +15,25 @@ const postConfig = {
 
 export const MailgunService: EmailService = {
   createAxios(MAILGUN_SECRET_KEY: string | undefined) {
-    return Axios.create({
+    const axiosInstance = Axios.create({
       baseURL: `https://api.mailgun.net/v3/${MAILGUN_DOMAIN}`,
       auth: {
         username: "api",
         password: MAILGUN_SECRET_KEY || "",
       },
     });
+
+    axiosInstance.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error) {
+        debug("Request failed with error: ", error?.response?.data);
+        return Promise.reject(error);
+      }
+    );
+
+    return axiosInstance;
   },
   createGetExistingTemplates(axios: AxiosInstance) {
     return async function getExistingTemplates() {
