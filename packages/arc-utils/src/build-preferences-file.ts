@@ -11,16 +11,19 @@ export async function buildPreferencesFile(config: string) {
       arc: { preferencesTemplatePath },
     } = fs.readJSONSync(path.resolve(cwd, config));
 
-    const templateFile = fs.readFileSync(
-      path.resolve(cwd, preferencesTemplatePath),
-      {
-        encoding: "utf8",
-      }
-    );
+    const preferencesPath = path.resolve(cwd, "./preferences.arc");
 
-    const renderedTemplate = Mustache.render(templateFile, {});
-
-    fs.outputFileSync(path.resolve(cwd, "./preferences.arc"), renderedTemplate);
+    // prevent overriding existing preferences.arc
+    if (!fs.existsSync(preferencesPath)) {
+      const templateFile = fs.readFileSync(
+        path.resolve(cwd, preferencesTemplatePath),
+        {
+          encoding: "utf8",
+        }
+      );
+      const renderedTemplate = Mustache.render(templateFile, {});
+      fs.outputFileSync(preferencesPath, renderedTemplate);
+    }
   } catch (e: any) {
     debug("Build preferences File: Caught exception: ", e);
   }
