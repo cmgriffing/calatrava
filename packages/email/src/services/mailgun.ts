@@ -4,6 +4,7 @@ import mjml2html = require("mjml");
 import { EmailService, EmailTemplates } from "../types";
 import { printDebugData } from "../utils";
 import FormData from "form-data";
+import Case from "case";
 
 const MAILGUN_DOMAIN = process.env["MAILGUN_DOMAIN"];
 
@@ -92,6 +93,7 @@ export const MailgunService: EmailService = {
       existingTemplates,
       templateName
     ) {
+      templateName = Case.kebab(templateName);
       if (!existingTemplates[templateName]) {
         const formData = new FormData();
         formData.append("name", templateName);
@@ -116,6 +118,7 @@ export const MailgunService: EmailService = {
       _templateData,
       templateContent
     ) {
+      templateName = Case.kebab(templateName);
       if (existingTemplates[templateName]?.content !== templateContent) {
         debug(`Creating new version for "${templateName}"...`);
 

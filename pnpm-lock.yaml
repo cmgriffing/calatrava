@@ -257,6 +257,7 @@ importers:
       '@types/minimist': ^1.2.2
       '@types/mjml': ^4.7.0
       axios: ^0.26.0
+      case: ^1.6.3
       dotenv: ^16.0.0
       form-data: ^4.0.0
       fs-extra: ^10.0.0
@@ -269,6 +270,7 @@ importers:
     dependencies:
       '@calatrava/utils': link:../utils
       axios: 0.26.0
+      case: 1.6.3
       dotenv: 16.0.0
       form-data: 4.0.0
       fs-extra: 10.0.0
