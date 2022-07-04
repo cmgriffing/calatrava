@@ -14,6 +14,9 @@ export const MailgunService: EmailService = {
         username: "api",
         password: MAILGUN_SECRET_KEY || "",
       },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
   },
   createGetExistingTemplates(axios: AxiosInstance) {
@@ -64,10 +67,10 @@ export const MailgunService: EmailService = {
       templateName
     ) {
       if (!existingTemplates[templateName]) {
-        await axios.post("/templates", {
-          name: templateName,
-          description: templateName,
-        });
+        const formData = new FormData();
+        formData.append("name", templateName);
+        formData.append("description", templateName);
+        await axios.post("/templates", formData);
 
         existingTemplates[templateName] = {
           id: templateName,
@@ -90,16 +93,20 @@ export const MailgunService: EmailService = {
       if (existingTemplates[templateName]?.content !== templateContent) {
         debug(`Creating new version for "${templateName}"...`);
 
+        const formData = new FormData();
+        formData.append("template", templateContent);
+        formData.append(
+          "tag",
+          `${+(existingTemplates[templateName]?.version || 0) + 1}`
+        );
+        formData.append("engine", "handlerbars");
+        formData.append("active", "yes");
+
         // update template content
         const newTemplateVersion = (
           await axios.post(
             `templates/${existingTemplates[templateName]?.id || ""}/versions`,
-            {
-              template: templateContent,
-              tag: `${+(existingTemplates[templateName]?.version || 0) + 1}`,
-              engine: "handlebars",
-              active: "yes",
-            }
+            formData
           )
         ).data;
         debug({ newTemplateVersion });
@@ -131,13 +138,15 @@ export const MailgunService: EmailService = {
           dynamicData
         );
       } else {
-        return axios.post("/messages", {
-          template: emailTemplateIdMap[template],
-          from: fromEmail,
-          to: toEmail,
-          subject,
-          "t:variables": dynamicData,
-        });
+        const formData = new FormData();
+
+        formData.append("template", emailTemplateIdMap[template] || "");
+        formData.append("from", fromEmail);
+        formData.append("to", toEmail);
+        formData.append("subject", subject);
+        formData.append("t:variables", JSON.stringify(dynamicData));
+
+        return axios.post("/messages", formData);
       }
     };
   },
