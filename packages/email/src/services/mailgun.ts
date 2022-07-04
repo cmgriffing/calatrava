@@ -6,6 +6,12 @@ import { printDebugData } from "../utils";
 
 const MAILGUN_DOMAIN = process.env["MAILGUN_DOMAIN"];
 
+const postConfig = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+};
+
 export const MailgunService: EmailService = {
   createAxios(MAILGUN_SECRET_KEY: string | undefined) {
     return Axios.create({
@@ -13,9 +19,6 @@ export const MailgunService: EmailService = {
       auth: {
         username: "api",
         password: MAILGUN_SECRET_KEY || "",
-      },
-      headers: {
-        "Content-Type": "multipart/form-data",
       },
     });
   },
@@ -70,7 +73,7 @@ export const MailgunService: EmailService = {
         const formData = new FormData();
         formData.append("name", templateName);
         formData.append("description", templateName);
-        await axios.post("/templates", formData);
+        await axios.post("/templates", formData, postConfig);
 
         existingTemplates[templateName] = {
           id: templateName,
@@ -106,7 +109,8 @@ export const MailgunService: EmailService = {
         const newTemplateVersion = (
           await axios.post(
             `templates/${existingTemplates[templateName]?.id || ""}/versions`,
-            formData
+            formData,
+            postConfig
           )
         ).data;
         debug({ newTemplateVersion });
@@ -146,7 +150,7 @@ export const MailgunService: EmailService = {
         formData.append("subject", subject);
         formData.append("t:variables", JSON.stringify(dynamicData));
 
-        return axios.post("/messages", formData);
+        return axios.post("/messages", formData, postConfig);
       }
     };
   },
