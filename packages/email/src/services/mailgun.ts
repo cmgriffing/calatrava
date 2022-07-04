@@ -119,7 +119,7 @@ export const MailgunService: EmailService = {
           "tag",
           `${+(existingTemplates[templateName]?.version || 0) + 1}`
         );
-        formData.append("engine", "handlerbars");
+        formData.append("engine", "handlebars");
         formData.append("active", "yes");
 
         // update template content
