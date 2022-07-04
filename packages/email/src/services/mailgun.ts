@@ -69,6 +69,12 @@ export const MailgunService: EmailService = {
                 version: templateVersion.version.tag,
                 content: templateVersion.version.template,
               };
+            } else {
+              existingTemplates[template.name] = {
+                id: template.name,
+                version: "0",
+                content: "",
+              };
             }
           })
         );
