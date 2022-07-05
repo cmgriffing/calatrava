@@ -24,5 +24,8 @@
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
+  "publishConfig": {
+    "@calatrava:registry": "https://npm.pkg.github.com"
+  },
   "packageManager": "pnpm@6.30.1"
 }
