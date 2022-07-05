@@ -1,5 +1,11 @@
 # @calatrava/middleware
 
+## 0.0.10
+
+### Patch Changes
+
+- 157176c: add extraValidation to createGetUser function
+
 ## 0.0.6
 
 ### Patch Changes
