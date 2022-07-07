@@ -1,5 +1,12 @@
 # @calatrava/middleware
 
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies [2b24272]
+  - @calatrava/datawrapper@0.0.13
+
 ## 0.0.10
 
 ### Patch Changes
