@@ -187,7 +187,7 @@ function getConfig(argv: any): CalatravaConfiguration {
   const configPath = path.resolve(cwd, argv.config);
 
   if (!fs.existsSync(configPath)) {
-    console.error("config file must exist at configPath: ", configPath);
+    console.error("Config file must exist at configPath: ", configPath);
     process.exit(-1);
   }
 
