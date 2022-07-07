@@ -45,6 +45,7 @@
     "@babel/core": "^7.17.5",
     "@babel/preset-react": "^7.16.7",
     "@sindresorhus/tsconfig": "^2.0.0",
+    "@types/fs-extra": "^9.0.13",
     "@types/ink-big-text": "^1.2.1",
     "@types/ink-gradient": "^2.0.1",
     "@types/react": "^17.0.39",
