@@ -10,8 +10,7 @@
   "scripts": {
     "generate-config-interface": "json2ts ../../calatrava.config.schema.json ./src/calatrava-config.d.ts",
     "dev": "nodemon --exec \"pnpm run build\" --watch src -e tsx",
-    "build": "tsc && chmod +x dist/cli.js",
-    "prebuild": "pnpm run generate-config-interface",
+    "build": "pnpm run generate-config-interface && tsc && chmod +x dist/cli.js",
     "start": "pnpm run build && dist/cli.js",
     "pretest": "pnpm run build",
     "test": "xo && ava"
