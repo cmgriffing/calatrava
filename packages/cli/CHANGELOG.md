@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.26
+
+### Patch Changes
+
+- 2b24272: Fix broken release process
+- Updated dependencies [2b24272]
+  - @calatrava/request-response@0.0.8
+  - @calatrava/boilerplate@0.0.19
+
 ## 0.0.25
 
 ### Patch Changes
