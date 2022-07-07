@@ -115,11 +115,12 @@ export const MailjetService: EmailService = {
     axios: AxiosInstance,
     emailTemplateIdMap: { [key: string]: string },
     fromEmail: string,
-    debugMode: boolean
+    debugMode: boolean,
+    preventSend: boolean = false
   ) {
     return function (toEmail: string, template: string, dynamicData: Object) {
       if (debugMode) {
-        return printDebugData(
+        printDebugData(
           axios,
           emailTemplateIdMap,
           fromEmail,
@@ -128,7 +129,8 @@ export const MailjetService: EmailService = {
           template,
           dynamicData
         );
-      } else {
+      }
+      if (!preventSend) {
         return axios.post("/send", {
           "Mj-TemplateID": emailTemplateIdMap[template],
           FromEmail: fromEmail,
@@ -136,6 +138,8 @@ export const MailjetService: EmailService = {
           Vars: dynamicData,
           "Mj-TemplateLanguage": true,
         });
+      } else {
+        return Promise.resolve();
       }
     };
   },

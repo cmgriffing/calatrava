@@ -12,7 +12,8 @@ export interface EmailService {
     axios: AxiosInstance,
     emailTemplateIdMap: { [key: string]: string },
     fromEmail: string,
-    debugMode: boolean
+    debugMode: boolean,
+    preventSend?: boolean
   ) => (toEmail: string, template: string, dynamicData: Object) => Promise<any>;
 
   createGetExistingTemplates: (

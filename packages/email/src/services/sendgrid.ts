@@ -105,7 +105,8 @@ export const SendgridService: EmailService = {
     axios: AxiosInstance,
     emailTemplateIdMap: { [key: string]: string },
     fromEmail: string,
-    debugMode: boolean
+    debugMode: boolean,
+    preventSend: boolean = false
   ) {
     return function (toEmail: string, template: string, dynamicData: Object) {
       if (debugMode) {
@@ -118,7 +119,8 @@ export const SendgridService: EmailService = {
           template,
           dynamicData
         );
-      } else {
+      }
+      if (!preventSend) {
         return axios.post("/mail/send", {
           template_id: emailTemplateIdMap[template],
           personalizations: {
@@ -127,6 +129,8 @@ export const SendgridService: EmailService = {
             dynamic_template_data: dynamicData,
           },
         });
+      } else {
+        return Promise.resolve();
       }
     };
   },

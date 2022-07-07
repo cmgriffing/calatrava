@@ -41,7 +41,8 @@ export class EmailClient {
       emailTemplateIdMap: { [key: string]: string };
       fromEmail: string;
     },
-    debugMode = false
+    debugMode = false,
+    preventSend = false
   ) {
     this.axios = emailProviderMap[provider].createAxios(accessKey, secretKey);
 
@@ -49,7 +50,8 @@ export class EmailClient {
       this.axios,
       emailTemplateIdMap,
       fromEmail,
-      debugMode
+      debugMode,
+      preventSend
     );
 
     this.getExistingTemplates = emailProviderMap[

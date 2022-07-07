@@ -147,7 +147,8 @@ export const MailgunService: EmailService = {
     axios: AxiosInstance,
     emailTemplateIdMap: { [key: string]: string },
     fromEmail: string,
-    debugMode: boolean
+    debugMode: boolean,
+    preventSend: boolean = false
   ) {
     // for Mailgun subject is part of dynamicData
     return function (toEmail: string, template: string, dynamicData: Object) {
@@ -158,7 +159,7 @@ export const MailgunService: EmailService = {
       }
 
       if (debugMode) {
-        return printDebugData(
+        printDebugData(
           axios,
           emailTemplateIdMap,
           fromEmail,
@@ -167,7 +168,9 @@ export const MailgunService: EmailService = {
           template,
           dynamicData
         );
-      } else {
+      }
+
+      if (!preventSend) {
         const formData = new FormData();
 
         formData.append("template", emailTemplateIdMap[template] || "");
@@ -177,6 +180,8 @@ export const MailgunService: EmailService = {
         formData.append("t:variables", JSON.stringify(dynamicData));
 
         return axios.post("/messages", formData, createPostConfig(formData));
+      } else {
+        return Promise.resolve();
       }
     };
   },
