@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.8
+
+### Patch Changes
+
+- 2b24272: Fix broken release process
+
 ## 0.0.7
 
 ### Patch Changes

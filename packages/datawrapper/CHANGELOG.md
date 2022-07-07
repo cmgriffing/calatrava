@@ -1,5 +1,11 @@
 # @calatrava/datawrapper
 
+## 0.0.13
+
+### Patch Changes
+
+- 2b24272: Fix broken release process
+
 ## 0.0.6
 
 ### Patch Changes
