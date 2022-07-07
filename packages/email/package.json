@@ -15,6 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "@sindresorhus/tsconfig": "^2.0.0",
+    "@types/fs-extra": "^9.0.13",
     "@types/minimist": "^1.2.2",
     "@types/mjml": "^4.7.0",
     "jest": "^27.5.1",

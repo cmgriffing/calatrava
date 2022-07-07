@@ -258,6 +258,7 @@ importers:
     specifiers:
       '@calatrava/utils': workspace:~
       '@sindresorhus/tsconfig': ^2.0.0
+      '@types/fs-extra': ^9.0.13
       '@types/minimist': ^1.2.2
       '@types/mjml': ^4.7.0
       axios: ^0.26.0
@@ -283,6 +284,7 @@ importers:
       mjml: 4.12.0
     devDependencies:
       '@sindresorhus/tsconfig': 2.0.0
+      '@types/fs-extra': 9.0.13
       '@types/minimist': 1.2.2
       '@types/mjml': 4.7.0
       jest: 27.5.1
