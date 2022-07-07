@@ -145,7 +145,7 @@ Yargs.scriptName("calatrava")
   // email
   .command(
     "email [config]",
-    "Scaffolds email template id map and uploads non existent templates to provider",
+    "Scaffolds email template id map and uploads missing templates to provider",
     (yargs: any) => {
       yargs.positional("config", {
         type: "string",
