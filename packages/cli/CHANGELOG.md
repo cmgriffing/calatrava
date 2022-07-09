@@ -1,5 +1,11 @@
 # @calatrava/cli
 
+## 0.0.27
+
+### Patch Changes
+
+- 1e6ffc2: Testing changesets functionality
+
 ## 0.0.26
 
 ### Patch Changes
