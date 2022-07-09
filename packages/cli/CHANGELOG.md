@@ -1,5 +1,12 @@
 # @calatrava/cli
 
+## 0.0.28
+
+### Patch Changes
+
+- Updated dependencies [29ba6ff]
+  - @calatrava/email@0.0.21
+
 ## 0.0.27
 
 ### Patch Changes
