@@ -69,3 +69,5 @@ export class EmailClient {
     ].createUploadCurrentContentIfNeeded(this.axios);
   }
 }
+
+export function noop() {}
