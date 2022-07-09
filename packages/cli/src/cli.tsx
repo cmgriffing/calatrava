@@ -197,4 +197,4 @@ function getConfig(argv: any): CalatravaConfiguration {
   return fs.readJSONSync(configPath);
 }
 
-export function noop() {}
+// export function noop() {}
