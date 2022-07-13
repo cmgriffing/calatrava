@@ -1,5 +1,11 @@
 # @calatrava/email
 
+## 0.0.21
+
+### Patch Changes
+
+- 29ba6ff: fix: add noop to email client
+
 ## 0.0.5
 
 ### Patch Changes
