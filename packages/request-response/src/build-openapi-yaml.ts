@@ -88,14 +88,14 @@ export async function buildOpenApiYaml(
 
       let requestSchema: any;
       debug(
-        "Build OpenAPI Yaml: routeOptionObject.requestJsonSchema: ",
-        routeOptionObject.requestJsonSchema,
+        "Build OpenAPI Yaml: routeOptionObject.requestSchema: ",
+        routeOptionObject.requestSchema,
         { routeOptionObject }
       );
 
-      if (routeOptionObject?.requestJsonSchema) {
+      if (routeOptionObject?.requestSchema) {
         requestSchema = tjsGenerator?.getSchemaForSymbol(
-          routeOptionObject.requestJsonSchema
+          routeOptionObject.requestSchema
         );
 
         if (!requestSchema) {
@@ -104,16 +104,15 @@ export async function buildOpenApiYaml(
 
         delete requestSchema?.$schema;
 
-        openApiSchema!.components!.schemas![
-          routeOptionObject.requestJsonSchema
-        ] = requestSchema as OpenAPIV3.SchemaObject;
+        openApiSchema!.components!.schemas![routeOptionObject.requestSchema] =
+          requestSchema as OpenAPIV3.SchemaObject;
       }
 
       const responses: any = {};
 
       // set 200 response
       const responseSchema = tjsGenerator?.getSchemaForSymbol(
-        routeOptionObject.responseJsonSchema
+        routeOptionObject.responseSchema
       );
 
       if (!responseSchema) {
@@ -125,7 +124,7 @@ export async function buildOpenApiYaml(
         content: {
           "application/json": {
             schema: {
-              $ref: `#/components/schemas/${routeOptionObject.responseJsonSchema}`,
+              $ref: `#/components/schemas/${routeOptionObject.responseSchema}`,
             },
           },
         },
@@ -133,18 +132,17 @@ export async function buildOpenApiYaml(
 
       delete responseSchema?.$schema;
 
-      openApiSchema!.components!.schemas![
-        routeOptionObject.responseJsonSchema
-      ] = responseSchema as OpenAPIV3.ResponseObject;
+      openApiSchema!.components!.schemas![routeOptionObject.responseSchema] =
+        responseSchema as OpenAPIV3.ResponseObject;
 
       // set error responses
       const errorSchema = tjsGenerator?.getSchemaForSymbol(
-        routeOptionObject.errorJsonSchema
+        routeOptionObject.errorSchema
       );
 
       delete errorSchema?.$schema;
 
-      openApiSchema!.components!.schemas![routeOptionObject.errorJsonSchema] =
+      openApiSchema!.components!.schemas![routeOptionObject.errorSchema] =
         errorSchema as OpenAPIV3.SchemaObject;
 
       routeOptionObject.definedErrors.forEach((errorCode) => {
@@ -153,7 +151,7 @@ export async function buildOpenApiYaml(
           content: {
             "application/json": {
               schema: {
-                $ref: `#/components/schemas/${routeOptionObject.errorJsonSchema}`,
+                $ref: `#/components/schemas/${routeOptionObject.errorSchema}`,
               },
             },
           },
@@ -173,7 +171,7 @@ export async function buildOpenApiYaml(
           content: {
             "application/json": {
               schema: {
-                $ref: `#/components/schemas/${routeOptionObject.requestJsonSchema}`,
+                $ref: `#/components/schemas/${routeOptionObject.requestSchema}`,
               },
             },
           },
