@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.9
+
+### Patch Changes
+
+- fa5af6e: Change from using JSON schemas to using raw interfaces
+
 ## 0.0.8
 
 ### Patch Changes
