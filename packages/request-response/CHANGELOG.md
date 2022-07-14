@@ -1,5 +1,12 @@
 # @calatrava/request-response
 
+## 0.0.12
+
+### Patch Changes
+
+- c084756: Revert previous change
+- fa2fa08: Allow additional props
+
 ## 0.0.9
 
 ### Patch Changes
