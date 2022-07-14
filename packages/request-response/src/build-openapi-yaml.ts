@@ -23,7 +23,7 @@ export async function buildOpenApiYaml(
 
     const settings: TJS.PartialArgs = {
       required: true,
-      // noExtraProps: true,
+      noExtraProps: true,
     };
 
     const inputFilePaths = [
