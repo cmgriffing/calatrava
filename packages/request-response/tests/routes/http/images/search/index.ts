@@ -11,9 +11,9 @@ class Handler {
       ...commonHeaders,
     },
     method: "POST",
-    requestJsonSchema: "ImageSearchRequest",
-    responseJsonSchema: "ImageSearchResponse",
-    errorJsonSchema: "ErrorResponse",
+    requestSchema: "ImageSearchRequest",
+    responseSchema: "ImageSearchResponse",
+    errorSchema: "ErrorResponse",
     definedErrors: [
       // HTTPStatusCode.BadRequest,
       // HTTPStatusCode.InternalServerError,
