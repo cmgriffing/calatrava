@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.16
+
+### Patch Changes
+
+- 4c30cd7: Add summary and description to open api yaml generation
+
 ## 0.0.15
 
 ### Patch Changes
