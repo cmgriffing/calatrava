@@ -161,6 +161,8 @@ export async function buildOpenApiYaml(
       });
 
       const pathObject: any = {
+        summary: routeOptionObject.summary,
+        description: routeOptionObject.description,
         responses,
         tags: routeOptionObject.tags,
       };
