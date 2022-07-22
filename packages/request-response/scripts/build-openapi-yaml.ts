@@ -5,8 +5,16 @@ async function main() {
   const args = minimist(process.argv.slice(2));
 
   // const cwd = process.cwd();
-  const { requests, responses, routes, version, title, description, out } =
-    args;
+  const {
+    requests,
+    responses,
+    routes,
+    version,
+    title,
+    description,
+    out,
+    isPublic,
+  } = args;
 
   if (!requests) {
     throw new Error("Requests path is required");
@@ -43,7 +51,8 @@ async function main() {
     version,
     title,
     description,
-    out
+    out,
+    !!isPublic
   );
 }
 

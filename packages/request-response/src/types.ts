@@ -12,6 +12,7 @@ export const commonHeaders = {
 };
 
 export interface RouteOptions {
+  public?: boolean;
   path: string;
   summary: string;
   description: string;

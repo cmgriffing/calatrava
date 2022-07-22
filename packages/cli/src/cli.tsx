@@ -131,11 +131,26 @@ Yargs.scriptName("calatrava")
         await tsToZod(requestTypesPath, requestSchemaPath);
         await tsToZod(responseTypesPath, responseSchemaPath);
 
-        // run build-openapi-yaml
+        // run build-openapi-yaml for both types (public/private)
         await buildOpenApiYaml(
           requestTypesPath,
           responseTypesPath,
-          httpRoutesDirectory
+          httpRoutesDirectory,
+          "0.0.0",
+          "",
+          "",
+          "openapi.yaml",
+          false
+        );
+        await buildOpenApiYaml(
+          requestTypesPath,
+          responseTypesPath,
+          httpRoutesDirectory,
+          "0.0.0",
+          "",
+          "",
+          "openapi-public.yaml",
+          true
         );
       } catch (e) {
         debug("CLI init: Caught exception: ", { e });

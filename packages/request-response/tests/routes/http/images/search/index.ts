@@ -3,6 +3,7 @@ import { Route, commonHeaders } from "../../../../../src/types";
 
 class Handler {
   @Route({
+    public: true,
     summary: "",
     description: "",
     path: "/images/search",
