@@ -12,6 +12,9 @@ export const commonHeaders = {
 };
 
 export interface RouteOptions {
+  // used to determine which private paths get annotated with auth params
+  open?: boolean;
+  // used to determine which openapi-yaml file to include this route in
   public?: boolean;
   path: string;
   summary: string;
