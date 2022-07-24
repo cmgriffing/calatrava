@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.37
+
+### Patch Changes
+
+- 7cf910d: Add isPublic flag
+- Updated dependencies [7cf910d]
+  - @calatrava/request-response@0.0.17
+  - @calatrava/boilerplate@0.0.19
+
 ## 0.0.36
 
 ### Patch Changes
