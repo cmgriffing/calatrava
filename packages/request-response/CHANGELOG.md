@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.17
+
+### Patch Changes
+
+- 7cf910d: Add isPublic flag
+
 ## 0.0.16
 
 ### Patch Changes
