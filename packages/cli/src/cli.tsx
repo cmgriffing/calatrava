@@ -108,14 +108,45 @@ Yargs.scriptName("calatrava")
     "scaffold [config]",
     "Scaffold out the zod validators and openapi yaml file",
     (yargs: any) => {
-      yargs.positional("config", {
-        type: "string",
-        default: "./calatrava.config.json",
-        describe: "the path to the Calatrava config file",
-      });
+      yargs
+        .positional("config", {
+          type: "string",
+          default: "./calatrava.config.json",
+          describe: "the path to the Calatrava config file",
+        })
+        .options({
+          o: {
+            alias: "out",
+            describe: "output file name",
+            type: "string",
+            nargs: 1,
+            default: "openapi.yaml",
+          },
+          p: {
+            alias: "public",
+            describe: "filter for public endpoints",
+            type: "boolean",
+            nargs: 1,
+            default: false,
+            // also: count:true, requiresArg:true
+          },
+          u: {
+            alias: "url",
+            describe: "the base url of the api",
+            type: "string",
+            nargs: 1,
+            default: "http://localhost",
+          },
+        });
+
+      return yargs;
     },
     async function (argv: any) {
       try {
+        const isPublic: boolean = argv.p;
+        const baseUrl: boolean = argv.u;
+        const outputFile: boolean = argv.o;
+
         const config = getConfig(argv);
         const {
           scaffolding: {
@@ -139,18 +170,9 @@ Yargs.scriptName("calatrava")
           "0.0.0",
           "",
           "",
-          "openapi.yaml",
-          false
-        );
-        await buildOpenApiYaml(
-          requestTypesPath,
-          responseTypesPath,
-          httpRoutesDirectory,
-          "0.0.0",
-          "",
-          "",
-          "openapi-public.yaml",
-          true
+          outputFile,
+          isPublic,
+          baseUrl
         );
       } catch (e) {
         debug("CLI init: Caught exception: ", { e });

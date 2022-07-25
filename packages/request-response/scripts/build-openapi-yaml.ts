@@ -14,6 +14,7 @@ async function main() {
     description,
     out,
     isPublic,
+    baseUrl,
   } = args;
 
   if (!requests) {
@@ -44,6 +45,10 @@ async function main() {
     throw new Error("Out path is required.");
   }
 
+  if (!baseUrl) {
+    throw new Error("Base URL is required.");
+  }
+
   await buildOpenApiYaml(
     requests,
     responses,
@@ -52,7 +57,8 @@ async function main() {
     title,
     description,
     out,
-    !!isPublic
+    !!isPublic,
+    baseUrl
   );
 }
 
