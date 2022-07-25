@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.22
+
+### Patch Changes
+
+- cdc72b2: remove baseUrl from info output
+
 ## 0.0.21
 
 ### Patch Changes
