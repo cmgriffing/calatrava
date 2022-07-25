@@ -1,5 +1,14 @@
 # @calatrava/cli
 
+## 0.0.41
+
+### Patch Changes
+
+- 5f81b77: add arguments to scaffold command
+- Updated dependencies [5f81b77]
+  - @calatrava/request-response@0.0.21
+  - @calatrava/boilerplate@0.0.19
+
 ## 0.0.40
 
 ### Patch Changes
