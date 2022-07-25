@@ -231,11 +231,12 @@ function getRouteOptionsYaml(
 
     if (!routeOptionObject.public && !routeOptionObject.open) {
       if (!pathObject.security) {
-        pathObject.security = [];
+        pathObject.security = [
+          {
+            BearerAuth: [],
+          },
+        ];
       }
-      pathObject.security!.push({
-        BearerAuth: [],
-      });
     }
     (openApiSchema!.paths![routeOptionObject.path] as any)![
       routeOptionObject.method.toLowerCase()
