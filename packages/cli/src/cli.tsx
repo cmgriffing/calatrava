@@ -144,8 +144,8 @@ Yargs.scriptName("calatrava")
     async function (argv: any) {
       try {
         const isPublic: boolean = argv.p;
-        const baseUrl: boolean = argv.u;
-        const outputFile: boolean = argv.o;
+        const baseUrl: string = argv.u;
+        const outputFile: string = argv.o;
 
         const config = getConfig(argv);
         const {
