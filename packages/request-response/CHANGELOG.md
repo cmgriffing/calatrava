@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.20
+
+### Patch Changes
+
+- 6e322e5: always show API Key auth as option in dev openapi yaml file
+
 ## 0.0.19
 
 ### Patch Changes
