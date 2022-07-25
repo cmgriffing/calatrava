@@ -142,15 +142,6 @@ function getRouteOptionsYaml(
       { routeOptionObject }
     );
 
-    if (!routeOptionObject.public && !routeOptionObject.open) {
-      if (!openApiSchema.security) {
-        openApiSchema.security = [];
-      }
-      openApiSchema.security!.push({
-        BearerAuth: [],
-      });
-    }
-
     if (routeOptionObject?.requestSchema) {
       requestSchema = tjsGenerator?.getSchemaForSymbol(
         routeOptionObject.requestSchema
@@ -236,6 +227,15 @@ function getRouteOptionsYaml(
           },
         },
       };
+    }
+
+    if (!routeOptionObject.public && !routeOptionObject.open) {
+      if (!pathObject.security) {
+        pathObject.security = [];
+      }
+      pathObject.security!.push({
+        BearerAuth: [],
+      });
     }
     (openApiSchema!.paths![routeOptionObject.path] as any)![
       routeOptionObject.method.toLowerCase()
