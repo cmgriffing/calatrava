@@ -103,10 +103,6 @@ function getRouteOptionsYaml(
     components: {
       schemas: {},
       securitySchemes: {
-        BearerAuth: {
-          type: "http",
-          scheme: "bearer",
-        },
         ApiKeyAuth: {
           type: "apiKey",
           in: "header",
@@ -122,11 +118,15 @@ function getRouteOptionsYaml(
     filteredRouteOptions = routeOptions.filter(
       (routeOption) => routeOption.public
     );
-
     openApiSchema.security = [];
     openApiSchema.security.push({
       ApiKeyAuth: [],
     });
+  } else {
+    openApiSchema.components!.securitySchemes!["BearerAuth"] = {
+      type: "http",
+      scheme: "bearer",
+    };
   }
 
   filteredRouteOptions.forEach((routeOptionObject) => {
@@ -229,15 +229,19 @@ function getRouteOptionsYaml(
       };
     }
 
-    if (!routeOptionObject.public && !routeOptionObject.open) {
-      if (!pathObject.security) {
-        pathObject.security = [
-          {
-            BearerAuth: [],
-          },
-        ];
+    if (!isPublic && !routeOptionObject.open) {
+      pathObject.security = [
+        {
+          BearerAuth: [],
+        },
+      ];
+      if (!!routeOptionObject.public) {
+        pathObject.security.push({
+          ApiKeyAuth: [],
+        });
       }
     }
+
     (openApiSchema!.paths![routeOptionObject.path] as any)![
       routeOptionObject.method.toLowerCase()
     ] = pathObject;
