@@ -76,9 +76,9 @@ export async function buildOpenApiYaml(
         version,
         title,
         description,
-        baseUrl,
       },
-      isPublic
+      isPublic,
+      baseUrl
     );
 
     // // output yaml file
@@ -95,15 +95,15 @@ function getRouteOptionsYaml(
     version: string;
     title: string;
     description: string;
-    baseUrl: string;
   },
-  isPublic?: boolean
+  isPublic?: boolean,
+  baseUrl: string = "http://localhost"
 ) {
   const openApiSchema = {
     openapi: "3.0.3",
     info,
     paths: {},
-    server: [{ url: info.baseUrl }],
+    server: [{ url: baseUrl }],
     components: {
       schemas: {},
       securitySchemes: {
