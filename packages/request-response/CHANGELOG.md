@@ -1,5 +1,12 @@
 # @calatrava/request-response
 
+## 0.0.18
+
+### Patch Changes
+
+- 74c228f: scoped security settings to routes for non public api
+- c452a97: ci: filter openapi and security better
+
 ## 0.0.17
 
 ### Patch Changes
