@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/cli",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "A CLI tool to manage apps built with the Calatrava framework",
   "main": "dist/cli.js",
   "bin": "dist/cli.js",

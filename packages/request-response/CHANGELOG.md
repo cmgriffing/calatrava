@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.21
+
+### Patch Changes
+
+- 5f81b77: add arguments to scaffold command
+
 ## 0.0.20
 
 ### Patch Changes
