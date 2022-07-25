@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.19
+
+### Patch Changes
+
+- fb74120: implify page options security
+
 ## 0.0.18
 
 ### Patch Changes
