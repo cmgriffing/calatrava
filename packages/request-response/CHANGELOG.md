@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.23
+
+### Patch Changes
+
+- 58ae320: scrub definitions and make openapi3 compliant
+
 ## 0.0.22
 
 ### Patch Changes
