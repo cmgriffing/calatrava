@@ -10,7 +10,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "isBehind": "ts-node scripts/is-behind.ts",
+    "isBehind": "git fetch && ts-node scripts/is-behind.ts",
     "changeset:core": "pnpm changeset",
     "changeset:safe": "npm-run-all -s isBehind changeset:core",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

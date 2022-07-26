@@ -331,7 +331,7 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
       const splitComponentName = componentName.split("_");
       const scrubbedComponentName = splitComponentName[0];
 
-      let newRefPath = refPath.replace("#/definitions", "#/components/schema");
+      let newRefPath = refPath.replace("#/definitions", "#/components/schemas");
 
       newRefPath = newRefPath.replace(
         componentName,
