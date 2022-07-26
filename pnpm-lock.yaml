@@ -336,6 +336,7 @@ importers:
       fs-extra: ^10.0.0
       glob: ^7.2.0
       jest: ^27.5.1
+      lodash: ^4.17.21
       minimist: ^1.2.5
       openapi-types: ^10.0.0
       ts-jest: ^27.1.3
@@ -351,6 +352,7 @@ importers:
       deepdash: 5.3.9
       fs-extra: 10.0.0
       glob: 7.2.0
+      lodash: 4.17.21
       minimist: 1.2.5
       openapi-types: 10.0.0
       ts-to-zod: 1.8.0
