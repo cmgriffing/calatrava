@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.24
+
+### Patch Changes
+
+- 78767cd: schemas instead of schema
+
 ## 0.0.23
 
 ### Patch Changes
