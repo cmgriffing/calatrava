@@ -8,6 +8,8 @@ import { RouteOptions } from "./types";
 import * as YAML from "yaml";
 import * as TJS from "typescript-json-schema";
 import { debug } from "@calatrava/utils";
+import lodash from "lodash";
+const deepdashPaths = require("deepdash/paths");
 
 export async function buildOpenApiYaml(
   requestTypesPath: string,
@@ -62,7 +64,10 @@ export async function buildOpenApiYaml(
         // map parsed handlers and extract metadata from Route
         ts.forEachChild(sourceFile, (node) => {
           if (ts.isClassDeclaration(node)) {
-            routeOptions.push(...getRouteMetadata(node, sourceFile));
+            const routeMetadata = getRouteMetadata(node, sourceFile);
+            if (routeMetadata.length) {
+              routeOptions.push(...routeMetadata);
+            }
           }
         });
       });
@@ -81,7 +86,6 @@ export async function buildOpenApiYaml(
       baseUrl
     );
 
-    // // output yaml file
     fs.outputFile(path.resolve(cwd, out), yaml);
   } catch (e) {
     debug("Build openapi yaml: Caught exception: ", { e });
@@ -99,11 +103,11 @@ function getRouteOptionsYaml(
   isPublic?: boolean,
   baseUrl: string = "http://localhost"
 ) {
-  const openApiSchema = {
+  let openApiSchema: OpenAPIV3.Document = {
     openapi: "3.0.3",
     info,
     paths: {},
-    server: [{ url: baseUrl }],
+    servers: [{ url: baseUrl }],
     components: {
       schemas: {},
       securitySchemes: {
@@ -114,7 +118,7 @@ function getRouteOptionsYaml(
         },
       },
     },
-  } as OpenAPIV3.Document;
+  };
 
   let filteredRouteOptions = routeOptions;
 
@@ -155,6 +159,19 @@ function getRouteOptionsYaml(
         throw new Error("Could not generate request schema");
       }
 
+      requestSchema =
+        scrubSchemaDefinitionsProps<OpenAPIV3.SchemaObject>(requestSchema);
+
+      const scrubbedSchemas =
+        scrubSchemaDefinitionsRefs<OpenAPIV3.SchemaObject>(
+          requestSchema,
+          openApiSchema,
+          tjsGenerator
+        );
+
+      requestSchema = scrubbedSchemas.schema;
+      openApiSchema = scrubbedSchemas.doc;
+
       delete requestSchema?.$schema;
 
       openApiSchema!.components!.schemas![routeOptionObject.requestSchema] =
@@ -164,13 +181,36 @@ function getRouteOptionsYaml(
     const responses: any = {};
 
     // set 200 response
-    const responseSchema = tjsGenerator?.getSchemaForSymbol(
+    let responseSchema = tjsGenerator?.getSchemaForSymbol(
       routeOptionObject.responseSchema
     );
 
     if (!responseSchema) {
+      throw new Error(
+        `Could not generate response schema:  ${routeOptionObject.responseSchema}`
+      );
+    }
+
+    responseSchema =
+      scrubSchemaDefinitionsProps<TJS.Definition>(responseSchema);
+
+    const scrubbedSchemas = scrubSchemaDefinitionsRefs<TJS.Definition>(
+      responseSchema,
+      openApiSchema,
+      tjsGenerator
+    );
+
+    responseSchema = scrubbedSchemas.schema;
+    openApiSchema = scrubbedSchemas.doc;
+
+    if (!responseSchema) {
       throw new Error("Could not generate request schema");
     }
+
+    delete responseSchema?.$schema;
+
+    openApiSchema!.components!.schemas![routeOptionObject.responseSchema] =
+      responseSchema as OpenAPIV3.ResponseObject;
 
     responses["200"] = {
       description: "Response",
@@ -183,17 +223,23 @@ function getRouteOptionsYaml(
       },
     };
 
-    delete responseSchema?.$schema;
-
-    openApiSchema!.components!.schemas![routeOptionObject.responseSchema] =
-      responseSchema as OpenAPIV3.ResponseObject;
-
     // set error responses
-    const errorSchema = tjsGenerator?.getSchemaForSymbol(
+    let errorSchema = tjsGenerator?.getSchemaForSymbol(
       routeOptionObject.errorSchema
     );
 
     delete errorSchema?.$schema;
+
+    errorSchema = scrubSchemaDefinitionsProps<TJS.Definition>(responseSchema);
+
+    const scrubbedErrorSchemas = scrubSchemaDefinitionsRefs<TJS.Definition>(
+      errorSchema,
+      openApiSchema,
+      tjsGenerator
+    );
+
+    errorSchema = scrubbedErrorSchemas.schema;
+    openApiSchema = scrubbedErrorSchemas.doc;
 
     openApiSchema!.components!.schemas![routeOptionObject.errorSchema] =
       errorSchema as OpenAPIV3.SchemaObject;
@@ -254,4 +300,68 @@ function getRouteOptionsYaml(
   // convert json to yaml
   const yaml = YAML.stringify(openApiSchema);
   return yaml;
+}
+
+function scrubSchemaDefinitionsProps<T>(schema: T): T {
+  const newSchema = lodash.cloneDeep(schema);
+  delete (newSchema as any).definitions;
+  return newSchema;
+}
+
+function scrubSchemaDefinitionsRefs<T extends Object>(
+  schema: T,
+  doc: OpenAPIV3.Document,
+  tjsGenerator: TJS.JsonSchemaGenerator | null
+): { schema: T; doc: OpenAPIV3.Document } {
+  if (!tjsGenerator) {
+    throw new Error("TJS Generator not instantiated.");
+  }
+
+  const newSchema = lodash.cloneDeep(schema);
+  const newDoc = lodash.cloneDeep(doc);
+
+  const schemaPaths: string[] = deepdashPaths(newSchema);
+  schemaPaths.forEach((schemaPath) => {
+    if (lodash.endsWith(schemaPath as string, "$ref")) {
+      const refPath: string = lodash.get(newSchema, schemaPath);
+
+      const splitRefPath = refPath.split("/");
+
+      const componentName: string = splitRefPath[splitRefPath.length - 1] || "";
+      const splitComponentName = componentName.split("_");
+      const scrubbedComponentName = splitComponentName[0];
+
+      let newRefPath = refPath.replace("#/definitions", "#/components/schema");
+
+      newRefPath = newRefPath.replace(
+        componentName,
+        scrubbedComponentName || componentName
+      );
+
+      lodash.set(newSchema, schemaPath, newRefPath);
+
+      if (
+        scrubbedComponentName &&
+        !newDoc!.components!.schemas![scrubbedComponentName]
+      ) {
+        const lookedUpSchema = tjsGenerator.getSchemaForSymbol(
+          scrubbedComponentName
+        );
+        if (lookedUpSchema) {
+          if (lookedUpSchema.definitions) {
+            const internalSchema =
+              lookedUpSchema.definitions[scrubbedComponentName];
+
+            newDoc!.components!.schemas![scrubbedComponentName] =
+              internalSchema as OpenAPIV3.SchemaObject;
+          }
+        }
+      }
+    }
+  });
+
+  return {
+    schema: newSchema,
+    doc: newDoc,
+  };
 }

@@ -293,3 +293,27 @@ export interface RestaurantDetailsResponse {
       }[]
     | null;
 }
+
+///////////////////////////
+
+//////////////////////////
+
+export enum PaymentProvider {
+  Stripe = "stripe",
+  Paypal = "paypal",
+  // AppleStore = "appleStore",
+  // PlayStore = "playStore",
+  // Plaid = "plaid",
+}
+
+export interface TransactionResponse {
+  transactionId: string;
+  accountId: string;
+  businessId: string;
+  amount: number;
+  note?: string;
+  paymentProvider?: PaymentProvider;
+  paymentId?: string;
+  createdAt: number;
+  modifiedAt: number;
+}

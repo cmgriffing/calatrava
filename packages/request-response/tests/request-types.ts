@@ -175,3 +175,27 @@ export interface ReportInviteRequest {
   inviterUserId: string;
   reporterUserId: string;
 }
+
+///////////////////
+
+//////////////////
+
+export enum PaymentProvider {
+  Stripe = "stripe",
+  Paypal = "paypal",
+  // AppleStore = "appleStore",
+  // PlayStore = "playStore",
+  // Plaid = "plaid",
+}
+
+export interface PatchTransactionRequest {
+  accountId?: string;
+  amount?: number;
+  note?: string;
+  paymentProvider?: PaymentProvider;
+  paymentId?: string;
+}
+
+export interface ErrorResponse {
+  message?: string;
+}

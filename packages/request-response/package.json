@@ -6,7 +6,7 @@
   "scripts": {
     "ts-to-zod:requests": "ts-node scripts/ts-to-zod --interfaces ./tests/request-types.ts --out ./tests/request-schemas.ts",
     "ts-to-zod:responses": "ts-node scripts/ts-to-zod --interfaces ./tests/response-types.ts --out ./tests/response-schemas.ts",
-    "build-openapi-yaml": "ts-node scripts/build-openapi-yaml.ts --requests ./tests/request-types.ts --responses ./tests/response-types.ts --routes ./tests/routes/http --version 0.0.1 --title \"A New API\" --description \"some kind of description\" --out ./openapi.yml",
+    "build-openapi-yaml": "ts-node scripts/build-openapi-yaml.ts --requests ./tests/request-types.ts --responses ./tests/response-types.ts --routes ./tests/routes/http --version 0.0.1 --title \"A New API\" --description \"some kind of description\" --out ./openapi.yml --baseUrl http://localhost:4242",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,10 +23,12 @@
     "@types/node": "^18.0.3",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.3",
+    "ts-node": "^10.9.1",
     "typescript": "^4.5.3"
   },
   "dependencies": {
     "@calatrava/utils": "workspace:~",
+    "deepdash": "^5.3.9",
     "fs-extra": "^10.0.0",
     "glob": "^7.2.0",
     "minimist": "^1.2.5",
