@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.27
+
+### Patch Changes
+
+- 899b789: remove \$schema from non definition schemas
+
 ## 0.0.26
 
 ### Patch Changes
