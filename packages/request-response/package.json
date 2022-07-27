@@ -6,7 +6,7 @@
   "scripts": {
     "ts-to-zod:requests": "ts-node scripts/ts-to-zod --interfaces ./tests/request-types.ts --out ./tests/request-schemas.ts",
     "ts-to-zod:responses": "ts-node scripts/ts-to-zod --interfaces ./tests/response-types.ts --out ./tests/response-schemas.ts",
-    "build-openapi-yaml": "ts-node scripts/build-openapi-yaml.ts --requests ./tests/request-types.ts --responses ./tests/response-types.ts --routes ./tests/routes/http --version 0.0.1 --title \"A New API\" --description \"some kind of description\" --out ./openapi.yml --baseUrl http://localhost:4242",
+    "build-openapi-yaml": "DEBUG=true ts-node scripts/build-openapi-yaml.ts --requests ./tests/request-types.ts --responses ./tests/response-types.ts --routes ./tests/routes/http --version 0.0.1 --title \"A New API\" --description \"some kind of description\" --out ./openapi.yml --baseUrl http://localhost:4242",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
