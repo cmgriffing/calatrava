@@ -1,5 +1,13 @@
 # @calatrava/cli
 
+## 0.0.45
+
+### Patch Changes
+
+- Updated dependencies [8619c82]
+  - @calatrava/request-response@0.0.25
+  - @calatrava/boilerplate@0.0.19
+
 ## 0.0.44
 
 ### Patch Changes
