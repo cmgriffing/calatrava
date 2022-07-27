@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.26
+
+### Patch Changes
+
+- 91113c7: handle non definitions
+
 ## 0.0.25
 
 ### Patch Changes
