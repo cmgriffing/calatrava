@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.25
+
+### Patch Changes
+
+- 8619c82: Add runtime logs
+
 ## 0.0.24
 
 ### Patch Changes
