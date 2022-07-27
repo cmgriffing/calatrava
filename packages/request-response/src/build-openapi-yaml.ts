@@ -363,6 +363,9 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
               "lookedUpSchema did not have definitions",
               lookedUpSchema
             );
+
+            newDoc!.components!.schemas![scrubbedComponentName] =
+              lookedUpSchema as OpenAPIV3.SchemaObject;
           }
         } else {
           console.log("Could not find schema for: ", scrubbedComponentName);
