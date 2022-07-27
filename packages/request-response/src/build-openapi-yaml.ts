@@ -364,6 +364,8 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
               lookedUpSchema
             );
 
+            delete lookedUpSchema["$schema"];
+
             newDoc!.components!.schemas![scrubbedComponentName] =
               lookedUpSchema as OpenAPIV3.SchemaObject;
           }
