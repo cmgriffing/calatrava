@@ -23,6 +23,7 @@ export async function buildOpenApiYaml(
   baseUrl: string = "http://localhost"
 ) {
   try {
+    console.log("This story begins with a process");
     const cwd = process.cwd();
 
     const settings: TJS.PartialArgs = {
@@ -313,6 +314,7 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
   doc: OpenAPIV3.Document,
   tjsGenerator: TJS.JsonSchemaGenerator | null
 ): { schema: T; doc: OpenAPIV3.Document } {
+  console.log("HERE");
   if (!tjsGenerator) {
     throw new Error("TJS Generator not instantiated.");
   }
@@ -321,8 +323,10 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
   const newDoc = lodash.cloneDeep(doc);
 
   const schemaPaths: string[] = deepdashPaths(newSchema);
+  // console.log({ schemaPaths });
   schemaPaths.forEach((schemaPath) => {
     if (lodash.endsWith(schemaPath as string, "$ref")) {
+      console.log({ schemaPath });
       const refPath: string = lodash.get(newSchema, schemaPath);
 
       const splitRefPath = refPath.split("/");
@@ -354,7 +358,14 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
 
             newDoc!.components!.schemas![scrubbedComponentName] =
               internalSchema as OpenAPIV3.SchemaObject;
+          } else {
+            console.log(
+              "lookedUpSchema did not have definitions",
+              lookedUpSchema
+            );
           }
+        } else {
+          console.log("Could not find schema for: ", scrubbedComponentName);
         }
       }
     }

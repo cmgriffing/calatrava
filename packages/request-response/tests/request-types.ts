@@ -188,6 +188,11 @@ export enum PaymentProvider {
   // Plaid = "plaid",
 }
 
+export enum BillingType {
+  Usage = "usage",
+  MicroTransaction = "microTransaction",
+}
+
 export interface PatchTransactionRequest {
   accountId?: string;
   amount?: number;
@@ -198,4 +203,18 @@ export interface PatchTransactionRequest {
 
 export interface ErrorResponse {
   message?: string;
+}
+
+export interface PatchBusinessSettingsRequest {
+  currencyLabel?: string;
+  currencyLabelSuffixed?: boolean;
+  accountsOverdraftable?: boolean;
+  billingType?: BillingType;
+  paymentProviders?: PaymentProvider[];
+  stripeSandboxPublishableKey?: string;
+  stripeSandboxSecretKey?: string;
+  stripePublishableKey?: string;
+  stripeSecretKey?: string;
+  paypalClientId?: string;
+  paypalClientSecret?: string;
 }

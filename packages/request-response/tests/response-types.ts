@@ -317,3 +317,10 @@ export interface TransactionResponse {
   createdAt: number;
   modifiedAt: number;
 }
+
+export interface BusinessSettingsResponse {
+  businessId: string;
+  currencyLabel: string;
+  currencyLabelSuffixed: boolean;
+  accountsOverdraftable: boolean;
+}
