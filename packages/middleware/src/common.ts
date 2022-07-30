@@ -7,17 +7,35 @@ export const commonHeaders = {
   "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE,OPTIONS",
   "access-control-allow-headers": "content-type,authorization",
   "cache-control": "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0",
-  "content-type": "application/json; charset=utf8",
+  "content-type": "application/json",
 };
 
-export function attachCommonHeaders(response: HttpResponse): HttpResponse {
+export function attachCommonHeaders(
+  response: HttpResponse,
+  customHeaders: Record<string, string> = {}
+): HttpResponse {
   response.headers = {
     ...(response.headers || {}),
     ...commonHeaders,
+    ...customHeaders,
   };
 
   (response as any).cors = true;
   return response;
+}
+
+export function createAttachCommonHeaders(
+  globalHeaders: Record<string, string> = {}
+) {
+  return function (
+    response: HttpResponse,
+    customHeaders: Record<string, string>
+  ) {
+    return attachCommonHeaders(response, {
+      ...globalHeaders,
+      ...customHeaders,
+    });
+  };
 }
 
 export function createGetPresignedUrl(
