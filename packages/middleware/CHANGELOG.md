@@ -1,5 +1,11 @@
 # @calatrava/middleware
 
+## 0.0.12
+
+### Patch Changes
+
+- 08d3042: Allow customHeaders and create global header function as well
+
 ## 0.0.11
 
 ### Patch Changes

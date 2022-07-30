@@ -1,5 +1,11 @@
 # @calatrava/cli
 
+## 0.0.48
+
+### Patch Changes
+
+- @calatrava/boilerplate@0.0.19
+
 ## 0.0.47
 
 ### Patch Changes
