@@ -29,7 +29,7 @@ export function createAttachCommonHeaders(
 ) {
   return function (
     response: HttpResponse,
-    customHeaders: Record<string, string>
+    customHeaders: Record<string, string> = {}
   ) {
     return attachCommonHeaders(response, {
       ...globalHeaders,
