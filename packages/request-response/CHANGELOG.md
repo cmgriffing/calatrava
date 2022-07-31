@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.28
+
+### Patch Changes
+
+- 459b643: use errorSchema and wrap usage
+
 ## 0.0.27
 
 ### Patch Changes
