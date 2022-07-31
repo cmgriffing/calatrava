@@ -1,5 +1,11 @@
 # @calatrava/middleware
 
+## 0.0.13
+
+### Patch Changes
+
+- 68e1b4c: fix: make customHeaders optional
+
 ## 0.0.12
 
 ### Patch Changes
