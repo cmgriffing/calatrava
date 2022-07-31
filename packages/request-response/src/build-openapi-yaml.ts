@@ -23,7 +23,6 @@ export async function buildOpenApiYaml(
   baseUrl: string = "http://localhost"
 ) {
   try {
-    console.log("This story begins with a process");
     const cwd = process.cwd();
 
     const settings: TJS.PartialArgs = {
@@ -229,36 +228,37 @@ function getRouteOptionsYaml(
       routeOptionObject.errorSchema
     );
 
-    delete errorSchema?.$schema;
+    if (errorSchema) {
+      delete errorSchema?.$schema;
+      errorSchema = scrubSchemaDefinitionsProps<TJS.Definition>(errorSchema);
 
-    errorSchema = scrubSchemaDefinitionsProps<TJS.Definition>(responseSchema);
+      const scrubbedErrorSchemas = scrubSchemaDefinitionsRefs<TJS.Definition>(
+        errorSchema,
+        openApiSchema,
+        tjsGenerator
+      );
 
-    const scrubbedErrorSchemas = scrubSchemaDefinitionsRefs<TJS.Definition>(
-      errorSchema,
-      openApiSchema,
-      tjsGenerator
-    );
+      errorSchema = scrubbedErrorSchemas.schema;
+      openApiSchema = scrubbedErrorSchemas.doc;
 
-    errorSchema = scrubbedErrorSchemas.schema;
-    openApiSchema = scrubbedErrorSchemas.doc;
+      openApiSchema!.components!.schemas![routeOptionObject.errorSchema] =
+        errorSchema as OpenAPIV3.SchemaObject;
 
-    openApiSchema!.components!.schemas![routeOptionObject.errorSchema] =
-      errorSchema as OpenAPIV3.SchemaObject;
-
-    routeOptionObject.definedErrors.forEach((errorCode) => {
-      const definedError = {
-        description: "Error",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: `#/components/schemas/${routeOptionObject.errorSchema}`,
+      routeOptionObject.definedErrors.forEach((errorCode) => {
+        const definedError = {
+          description: "Error",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: `#/components/schemas/${routeOptionObject.errorSchema}`,
+              },
             },
           },
-        },
-      };
+        };
 
-      responses[errorCode] = definedError;
-    });
+        responses[errorCode] = definedError;
+      });
+    }
 
     const pathObject: any = {
       summary: routeOptionObject.summary,
@@ -314,7 +314,6 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
   doc: OpenAPIV3.Document,
   tjsGenerator: TJS.JsonSchemaGenerator | null
 ): { schema: T; doc: OpenAPIV3.Document } {
-  console.log("HERE");
   if (!tjsGenerator) {
     throw new Error("TJS Generator not instantiated.");
   }
@@ -323,10 +322,8 @@ function scrubSchemaDefinitionsRefs<T extends Object>(
   const newDoc = lodash.cloneDeep(doc);
 
   const schemaPaths: string[] = deepdashPaths(newSchema);
-  // console.log({ schemaPaths });
   schemaPaths.forEach((schemaPath) => {
     if (lodash.endsWith(schemaPath as string, "$ref")) {
-      console.log({ schemaPath });
       const refPath: string = lodash.get(newSchema, schemaPath);
 
       const splitRefPath = refPath.split("/");
