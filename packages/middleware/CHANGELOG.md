@@ -1,5 +1,11 @@
 # @calatrava/middleware
 
+## 0.0.14
+
+### Patch Changes
+
+- 7f5df81: add optional attachCommonHeaders override param
+
 ## 0.0.13
 
 ### Patch Changes
