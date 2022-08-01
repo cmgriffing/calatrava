@@ -23,7 +23,7 @@ import {
   DBKeys,
   TableKeyManager,
 } from "@calatrava/datawrapper";
-import { attachCommonHeaders } from "./common";
+import { attachCommonHeaders as baseAttachCommonHeaders } from "./common";
 
 export const createGetTables = function (tableKeyManager: TableKeyManager) {
   return async function getTables(
@@ -45,7 +45,8 @@ export const createGetTables = function (tableKeyManager: TableKeyManager) {
 export const createGetUser = function <User>(
   usersTableKey: string,
   decodeToken: Function,
-  extraValidation?: (user: User) => Promise<HttpResponse | void>
+  extraValidation?: (user: User) => Promise<HttpResponse | void>,
+  attachCommonHeaders = baseAttachCommonHeaders
 ) {
   return async function getUser(
     req: HttpRequestWithTables,
@@ -97,7 +98,11 @@ export const createGetUserTeams = function <
   User extends BaseUser,
   Team extends BaseTeam,
   Teammate extends BaseTeammate
->(teamsKey: string, teammatesKey: string) {
+>(
+  teamsKey: string,
+  teammatesKey: string,
+  attachCommonHeaders = baseAttachCommonHeaders
+) {
   return async function (req: HttpRequestWithUser<User>, _context: any) {
     const teamsTable = req.tables.get<Team>(teamsKey);
     const teammatesTable = req.tables.get<Teammate>(teammatesKey);
@@ -142,7 +147,10 @@ export const createGetUserTeams = function <
   } as HttpHandler;
 };
 
-export function isValidRequest(schema: any) {
+export function isValidRequest(
+  schema: any,
+  attachCommonHeaders = baseAttachCommonHeaders
+) {
   return async function (
     req: HttpRequestWithTables,
     _context: any
@@ -161,7 +169,10 @@ export function isValidRequest(schema: any) {
   } as HttpHandler;
 }
 
-export const logDatabase = function (tableName: string) {
+export const logDatabase = function (
+  tableName: string,
+  attachCommonHeaders = baseAttachCommonHeaders
+) {
   return async function (
     _req: HttpRequestWithTables
   ): Promise<HttpResponse | undefined> {
