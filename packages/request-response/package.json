@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/request-response",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "A set of tools for request validation and openapi documentation for the Calatrava framework",
   "main": "./dist/index.js",
   "scripts": {

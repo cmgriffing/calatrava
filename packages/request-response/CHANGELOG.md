@@ -1,5 +1,11 @@
 # @calatrava/request-response
 
+## 0.0.30
+
+### Patch Changes
+
+- 86f590e: version bump
+
 ## 0.0.29
 
 ### Patch Changes
