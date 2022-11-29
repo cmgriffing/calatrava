@@ -67,7 +67,10 @@
       ],
       "properties": {
         "dependencyTypesPath": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "requestTypesPath": {
           "type": "string"
