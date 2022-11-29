@@ -58,6 +58,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "dependencyTypesPath",
         "requestTypesPath",
         "requestSchemaPath",
         "responseTypesPath",
@@ -65,6 +66,9 @@
         "openApiSchemaPath"
       ],
       "properties": {
+        "dependencyTypesPath": {
+          "type": "string"
+        },
         "requestTypesPath": {
           "type": "string"
         },

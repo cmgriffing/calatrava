@@ -150,6 +150,7 @@ Yargs.scriptName("calatrava")
         const config = getConfig(argv);
         const {
           scaffolding: {
+            dependencyTypesPath,
             requestSchemaPath,
             requestTypesPath,
             responseSchemaPath,
@@ -159,8 +160,12 @@ Yargs.scriptName("calatrava")
         } = config;
 
         // run ts-to-zod
-        await tsToZod(requestTypesPath, requestSchemaPath);
-        await tsToZod(responseTypesPath, responseSchemaPath);
+        await tsToZod(requestTypesPath, requestSchemaPath, dependencyTypesPath);
+        await tsToZod(
+          responseTypesPath,
+          responseSchemaPath,
+          dependencyTypesPath
+        );
 
         // run build-openapi-yaml for both types (public/private)
         await buildOpenApiYaml(
