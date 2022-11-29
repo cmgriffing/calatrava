@@ -49,10 +49,8 @@ ${sourceText}
 
     fs.ensureFileSync(outputPath);
 
-    const splitInterfacesPath = interfaces.split("/");
-    const relativeInterfacesPath = `./${
-      splitInterfacesPath[splitInterfacesPath.length - 1]
-    }`
+    const relativeInterfacesPath = path
+      .relative(outputPath, interfaces)
       .replace(".tsx", "")
       .replace(".ts", "");
 
