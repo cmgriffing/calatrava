@@ -1,5 +1,15 @@
 # @calatrava/cli
 
+## 0.0.52
+
+### Patch Changes
+
+- 384d872: Add dependencyPaths support to config and request-response generation
+- Updated dependencies [f38d698]
+- Updated dependencies [384d872]
+  - @calatrava/request-response@0.0.29
+  - @calatrava/boilerplate@0.0.19
+
 ## 0.0.51
 
 ### Patch Changes
