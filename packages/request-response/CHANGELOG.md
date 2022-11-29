@@ -1,5 +1,12 @@
 # @calatrava/request-response
 
+## 0.0.29
+
+### Patch Changes
+
+- f38d698: Update relative path for dependencies of Zod schemas
+- 384d872: Add dependencyPaths support to config and request-response generation
+
 ## 0.0.28
 
 ### Patch Changes
