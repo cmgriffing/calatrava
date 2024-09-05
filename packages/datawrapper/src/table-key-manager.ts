@@ -61,7 +61,7 @@ export class TableKeyManager {
         allowedKeyNames.forEach((keyName) => {
           if (!keyValueMap[keyName]) {
             throw new Error(
-              `keyValueMap is missing required key: ${keyName}, table: ${table}`
+              `keyValueMap is missing required key: ${keyName}, table: ${table}, dbKey: ${dbKey}`
             );
           }
         });
