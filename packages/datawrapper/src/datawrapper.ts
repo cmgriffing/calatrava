@@ -13,7 +13,7 @@ import { TableKeyManager } from "./table-key-manager";
 import { TableQueryCreator } from "./table-query-creator";
 
 // usage: const posts = createDataWrapper<Post>(app.posts)
-export function createDataWrapper<ModelType>(
+export function createDataWrapper<ModelType extends {}>(
   datastoreName: string,
   datastore: Datastore,
   _documentClient: any,
