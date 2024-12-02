@@ -2,6 +2,7 @@ export enum DBKeys {
   Partition = "partitionKey",
   Sort = "sortKey",
   Tertiary = "tertiaryKey",
+  Quaternary = "quaternaryKey",
 }
 
 export interface Datastore {
