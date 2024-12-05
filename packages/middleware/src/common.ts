@@ -14,7 +14,7 @@ export const commonHeaders = {
 export function attachCommonHeaders<T>(
   response: TypedHttpResponse<T>,
   customHeaders: Record<string, string> = {}
-): HttpResponse {
+): TypedHttpResponse<T> {
   response.headers = {
     ...(response.headers || {}),
     ...commonHeaders,

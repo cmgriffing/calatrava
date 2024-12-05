@@ -16,6 +16,7 @@ import {
   HttpRequestWithUser,
   HttpRequestWithSignableEntity,
   HttpRequestWithPresignedPost,
+  TypedHttpResponse,
 } from "./types";
 import {
   createDataWrapper,
@@ -51,12 +52,11 @@ export const createGetUser = function <User extends BaseUser>(
   return async function getUser(
     req: HttpRequestWithTables,
     _context: any
-  ): Promise<HttpResponse | void> {
+  ): Promise<TypedHttpResponse<User> | void> {
     try {
       if (!req.headers["authorization"]) {
         return attachCommonHeaders({
           statusCode: 401,
-          json: {},
         });
       }
 
@@ -70,7 +70,6 @@ export const createGetUser = function <User extends BaseUser>(
       if (!user) {
         return attachCommonHeaders({
           statusCode: 401,
-          json: {},
         });
       }
 
@@ -88,7 +87,6 @@ export const createGetUser = function <User extends BaseUser>(
 
       return attachCommonHeaders({
         statusCode: 401,
-        json: {},
       });
     }
   } as HttpHandler;
@@ -103,7 +101,10 @@ export const createGetUserTeams = function <
   teammatesKey: string,
   attachCommonHeaders = baseAttachCommonHeaders
 ) {
-  return async function (req: HttpRequestWithUser<User>, _context: any) {
+  return async function getUserTeams(
+    req: HttpRequestWithUser<User>,
+    _context: any
+  ) {
     const teamsTable = req.tables.get<Team>(teamsKey);
     const teammatesTable = req.tables.get<Teammate>(teammatesKey);
 
@@ -140,7 +141,6 @@ export const createGetUserTeams = function <
 
       return attachCommonHeaders({
         statusCode: 500,
-        json: {},
       });
     }
     // req.teams =
@@ -154,7 +154,7 @@ export function isValidRequest(
   return async function (
     req: HttpRequestWithTables,
     _context: any
-  ): Promise<HttpResponse | void> {
+  ): Promise<TypedHttpResponse<unknown> | void> {
     try {
       schema.strict().parse(req.body);
     } catch (e) {
@@ -175,7 +175,7 @@ export const logDatabase = function (
 ) {
   return async function (
     _req: HttpRequestWithTables
-  ): Promise<HttpResponse | undefined> {
+  ): Promise<TypedHttpResponse<unknown> | undefined> {
     try {
       const data = await tables();
       const everything = await data?.[tableName]?.scan({});
@@ -236,8 +236,6 @@ export function createGetPresignedPost<
 
       (req as HttpRequestWithPresignedPost<T, Team, User>).presignedPost =
         presignedPost;
-
-      return;
     } as HttpHandler;
   };
 }
