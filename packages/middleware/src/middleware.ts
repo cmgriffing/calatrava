@@ -2,8 +2,8 @@ import {
   HttpHandler,
   HttpRequest,
   HttpResponse,
-  tables,
-} from "@architect/functions";
+} from "@architect/functions/http";
+import { tables } from "@architect/functions";
 import { S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 
@@ -33,7 +33,7 @@ export const createGetTables = function (tableKeyManager: TableKeyManager) {
     const data = await tables();
 
     (req as unknown as HttpRequestWithTables).tables = {
-      get<T>(prop: string, tableName: string = "core") {
+      get<T extends {}>(prop: string, tableName: string = "core") {
         const table = data[tableName] as unknown as Datastore;
         return createDataWrapper<T>(prop, table, data["_doc"], tableKeyManager);
       },
@@ -42,7 +42,7 @@ export const createGetTables = function (tableKeyManager: TableKeyManager) {
 };
 
 // requires tables to be fetched first
-export const createGetUser = function <User>(
+export const createGetUser = function <User extends BaseUser>(
   usersTableKey: string,
   decodeToken: Function,
   extraValidation?: (user: User) => Promise<HttpResponse | void>,
@@ -195,7 +195,10 @@ export const logDatabase = function (
   } as HttpHandler;
 };
 
-export function createGetPresignedPost<Team, User>(
+export function createGetPresignedPost<
+  Team extends BaseTeam,
+  User extends BaseUser
+>(
   STORAGE_ACCESS_KEY: string,
   STORAGE_SECRET_KEY: string,
   STORAGE_BUCKET: string

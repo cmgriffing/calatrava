@@ -6,38 +6,52 @@ export interface TypedHttpResponse<T> extends HttpResponse {
   json?: T | undefined;
 }
 
-export interface BaseUser {
+export interface BaseUser extends Object {
   userId: string;
 }
 
-export interface BaseTeam {
+export interface BaseTeam extends Object {
   teamId: string;
 }
 
-export interface BaseTeammate {
+export interface BaseTeammate extends Object {
   teamId: string;
 }
 
 export interface HttpRequestWithTables extends HttpRequest {
-  tables: { get: <T>(prop: string, tableName?: string) => WrappedDatastore<T> };
+  tables: {
+    get: <T extends {}>(
+      prop: string,
+      tableName?: string
+    ) => WrappedDatastore<T>;
+  };
 }
 
-export interface HttpRequestWithUser<User> extends HttpRequestWithTables {
+export interface HttpRequestWithUser<User extends BaseUser>
+  extends HttpRequestWithTables {
   user: User;
 }
 
-export interface HttpRequestWithTeams<Team, User>
-  extends HttpRequestWithUser<User> {
+export interface HttpRequestWithTeams<
+  Team extends BaseTeam,
+  User extends BaseUser
+> extends HttpRequestWithUser<User> {
   ownedTeams: Team[];
   joinedTeams: Team[];
 }
 
-export interface HttpRequestWithSignableEntity<T, Team, User>
-  extends HttpRequestWithTeams<Team, User> {
+export interface HttpRequestWithSignableEntity<
+  T,
+  Team extends BaseTeam,
+  User extends BaseUser
+> extends HttpRequestWithTeams<Team, User> {
   entity: T;
 }
 
-export interface HttpRequestWithPresignedPost<T, Team, User>
-  extends HttpRequestWithSignableEntity<T, Team, User> {
+export interface HttpRequestWithPresignedPost<
+  T,
+  Team extends BaseTeam,
+  User extends BaseUser
+> extends HttpRequestWithSignableEntity<T, Team, User> {
   presignedPost: PresignedPost;
 }

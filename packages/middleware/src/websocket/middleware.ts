@@ -2,7 +2,8 @@
  * WebSocketMiddleware
  */
 
-import { HttpResponse, tables } from "@architect/functions";
+import { tables } from "@architect/functions";
+import type { HttpResponse } from "@architect/functions/http";
 import {
   createDataWrapper,
   Datastore,
@@ -23,6 +24,7 @@ import {
   webSocketIncomingConnectedMessageSchema,
   webSocketIncomingOtherMessageSchema,
 } from "./request-schemas";
+import { BaseUser } from "../types";
 
 export function createGetWebSocketTables(tableKeyManager: TableKeyManager) {
   return async function getWebSocketTables(
@@ -31,7 +33,7 @@ export function createGetWebSocketTables(tableKeyManager: TableKeyManager) {
     const data = await tables();
 
     (req as WebSocketRequestWithTables).tables = {
-      get<T>(prop: string, tableName: string = "core") {
+      get<T extends {}>(prop: string, tableName: string = "core") {
         const table = data[tableName] as unknown as Datastore;
         return createDataWrapper<T>(prop, table, data["_doc"], tableKeyManager);
       },
@@ -39,7 +41,7 @@ export function createGetWebSocketTables(tableKeyManager: TableKeyManager) {
   } as WebSocketHandler;
 }
 
-export const createGetWebSocketUser = function <User>(
+export const createGetWebSocketUser = function <User extends BaseUser>(
   usersTableName: string,
   decodeToken: Function
 ) {
