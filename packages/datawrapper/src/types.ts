@@ -41,7 +41,7 @@ export type CleanRecord<T> = Omit<
   "partitionKey" | "sortKey" | "tertiaryKey"
 >;
 
-export interface WrappedDatastore<T> {
+export interface WrappedDatastore<T extends {}> {
   // GET_EVERYTHING: () => Promise<any>;
   create: (putObject: DBRecord<T>) => Promise<T>;
   getById: (
