@@ -1,6 +1,10 @@
-import { HttpRequest } from "@architect/functions";
 import { WrappedDatastore } from "@calatrava/datawrapper";
 import { PresignedPost } from "@aws-sdk/s3-presigned-post";
+import type { HttpRequest, HttpResponse } from "@architect/functions/http";
+
+export interface TypedHttpResponse<T> extends HttpResponse {
+  json?: T | undefined;
+}
 
 export interface BaseUser {
   userId: string;

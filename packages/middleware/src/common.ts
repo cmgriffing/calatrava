@@ -1,6 +1,7 @@
 import { HttpResponse } from "@architect/functions";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { TypedHttpResponse } from "./types";
 
 export const commonHeaders = {
   "access-control-allow-origin": "*",
@@ -10,8 +11,8 @@ export const commonHeaders = {
   "content-type": "application/json",
 };
 
-export function attachCommonHeaders(
-  response: HttpResponse,
+export function attachCommonHeaders<T>(
+  response: TypedHttpResponse<T>,
   customHeaders: Record<string, string> = {}
 ): HttpResponse {
   response.headers = {
