@@ -236,6 +236,8 @@ export function createGetPresignedPost<
 
       (req as HttpRequestWithPresignedPost<T, Team, User>).presignedPost =
         presignedPost;
+
+      return;
     } as HttpHandler;
   };
 }
