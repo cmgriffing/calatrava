@@ -25,11 +25,11 @@ export function attachCommonHeaders<T>(
   return response;
 }
 
-export function createAttachCommonHeaders(
+export function createAttachCommonHeaders<T extends {}>(
   globalHeaders: Record<string, string> = {}
 ) {
   return function (
-    response: HttpResponse,
+    response: TypedHttpResponse<T>,
     customHeaders: Record<string, string> = {}
   ) {
     return attachCommonHeaders(response, {
