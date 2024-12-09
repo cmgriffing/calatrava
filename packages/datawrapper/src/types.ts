@@ -34,7 +34,12 @@ export interface GetAllOptions {
 
 export type DBRecord<T> =
   | T
-  | { partitionKey: string; sortKey: string; tertiaryKey?: string };
+  | {
+      partitionKey: string;
+      sortKey: string;
+      tertiaryKey?: string;
+      quaternaryKey?: string;
+    };
 
 export type CleanRecord<T> = Omit<
   T,
