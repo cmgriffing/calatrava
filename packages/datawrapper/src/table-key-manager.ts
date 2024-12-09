@@ -71,7 +71,7 @@ export class TableKeyManager {
         if (Object.keys(keyValueMap).length > allowedKeyNames.length) {
           console.warn(
             "Extra keys were passed in the keyValueMap. They will be ignored.",
-            { allowedKeyNames, keyValueMap }
+            { allowedKeyNames, keyValueMap, table, dbKey }
           );
         }
 
