@@ -16,6 +16,9 @@ import {
   renameIndexFiles,
 } from "@calatrava/arc-utils";
 import { debug } from "@calatrava/utils";
+import * as Case from "case";
+
+console.log("Hellooooo Mcflyyyyyyy");
 
 const cwd = process.cwd();
 Yargs.scriptName("calatrava")
@@ -100,6 +103,94 @@ Yargs.scriptName("calatrava")
         await renameIndexFiles();
       } catch (e) {
         debug("CLI arc: Caught exception: ", { e });
+      }
+    }
+  )
+  // gen-data-keys
+  .command(
+    "gen-data-keys [inFile] [outFile]",
+    "Generate Maps for Data Keys for querying DynamoDB",
+    (yargs: any) => {
+      yargs
+        .positional("inFile", {
+          type: "string",
+          describe:
+            "the path to the JSON file that defines the mapping of keys to their tables and key types",
+        })
+        .positional("outFile", {
+          type: "string",
+          describe:
+            "the path to the file that will contain the generated data key maps",
+        });
+      return yargs;
+    },
+    async function (argv: any) {
+      try {
+        console.log("Generating data key maps", argv);
+        const inFile: string = argv.inFile;
+        const outFile: string = argv.outFile;
+
+        console.log("inFile: ", inFile);
+        console.log("outFile: ", outFile);
+
+        const tableKeyMappings: Record<
+          string,
+          Record<
+            "partitionKey" | "sortKey" | "tertiaryKey" | "quaternaryKey",
+            string[]
+          >
+        > = fs.readJSONSync(inFile, { encoding: "utf8" });
+
+        const tableKeyMappingsOutput: string[] = Object.entries(
+          tableKeyMappings
+        ).map(([tableName, tableKeyMap]) => {
+          return `
+const ${Case.pascal(tableName)}KeyOrder = {
+  partitionKey: [${tableKeyMap.partitionKey
+    .map((keyValue) => `"${keyValue}"`)
+    .join(", ")}],
+  sortKey: [${tableKeyMap.sortKey
+    .map((keyValue) => `"${keyValue}"`)
+    .join(", ")}],
+  tertiaryKey: [${tableKeyMap.tertiaryKey
+    .map((keyValue) => `"${keyValue}"`)
+    .join(", ")}],
+  quaternaryKey: [${tableKeyMap.quaternaryKey
+    .map((keyValue) => `"${keyValue}"`)
+    .join(", ")}],
+} as const
+
+export const ${Case.pascal(tableName)}KeyMap = {
+  ${Object.entries(tableKeyMap)
+    .map(([keyType, keyNames]) => {
+      return `
+  get${Case.pascal(keyType)}(keys: {
+${keyNames
+  .map((keyName) => {
+    return `    ${keyName}: string`;
+  })
+  .join(",\n")}
+  }): string {
+    return createKeyString("${tableName}", ${Case.pascal(
+        tableName
+      )}KeyOrder["${keyType}"], keys);
+  },
+  `;
+    })
+    .join("\n")}
+} as const;
+          `;
+        });
+
+        const output = `import { createKeyString, DBKeys } from "@calatrava/datawrapper";
+        
+${tableKeyMappingsOutput.join("\n")}
+`;
+        console.log(output);
+        fs.outputFileSync(outFile, output);
+      } catch (e) {
+        debug("CLI init: Caught exception: ", { e });
+        console.log("error: ", e);
       }
     }
   )

@@ -1,0 +1,14 @@
+{
+  "Users": {
+    "partitionKey": ["userId"],
+    "sortKey": ["createdAt"],
+    "tertiaryKey": [],
+    "quaternaryKey": []
+  },
+  "Accounts": {
+    "partitionKey": ["businessId", "accountId"],
+    "sortKey": ["createdAt"],
+    "tertiaryKey": ["businessId"],
+    "quaternaryKey": []
+  }
+}
