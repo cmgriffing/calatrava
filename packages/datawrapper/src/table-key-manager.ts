@@ -43,7 +43,7 @@ export class TableKeyManager<
           return 0;
         }
       })
-      .forEach(([key, value]) => {
+      .forEach(([_key, value]) => {
         keyString = `${keyString}#${Case.constant(
           jsStringEscape(value)
         )}#${jsStringEscape((keys as any)[value])}`;
