@@ -2,35 +2,38 @@ import jsStringEscape from "js-string-escape";
 import * as Case from "case";
 import { DBKeys } from "./types";
 
-export type TableKeysMap = {
-  [key: string]: { [value in DBKeys]?: string[] };
-};
+// export type TableKeysMap = {
+//   [key: string]: { [value in DBKeys]?: string[] };
+// };
 
-export class TableKeyManager {
+export class TableKeyManager<
+  TableKeysMap extends Record<
+    string,
+    Record<keyof typeof DBKeys, readonly string[]>
+  >
+> {
   private tableKeysMap: TableKeysMap;
-  private tableNames: { [key: string]: string };
 
-  constructor(
-    tableKeysMap: TableKeysMap,
-    tableNames: { [key: string]: string }
-  ) {
+  constructor(tableKeysMap: TableKeysMap) {
     this.tableKeysMap = tableKeysMap;
-    this.tableNames = tableNames;
   }
 
-  private createKeyString(
-    tableName: string,
-    keyValueMap: { [key: string]: string | number | boolean }
-  ): string {
-    if (!Object.values(this.tableNames).includes(tableName)) {
-      throw new Error(
-        `Could not find table name, ${tableName}, in tableNames map.`
-      );
-    }
+  private createKeyString<
+    K extends keyof typeof DBKeys,
+    TableKeysMap extends Record<
+      string,
+      Record<keyof typeof DBKeys, readonly string[]>
+    >,
+    TableKey extends keyof TableKeysMap
+  >(
+    table: TableKey,
+    dbKey: DBKeys,
+    keyMap: TableKeysMap,
+    keys: Record<TableKeysMap[TableKey][K][number], string>
+  ) {
+    let keyString = `#${Case.constant(String(table))}`;
 
-    let keyString = `#${Case.constant(tableName)}`;
-
-    Object.entries(keyValueMap)
+    Object.entries(keyMap[table]![dbKey])
       .sort((entryA, entryB) => {
         if (entryA[0] > entryB[0]) {
           return 1;
@@ -42,28 +45,36 @@ export class TableKeyManager {
       })
       .forEach(([key, value]) => {
         keyString = `${keyString}#${Case.constant(
-          jsStringEscape(key)
-        )}#${jsStringEscape(value)}`;
+          jsStringEscape(value)
+        )}#${jsStringEscape((keys as any)[value])}`;
       });
 
     return keyString;
   }
 
-  getTable(table: string) {
-    return {
-      getTableKey: (
-        dbKey: DBKeys,
-        keyValueMap: { [key: string]: string | number | boolean }
+  getTable(table: keyof TableKeysMap) {
+    const createGetTableKey = (dbKey: DBKeys) => {
+      return (
+        keyValueMap: Record<
+          TableKeysMap[typeof table][keyof typeof DBKeys][number],
+          string
+        >
       ) => {
         // validate keyValueMap
         const allowedKeyNames = this.tableKeysMap?.[table]?.[dbKey] || [];
 
         allowedKeyNames.forEach((keyName) => {
-          if (!keyValueMap[keyName]) {
+          // This cast could be buggy until we test it
+          const typedkeyName =
+            keyName as TableKeysMap[typeof table][keyof typeof DBKeys][number];
+
+          if (!keyValueMap[typedkeyName]) {
             throw new Error(
-              `keyValueMap is missing required key: ${keyName}, table: ${table}, dbKey: ${dbKey}, keyValueMap: ${JSON.stringify(
-                keyValueMap
-              )}`
+              `keyValueMap is missing required key: ${String(
+                keyName
+              )}, table: ${String(
+                table
+              )}, dbKey: ${dbKey}, keyValueMap: ${JSON.stringify(keyValueMap)}`
             );
           }
         });
@@ -75,8 +86,20 @@ export class TableKeyManager {
           );
         }
 
-        return this.createKeyString(table, keyValueMap);
-      },
+        return this.createKeyString(
+          String(table),
+          dbKey,
+          this.tableKeysMap,
+          keyValueMap
+        );
+      };
+    };
+
+    return {
+      getPartitionKey: createGetTableKey(DBKeys.partitionKey),
+      getSortKey: createGetTableKey(DBKeys.sortKey),
+      getTertiaryKey: createGetTableKey(DBKeys.tertiaryKey),
+      getQuaternaryKey: createGetTableKey(DBKeys.quaternaryKey),
     };
   }
 }

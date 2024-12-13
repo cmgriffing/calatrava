@@ -1,8 +1,8 @@
 export enum DBKeys {
-  Partition = "partitionKey",
-  Sort = "sortKey",
-  Tertiary = "tertiaryKey",
-  Quaternary = "quaternaryKey",
+  partitionKey = "partitionKey",
+  sortKey = "sortKey",
+  tertiaryKey = "tertiaryKey",
+  quaternaryKey = "quaternaryKey",
 }
 
 export interface Datastore {
@@ -46,53 +46,46 @@ export type CleanRecord<T> = Omit<
   "partitionKey" | "sortKey" | "tertiaryKey"
 >;
 
-export interface WrappedDatastore<T extends {}> {
-  // GET_EVERYTHING: () => Promise<any>;
-  create: (putObject: DBRecord<T>) => Promise<T>;
-  getById: (
-    idValue: QueryKeys,
-    index?: DBKeys,
-    secondaryId?: string
-  ) => Promise<T>;
-  getByIndex: (
-    idValue: QueryKeys,
-    index?: DBKeys,
-    secondaryId?: string
-  ) => Promise<T>;
-  getRandom: (
-    ignoreKey?: string,
-    ignoreValue?: string,
-    index?: DBKeys
-  ) => Promise<T | undefined>;
-  scanIdsByFilter: (options?: GetAllOptions) => Promise<T[]>;
-  getAllById: (
-    idValue: QueryKeys,
-    options?: GetAllOptions,
-    index?: DBKeys,
-    secondaryId?: string
-  ) => Promise<T[]>;
-  getAllByManyIds: (
-    idValues: string[],
-    idKey: string,
-    index?: DBKeys,
-    secondaryId?: string
-  ) => Promise<T[]>;
-  update: (
-    idValue: QueryKeys,
-    patchObject: Partial<T>,
-    secondaryId: QueryKeys,
-    index?: DBKeys
-  ) => Promise<T>;
-  remove: (
-    idValue: QueryKeys,
-    secondaryId: QueryKeys,
-    index?: DBKeys
-  ) => Promise<T>;
-}
-
-export interface TableKeyMethods {
-  getTableKey: (
-    dbKey: DBKeys,
-    keyValueMap: { [key: string]: string | number | boolean }
-  ) => string;
-}
+// export interface WrappedDatastore<T extends {}> {
+//   // GET_EVERYTHING: () => Promise<any>;
+//   create: (putObject: DBRecord<T>) => Promise<T>;
+//   getById: (
+//     idValue: QueryKeys,
+//     index?: DBKeys,
+//     secondaryId?: string
+//   ) => Promise<T>;
+//   getByIndex: (
+//     idValue: QueryKeys,
+//     index?: DBKeys,
+//     secondaryId?: string
+//   ) => Promise<T>;
+//   getRandom: (
+//     ignoreKey?: string,
+//     ignoreValue?: string,
+//     index?: DBKeys
+//   ) => Promise<T | undefined>;
+//   scanIdsByFilter: (options?: GetAllOptions) => Promise<T[]>;
+//   getAllById: (
+//     idValue: QueryKeys,
+//     options?: GetAllOptions,
+//     index?: DBKeys,
+//     secondaryId?: string
+//   ) => Promise<T[]>;
+//   getAllByManyIds: (
+//     idValues: string[],
+//     idKey: string,
+//     index?: DBKeys,
+//     secondaryId?: string
+//   ) => Promise<T[]>;
+//   update: (
+//     idValue: QueryKeys,
+//     patchObject: Partial<T>,
+//     secondaryId: QueryKeys,
+//     index?: DBKeys
+//   ) => Promise<T>;
+//   remove: (
+//     idValue: QueryKeys,
+//     secondaryId: QueryKeys,
+//     index?: DBKeys
+//   ) => Promise<T>;
+// }

@@ -1,26 +1,18 @@
 import jsStringEscape from "js-string-escape";
 import { nanoid } from "nanoid";
-import {
-  Datastore,
-  DBKeys,
-  QueryKeys,
-  DBRecord,
-  GetAllOptions,
-  WrappedDatastore,
-} from "./types";
+import { Datastore, DBKeys, DBRecord, GetAllOptions } from "./types";
 import { omitKeys } from "./utils";
-import { TableKeyManager } from "./table-key-manager";
 import { TableQueryCreator } from "./table-query-creator";
 
 // usage: const posts = createDataWrapper<Post>(app.posts)
-export function createDataWrapper<ModelType extends {}>(
-  datastoreName: string,
-  datastore: Datastore,
-  _documentClient: any,
-  tableKeyManager: TableKeyManager
-): WrappedDatastore<ModelType> {
-  const tableKeyMethods = tableKeyManager.getTable(datastoreName);
-  const tableQueryCreator = new TableQueryCreator(tableKeyMethods);
+export function createDataWrapper<
+  ModelType extends {},
+  TableKeysMap extends Record<
+    string,
+    Record<keyof typeof DBKeys, readonly string[]>
+  >
+>(datastore: Datastore, _documentClient: any) {
+  const tableQueryCreator = new TableQueryCreator();
 
   return {
     async create(putObject: DBRecord<ModelType>) {
@@ -31,12 +23,20 @@ export function createDataWrapper<ModelType extends {}>(
 
       return datastore.put(putObject).then(omitKeys);
     },
-    async getById(idValue, index = DBKeys.Partition, _secondaryId) {
+    async getById(
+      idValue: string,
+      index = DBKeys.partitionKey,
+      _secondaryId?: string
+    ) {
       return this.getAllById(idValue, {}, index).then((result: any) => {
         return result[0];
       });
     },
-    async getByIndex(idValue, index = DBKeys.Partition, _secondaryId) {
+    async getByIndex(
+      idValue: string,
+      index = DBKeys.partitionKey,
+      _secondaryId?: string
+    ) {
       return this.getAllById(idValue, { indexKey: index }, index).then(
         (result: any) => {
           return result[0];
@@ -46,7 +46,7 @@ export function createDataWrapper<ModelType extends {}>(
     async getRandom(
       ignoreKey?: string,
       ignoreValue?: string,
-      index = DBKeys.Partition,
+      index = DBKeys.partitionKey,
       startingKey = nanoid()
     ) {
       index = jsStringEscape(index) as DBKeys;
@@ -86,7 +86,10 @@ export function createDataWrapper<ModelType extends {}>(
 
       return omitKeys<ModelType>(record) as ModelType;
     },
-    async scanIdsByFilter(options?: GetAllOptions, index = DBKeys.Partition) {
+    async scanIdsByFilter(
+      options?: GetAllOptions,
+      index = DBKeys.partitionKey
+    ) {
       const query = tableQueryCreator.scanIdsByFilter(options, index);
 
       return datastore
@@ -94,9 +97,9 @@ export function createDataWrapper<ModelType extends {}>(
         .then((results: { Items: ModelType[] }) => results.Items.map(omitKeys));
     },
     async getAllById(
-      idValue: QueryKeys,
+      idValue: string,
       options?: GetAllOptions,
-      index = DBKeys.Partition
+      index = DBKeys.partitionKey
     ) {
       const query = tableQueryCreator.getAllById(idValue, options, index);
 
@@ -105,10 +108,10 @@ export function createDataWrapper<ModelType extends {}>(
       });
     },
     async update(
-      idValue: QueryKeys,
+      idValue: string,
       patchObject = {},
-      secondaryId: QueryKeys = {},
-      index = DBKeys.Partition
+      secondaryId?: string,
+      index = DBKeys.partitionKey
     ) {
       const updateRequest = tableQueryCreator.update(
         idValue,
@@ -125,17 +128,21 @@ export function createDataWrapper<ModelType extends {}>(
     },
     // TODO: Refactor this to one batch request
     async getAllByManyIds(
-      idValues: string[],
+      idValues: TableKeysMap[keyof TableKeysMap][
+        | "partitionKey"
+        | "sortKey"
+        | "tertiaryKey"
+        | "quaternaryKey"],
       idKey: string,
-      index = DBKeys.Partition
+      index = DBKeys.partitionKey
     ) {
       const options: GetAllOptions = { indexKey: undefined };
-      if (index !== DBKeys.Partition) {
+      if (index !== DBKeys.partitionKey) {
         options.indexKey = index;
       }
       const itemsGroupedByKey = await Promise.all(
         idValues.map((idValue) => {
-          return this.getAllById({ [idKey]: idValue }, options, index);
+          return this.getAllById({ [idKey]: idValue } as any, options, index);
         })
       );
 
@@ -147,9 +154,9 @@ export function createDataWrapper<ModelType extends {}>(
       return items;
     },
     async remove(
-      idValue: QueryKeys,
-      secondaryId: QueryKeys,
-      index = DBKeys.Partition
+      idValue: string,
+      secondaryId: string,
+      index = DBKeys.partitionKey
     ) {
       const deleteRequest = tableQueryCreator.remove(
         idValue,

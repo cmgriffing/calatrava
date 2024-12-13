@@ -1,15 +1,15 @@
 import jsStringEscape from "js-string-escape";
-import { QueryKeys, DBKeys, GetAllOptions, TableKeyMethods } from "./types";
+import { DBKeys, GetAllOptions } from "./types";
 import { escapeQueryKeys } from "./utils";
 
+// type Foo = ReturnType<
+//   TableKeyManager<
+//     Record<string, Record<keyof typeof DBKeys, readonly string[]>>
+//   >["getTable"]
+// >;
+
 export class TableQueryCreator {
-  private tableKeyMethods: TableKeyMethods;
-
-  constructor(tableKeyMethods: TableKeyMethods) {
-    this.tableKeyMethods = tableKeyMethods;
-  }
-
-  scanIdsByFilter(options?: GetAllOptions, index = DBKeys.Partition) {
+  scanIdsByFilter(options?: GetAllOptions, index = DBKeys.partitionKey) {
     const query: any = {
       ExpressionAttributeNames: {},
       ExpressionAttributeValues: {},
@@ -33,7 +33,7 @@ export class TableQueryCreator {
       };
     }
 
-    if (index !== DBKeys.Partition) {
+    if (index !== DBKeys.partitionKey) {
       query.IndexName = index;
     }
 
@@ -41,13 +41,12 @@ export class TableQueryCreator {
   }
 
   getAllById(
-    idValue: QueryKeys,
+    idValue: string,
     options?: GetAllOptions,
-    index = DBKeys.Partition
+    index = DBKeys.partitionKey
   ) {
     index = jsStringEscape(index) as DBKeys;
     idValue = escapeQueryKeys(idValue);
-    const key = this.tableKeyMethods.getTableKey(index, idValue);
 
     const query: any = {
       KeyConditionExpression: `#${index} = :${index}`,
@@ -55,7 +54,7 @@ export class TableQueryCreator {
         [`#${index}`]: index,
       },
       ExpressionAttributeValues: {
-        [`:${index}`]: key,
+        [`:${index}`]: idValue,
       },
     };
 
@@ -77,21 +76,20 @@ export class TableQueryCreator {
       };
     }
 
-    if (index !== DBKeys.Partition) {
+    if (index !== DBKeys.partitionKey) {
       query.IndexName = index;
     }
 
     return query;
   }
   update(
-    idValue: QueryKeys,
+    idValue: string,
     patchObject = {},
-    secondaryId: QueryKeys = {},
-    index = DBKeys.Partition
+    secondaryId?: string,
+    index = DBKeys.partitionKey
   ) {
     index = jsStringEscape(index) as DBKeys;
     idValue = escapeQueryKeys(idValue);
-    const key = this.tableKeyMethods.getTableKey(index, idValue);
     const patchEntries: string[][] = Object.entries(patchObject);
 
     if (!patchEntries?.length) {
@@ -101,7 +99,7 @@ export class TableQueryCreator {
 
     const updateRequest = {
       Key: {
-        [index]: key,
+        [index]: idValue,
       },
       UpdateExpression: "",
       ExpressionAttributeNames: {} as { [key: string]: string },
@@ -126,30 +124,22 @@ export class TableQueryCreator {
 
     if (secondaryId) {
       const secondaryIndex =
-        index === DBKeys.Partition ? DBKeys.Sort : DBKeys.Partition;
-      updateRequest.Key[secondaryIndex] = this.tableKeyMethods.getTableKey(
-        secondaryIndex,
-        secondaryId
-      );
+        index === DBKeys.partitionKey ? DBKeys.sortKey : DBKeys.partitionKey;
+      updateRequest.Key[secondaryIndex] = secondaryId;
     }
 
     return updateRequest;
   }
-  remove(idValue: QueryKeys, secondaryId: QueryKeys, index = DBKeys.Partition) {
+  remove(idValue: string, secondaryId: string, index = DBKeys.partitionKey) {
     idValue = escapeQueryKeys(idValue);
-    const key = this.tableKeyMethods.getTableKey(index, idValue);
-
     const deleteRequest: any = {
-      [index]: key,
+      [index]: idValue,
     };
 
     if (secondaryId) {
       const secondaryIndex =
-        index === DBKeys.Partition ? DBKeys.Sort : DBKeys.Partition;
-      deleteRequest[secondaryIndex] = this.tableKeyMethods.getTableKey(
-        secondaryIndex,
-        secondaryId
-      );
+        index === DBKeys.partitionKey ? DBKeys.sortKey : DBKeys.partitionKey;
+      deleteRequest[secondaryIndex] = secondaryId;
     }
 
     return deleteRequest;

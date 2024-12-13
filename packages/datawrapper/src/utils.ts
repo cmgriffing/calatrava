@@ -1,3 +1,4 @@
+import Case from "case";
 import { CleanRecord, QueryKeys } from "./types";
 import jsStringEscape from "js-string-escape";
 import omit from "lodash/omit";
@@ -15,12 +16,12 @@ export function omitKeys<T extends Object>(
   ) as CleanRecord<T>;
 }
 
-export function escapeQueryKeys(queryKeys: QueryKeys) {
+export function escapeQueryKeys<T extends {}>(queryKeys: T): T {
   const newQueryKeys: QueryKeys = {};
   Object.entries(queryKeys).forEach(([key, value]) => {
     newQueryKeys[key] = jsStringEscape(value);
   });
-  return newQueryKeys;
+  return newQueryKeys as T;
 }
 
 export function escapedKeyMethod(callback: (queryKeys: QueryKeys) => string) {
@@ -28,4 +29,20 @@ export function escapedKeyMethod(callback: (queryKeys: QueryKeys) => string) {
     const escapedQueryKeys = escapeQueryKeys(queryKeys);
     return callback(escapedQueryKeys);
   };
+}
+
+export function createKeyString(
+  table: string,
+  keyOrder: readonly string[],
+  keys: Record<string, string>
+) {
+  let keyString = `#${Case.constant(table)}`;
+
+  keyOrder.forEach((key) => {
+    keyString = `${keyString}#${Case.constant(
+      jsStringEscape(key)
+    )}#${jsStringEscape(keys[key])}`;
+  });
+
+  return keyString;
 }
