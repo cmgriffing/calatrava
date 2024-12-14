@@ -163,8 +163,7 @@ const ${Case.pascal(tableName)}KeyOrder = {
 export const ${Case.pascal(tableName)}KeyMap = {
   ${Object.entries(tableKeyMap)
     .map(([keyType, keyNames]) => {
-      return `
-  get${Case.pascal(keyType)}(keys: {
+      return `  get${Case.pascal(keyType)}(keys: {
 ${keyNames
   .map((keyName) => {
     return `    ${keyName}: string`;
@@ -174,15 +173,14 @@ ${keyNames
     return createKeyString("${tableName}", ${Case.pascal(
         tableName
       )}KeyOrder["${keyType}"], keys);
-  },
-  `;
+  },`;
     })
     .join("\n")}
 } as const;
           `;
         });
 
-        const output = `import { createKeyString, DBKeys } from "@calatrava/datawrapper";
+        const output = `import { createKeyString } from "@calatrava/datawrapper";
         
 ${tableKeyMappingsOutput.join("\n")}
 `;
