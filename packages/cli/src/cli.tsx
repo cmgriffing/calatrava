@@ -152,12 +152,14 @@ const ${Case.pascal(tableName)}KeyOrder = {
   sortKey: [${tableKeyMap.sortKey
     .map((keyValue) => `"${keyValue}"`)
     .join(", ")}],
-  tertiaryKey: [${tableKeyMap.tertiaryKey
-    ?.map((keyValue) => `"${keyValue}"`)
-    ?.join(", ")}],
-  quaternaryKey: [${tableKeyMap.quaternaryKey
-    ?.map((keyValue) => `"${keyValue}"`)
-    ?.join(", ")}],
+  tertiaryKey: [${
+    tableKeyMap.tertiaryKey?.map((keyValue) => `"${keyValue}"`)?.join(", ") ||
+    ""
+  }],
+  quaternaryKey: [${
+    tableKeyMap.quaternaryKey?.map((keyValue) => `"${keyValue}"`)?.join(", ") ||
+    ""
+  }],
 } as const
 
 export const ${Case.pascal(tableName)}KeyMap = {
