@@ -1,6 +1,6 @@
-import { WrappedDatastore } from "@calatrava/datawrapper";
 import { PresignedPost } from "@aws-sdk/s3-presigned-post";
 import type { HttpRequest, HttpResponse } from "@architect/functions/http";
+import { WrappedDatastore } from "@calatrava/datawrapper";
 
 export interface TypedHttpResponse<T> extends HttpResponse {
   json?: T | undefined;
@@ -20,10 +20,7 @@ export interface BaseTeammate extends Object {
 
 export interface HttpRequestWithTables extends HttpRequest {
   tables: {
-    get: <T extends {}>(
-      prop: string,
-      tableName?: string
-    ) => WrappedDatastore<T>;
+    get: <T extends {}>(tableName?: string) => WrappedDatastore<T>;
   };
 }
 

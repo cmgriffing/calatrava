@@ -4,11 +4,7 @@
 
 import { tables } from "@architect/functions";
 import type { HttpResponse } from "@architect/functions/http";
-import {
-  createDataWrapper,
-  Datastore,
-  TableKeyManager,
-} from "@calatrava/datawrapper";
+import { createDataWrapper, Datastore } from "@calatrava/datawrapper";
 // import { createDataWrapper, Datastore } from "../data";
 // import { attachCommonHeaders } from "../middleware";
 // import { decodeToken } from "../token";
@@ -26,24 +22,24 @@ import {
 } from "./request-schemas";
 import { BaseUser } from "../types";
 
-export function createGetWebSocketTables(tableKeyManager: TableKeyManager) {
+export function createGetWebSocketTables() {
   return async function getWebSocketTables(
     req: WebSocketRequest
   ): Promise<HttpResponse | void> {
     const data = await tables();
 
     (req as WebSocketRequestWithTables).tables = {
-      get<T extends {}>(prop: string, tableName: string = "core") {
+      get<T extends {}>(tableName: string = "core") {
         const table = data[tableName] as unknown as Datastore;
-        return createDataWrapper<T>(prop, table, data["_doc"], tableKeyManager);
+        return createDataWrapper<T>(table, data["_doc"]);
       },
     };
   } as WebSocketHandler;
 }
 
 export const createGetWebSocketUser = function <User extends BaseUser>(
-  usersTableName: string,
-  decodeToken: Function
+  decodeToken: Function,
+  getPartitionKey: (keys: Record<string, string>) => string
 ) {
   return async function getWebSocketUser(
     req: WebSocketRequestWithTables
@@ -57,10 +53,10 @@ export const createGetWebSocketUser = function <User extends BaseUser>(
       }
 
       const { accessToken } = req.body;
-      const usersTable = req.tables.get<User>(usersTableName);
+      const usersTable = req.tables.get<User>();
       const decodedToken = decodeToken(accessToken);
       const userId = (decodedToken.sub as any).userId;
-      const user = await usersTable.getById({ userId });
+      const user = await usersTable.getById(getPartitionKey({ userId }));
 
       if (!user) {
         throw new Error("No user found.");

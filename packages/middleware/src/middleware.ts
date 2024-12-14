@@ -18,33 +18,23 @@ import {
   HttpRequestWithPresignedPost,
   TypedHttpResponse,
 } from "./types";
-import {
-  createDataWrapper,
-  Datastore,
-  DBKeys,
-  TableKeyManager,
-} from "@calatrava/datawrapper";
+import { createDataWrapper, Datastore, DBKeys } from "@calatrava/datawrapper";
 import { attachCommonHeaders as baseAttachCommonHeaders } from "./common";
 
-export const createGetTables = function (tableKeyManager: TableKeyManager) {
-  return async function getTables(
-    req: HttpRequest,
-    _context: any
-  ): Promise<HttpResponse | void> {
-    const data = await tables();
+export const getTables = async function (req: HttpRequest, _context: any) {
+  const data = await tables();
 
-    (req as unknown as HttpRequestWithTables).tables = {
-      get<T extends {}>(prop: string, tableName: string = "core") {
-        const table = data[tableName] as unknown as Datastore;
-        return createDataWrapper<T>(prop, table, data["_doc"], tableKeyManager);
-      },
-    };
-  } as HttpHandler;
-};
+  (req as unknown as HttpRequestWithTables).tables = {
+    get<T extends {}>(tableName: string = "core") {
+      const table = data[tableName] as unknown as Datastore;
+      return createDataWrapper<T>(table, data["_doc"]);
+    },
+  };
+} as HttpHandler;
 
 // requires tables to be fetched first
 export const createGetUser = function <User extends BaseUser>(
-  usersTableKey: string,
+  getPartitionKey: (keyParts: Record<string, string>) => string,
   decodeToken: Function,
   extraValidation?: (user: User) => Promise<HttpResponse | void>,
   attachCommonHeaders = baseAttachCommonHeaders
@@ -61,11 +51,11 @@ export const createGetUser = function <User extends BaseUser>(
       }
 
       const token = req.headers["authorization"].substring("Bearer ".length);
-      const usersTable = req.tables.get<User>(usersTableKey);
+      const usersTable = req.tables.get<User>();
 
       const decodedToken = decodeToken(token);
       const userId = (decodedToken.sub as any).userId;
-      const user = await usersTable.getById({ userId });
+      const user = await usersTable.getById(getPartitionKey({ userId }));
 
       if (!user) {
         return attachCommonHeaders({
@@ -97,26 +87,30 @@ export const createGetUserTeams = function <
   Team extends BaseTeam,
   Teammate extends BaseTeammate
 >(
-  teamsKey: string,
-  teammatesKey: string,
+  getTeamKey: (keyParts: Record<string, string>) => string,
+  getTeammateKey: (keyParts: Record<string, string>) => string,
   attachCommonHeaders = baseAttachCommonHeaders
 ) {
   return async function getUserTeams(
     req: HttpRequestWithUser<User>,
     _context: any
   ) {
-    const teamsTable = req.tables.get<Team>(teamsKey);
-    const teammatesTable = req.tables.get<Teammate>(teammatesKey);
+    const teamsTable = req.tables.get<Team>();
+    const teammatesTable = req.tables.get<Teammate>();
 
     try {
       const ownedTeamsPromise = teamsTable.getAllById(
-        { userId: req.user.userId },
+        getTeamKey({ userId: req.user.userId }),
         {},
-        DBKeys.Sort
+        DBKeys.sortKey
       );
 
       const joinedTeamsPromise = teammatesTable
-        .getAllById({ userId: req.user.userId }, {}, DBKeys.Sort)
+        .getAllById(
+          getTeammateKey({ userId: req.user.userId }),
+          {},
+          DBKeys.sortKey
+        )
         .then((teammateRecords: Teammate[]) => {
           const teamIds = teammateRecords.map(
             (teammateRecord) => teammateRecord.teamId

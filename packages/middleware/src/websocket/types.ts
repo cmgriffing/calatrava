@@ -1,6 +1,6 @@
 import { HttpResponse } from "@architect/functions/http";
-import { WrappedDatastore } from "@calatrava/datawrapper";
 import { WebSocketIncomingMessage } from "./request-types";
+import { WrappedDatastore } from "@calatrava/datawrapper";
 
 export interface WebSocketRequest {
   requestContext: {
@@ -21,10 +21,7 @@ export interface WebSocketRequest {
 
 export interface WebSocketRequestWithTables extends WebSocketRequest {
   tables: {
-    get: <T extends {}>(
-      prop: string,
-      tableName?: string
-    ) => WrappedDatastore<T>;
+    get: <T extends {}>(tableName?: string) => WrappedDatastore<T>;
   };
 }
 
