@@ -22,7 +22,7 @@ export function createDataWrapper<ModelType extends {}>(
         return;
       }
 
-      return datastore.put(putObject).then(omitKeys);
+      return datastore.put(putObject).then(omitKeys) as Promise<ModelType>;
     },
     async getById(
       idValue: string,
@@ -31,7 +31,7 @@ export function createDataWrapper<ModelType extends {}>(
     ) {
       return this.getAllById(idValue, {}, index).then((result: any) => {
         return result[0];
-      });
+      }) as Promise<ModelType>;
     },
     async getByIndex(
       idValue: string,
@@ -42,7 +42,7 @@ export function createDataWrapper<ModelType extends {}>(
         (result: any) => {
           return result[0];
         }
-      );
+      ) as Promise<ModelType>;
     },
     async getRandom(
       ignoreKey?: string,
@@ -95,7 +95,9 @@ export function createDataWrapper<ModelType extends {}>(
 
       return datastore
         .scan(query)
-        .then((results: { Items: ModelType[] }) => results.Items.map(omitKeys));
+        .then((results: { Items: ModelType[] }) =>
+          results.Items.map(omitKeys)
+        ) as Promise<ModelType[]>;
     },
     async getAllById(
       idValue: string,
@@ -106,7 +108,7 @@ export function createDataWrapper<ModelType extends {}>(
 
       return datastore.query(query).then((response: any) => {
         return response.Items.map(omitKeys);
-      });
+      }) as Promise<ModelType[]>;
     },
     async update(
       idValue: string,
@@ -125,7 +127,7 @@ export function createDataWrapper<ModelType extends {}>(
         .update(updateRequest)
         .then((result: { Attributes: ModelType }) =>
           omitKeys(result.Attributes)
-        );
+        ) as Promise<ModelType>;
     },
     // TODO: Refactor this to one batch request
     async getAllByManyIds(
@@ -161,7 +163,7 @@ export function createDataWrapper<ModelType extends {}>(
         index
       );
 
-      return datastore.delete(deleteRequest);
+      return datastore.delete(deleteRequest) as Promise<void>;
     },
   };
 }
