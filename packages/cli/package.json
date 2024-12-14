@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/cli",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "A CLI tool to manage apps built with the Calatrava framework",
   "main": "dist/cli.js",
   "bin": "dist/cli.js",
@@ -15,7 +15,8 @@
     "pretest": "pnpm run build",
     "test:keys": "pnpm run build && node dist/cli.js gen-data-keys ./data-keys.example.json ./testing-keys.ts",
     "test:keys:tsx": "tsx src/cli.tsx gen-data-keys ./data-keys.example.json ./testing-keys.ts",
-    "test": "xo && ava"
+    "test": "xo && ava",
+    "prepublish": "pnpm build"
   },
   "files": [
     "dist/**/*"
