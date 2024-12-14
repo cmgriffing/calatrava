@@ -4,14 +4,15 @@ import { Datastore, DBKeys, DBRecord, GetAllOptions } from "./types";
 import { omitKeys } from "./utils";
 import { TableQueryCreator } from "./table-query-creator";
 
+export type WrappedDatastore<T extends {}> = ReturnType<
+  typeof createDataWrapper<T>
+>;
+
 // usage: const posts = createDataWrapper<Post>(app.posts)
-export function createDataWrapper<
-  ModelType extends {},
-  TableKeysMap extends Record<
-    string,
-    Record<keyof typeof DBKeys, readonly string[]>
-  >
->(datastore: Datastore, _documentClient: any) {
+export function createDataWrapper<ModelType extends {}>(
+  datastore: Datastore,
+  _documentClient: any
+) {
   const tableQueryCreator = new TableQueryCreator();
 
   return {
@@ -128,11 +129,7 @@ export function createDataWrapper<
     },
     // TODO: Refactor this to one batch request
     async getAllByManyIds(
-      idValues: TableKeysMap[keyof TableKeysMap][
-        | "partitionKey"
-        | "sortKey"
-        | "tertiaryKey"
-        | "quaternaryKey"],
+      idValues: string[],
       idKey: string,
       index = DBKeys.partitionKey
     ) {
