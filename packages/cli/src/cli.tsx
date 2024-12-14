@@ -153,11 +153,11 @@ const ${Case.pascal(tableName)}KeyOrder = {
     .map((keyValue) => `"${keyValue}"`)
     .join(", ")}],
   tertiaryKey: [${tableKeyMap.tertiaryKey
-    .map((keyValue) => `"${keyValue}"`)
-    .join(", ")}],
+    ?.map((keyValue) => `"${keyValue}"`)
+    ?.join(", ")}],
   quaternaryKey: [${tableKeyMap.quaternaryKey
-    .map((keyValue) => `"${keyValue}"`)
-    .join(", ")}],
+    ?.map((keyValue) => `"${keyValue}"`)
+    ?.join(", ")}],
 } as const
 
 export const ${Case.pascal(tableName)}KeyMap = {
@@ -186,7 +186,7 @@ ${keyNames
         
 ${tableKeyMappingsOutput.join("\n")}
 `;
-        console.log(output);
+        // console.log(output);
         fs.outputFileSync(outFile, output);
       } catch (e) {
         debug("CLI init: Caught exception: ", { e });
