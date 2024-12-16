@@ -1,5 +1,5 @@
 import Case from "case";
-import { CleanRecord, QueryKeys } from "./types";
+import { CleanRecord } from "./types";
 import jsStringEscape from "js-string-escape";
 import omit from "lodash/omit";
 
