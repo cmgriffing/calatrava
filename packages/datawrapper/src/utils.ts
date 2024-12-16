@@ -16,21 +16,6 @@ export function omitKeys<T extends Object>(
   ) as CleanRecord<T>;
 }
 
-export function escapeQueryKeys<T extends {}>(queryKeys: T): T {
-  const newQueryKeys: QueryKeys = {};
-  Object.entries(queryKeys).forEach(([key, value]) => {
-    newQueryKeys[key] = jsStringEscape(value);
-  });
-  return newQueryKeys as T;
-}
-
-export function escapedKeyMethod(callback: (queryKeys: QueryKeys) => string) {
-  return function (queryKeys: QueryKeys) {
-    const escapedQueryKeys = escapeQueryKeys(queryKeys);
-    return callback(escapedQueryKeys);
-  };
-}
-
 export function createKeyString(
   table: string,
   keyOrder: readonly string[],

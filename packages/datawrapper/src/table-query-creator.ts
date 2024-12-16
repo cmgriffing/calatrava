@@ -1,6 +1,5 @@
 import jsStringEscape from "js-string-escape";
 import { DBKeys, GetAllOptions } from "./types";
-import { escapeQueryKeys } from "./utils";
 
 // type Foo = ReturnType<
 //   TableKeyManager<
@@ -46,7 +45,6 @@ export class TableQueryCreator {
     index = DBKeys.partitionKey
   ) {
     index = jsStringEscape(index) as DBKeys;
-    idValue = escapeQueryKeys(idValue);
 
     const query: any = {
       KeyConditionExpression: `#${index} = :${index}`,
@@ -89,7 +87,6 @@ export class TableQueryCreator {
     index = DBKeys.partitionKey
   ) {
     index = jsStringEscape(index) as DBKeys;
-    idValue = escapeQueryKeys(idValue);
     const patchEntries: string[][] = Object.entries(patchObject);
 
     if (!patchEntries?.length) {
@@ -131,7 +128,6 @@ export class TableQueryCreator {
     return updateRequest;
   }
   remove(idValue: string, secondaryId: string, index = DBKeys.partitionKey) {
-    idValue = escapeQueryKeys(idValue);
     const deleteRequest: any = {
       [index]: idValue,
     };

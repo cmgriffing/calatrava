@@ -113,7 +113,7 @@ export function createDataWrapper<ModelType extends {}>(
     async update(
       idValue: string,
       patchObject = {},
-      secondaryId?: string,
+      secondaryId: string,
       index = DBKeys.partitionKey
     ) {
       const updateRequest = tableQueryCreator.update(
