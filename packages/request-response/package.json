@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/request-response",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "A set of tools for request validation and openapi documentation for the Calatrava framework",
   "main": "./dist/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "openapi-types": "^10.0.0",
-    "ts-to-zod": "^1.8.0",
+    "ts-to-zod": "^1.13.1",
     "typescript-json-schema": "^0.53.0",
     "yaml": "^1.10.2",
     "zod": "^3.11.6",
