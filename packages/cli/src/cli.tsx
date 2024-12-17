@@ -18,8 +18,6 @@ import {
 import { debug } from "@calatrava/utils";
 import * as Case from "case";
 
-console.log("Hellooooo Mcflyyyyyyy");
-
 const cwd = process.cwd();
 Yargs.scriptName("calatrava")
   .usage("$0 <cmd> [args]")
