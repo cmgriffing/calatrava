@@ -130,18 +130,14 @@ export function createDataWrapper<ModelType extends {}>(
         ) as Promise<ModelType>;
     },
     // TODO: Refactor this to one batch request
-    async getAllByManyIds(
-      idValues: string[],
-      idKey: string,
-      index = DBKeys.partitionKey
-    ) {
+    async getAllByManyIds(idValues: string[], index = DBKeys.partitionKey) {
       const options: GetAllOptions = { indexKey: undefined };
       if (index !== DBKeys.partitionKey) {
         options.indexKey = index;
       }
       const itemsGroupedByKey = await Promise.all(
         idValues.map((idValue) => {
-          return this.getAllById({ [idKey]: idValue } as any, options, index);
+          return this.getAllById(idValue, options, index);
         })
       );
 
