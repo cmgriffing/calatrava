@@ -129,13 +129,15 @@ export class TableQueryCreator {
   }
   remove(idValue: string, secondaryId: string, index = DBKeys.partitionKey) {
     const deleteRequest: any = {
-      [index]: idValue,
+      Key: {
+        [index]: idValue,
+      },
     };
 
     if (secondaryId) {
       const secondaryIndex =
         index === DBKeys.partitionKey ? DBKeys.sortKey : DBKeys.partitionKey;
-      deleteRequest[secondaryIndex] = secondaryId;
+      deleteRequest.Key[secondaryIndex] = secondaryId;
     }
 
     return deleteRequest;

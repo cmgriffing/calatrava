@@ -11,6 +11,7 @@ export function omitKeys<T extends Object>(
     "partitionKey",
     "sortKey",
     "tertiaryKey",
+    "quaternaryKey",
     // This seems a bit hacky but no reason to ever expose this
     "searchField"
   ) as CleanRecord<T>;

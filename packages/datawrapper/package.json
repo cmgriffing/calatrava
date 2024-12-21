@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/datawrapper",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "A DynamoDB data wrapper for the Calatrava framework",
   "main": "dist/index.js",
   "scripts": {
