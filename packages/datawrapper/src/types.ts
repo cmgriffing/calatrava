@@ -43,7 +43,7 @@ export type DBRecord<T> =
 
 export type CleanRecord<T> = Omit<
   T,
-  "partitionKey" | "sortKey" | "tertiaryKey"
+  "partitionKey" | "sortKey" | "tertiaryKey" | "quaternaryKey"
 >;
 
 // export interface WrappedDatastore<T extends {}> {
