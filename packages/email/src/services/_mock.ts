@@ -4,21 +4,21 @@ import { printDebugData } from "../utils";
 import Case from "case";
 
 export const MockService: EmailService = {
-  createAxios(MAILGUN_SECRET_KEY: string | undefined) {
+  createAxios(_MAILGUN_SECRET_KEY: string | undefined) {
     const axiosInstance = Axios.create();
     return axiosInstance;
   },
-  createGetExistingTemplates(axios: AxiosInstance) {
+  createGetExistingTemplates(_axios: AxiosInstance) {
     return async function getExistingTemplates() {
       const existingTemplates: EmailTemplates = {};
       return existingTemplates;
     };
   },
 
-  async processTemplate(templateContent: string) {
+  async processTemplate(_templateContent: string) {
     return "";
   },
-  createCreateNewTemplateIfNeeded(axios: AxiosInstance) {
+  createCreateNewTemplateIfNeeded(_axios: AxiosInstance) {
     return async function createNewTemplateIfNeeded(
       existingTemplates,
       templateName
@@ -36,12 +36,12 @@ export const MockService: EmailService = {
     };
   },
 
-  createUploadCurrentContentIfNeeded(axios: AxiosInstance) {
+  createUploadCurrentContentIfNeeded(_axios: AxiosInstance) {
     return async function uploadCurrentContentIfNeeded(
-      existingTemplates,
-      templateName,
+      _existingTemplates,
+      _templateName,
       _templateData,
-      templateContent
+      _templateContent
     ) {};
   },
   createSendEmail(
@@ -49,7 +49,7 @@ export const MockService: EmailService = {
     emailTemplateIdMap: { [key: string]: string },
     fromEmail: string,
     debugMode: boolean,
-    preventSend: boolean = false
+    _preventSend: boolean = false
   ) {
     return function (toEmail: string, template: string, dynamicData: Object) {
       printDebugData(
