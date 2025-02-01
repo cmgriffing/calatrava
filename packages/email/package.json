@@ -1,6 +1,6 @@
 {
   "name": "@calatrava/email",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "A set of tools for working with transactional emails for the Calatrava framework",
   "main": "./dist/index.js",
   "scripts": {
