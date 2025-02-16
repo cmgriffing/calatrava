@@ -24,8 +24,11 @@ export function getRouteMetadata(
   }
 
   allNodes.forEach((childNode) => {
-    if (childNode.decorators?.length) {
-      childNode.decorators.forEach((decorator: any) => {
+    const decorators = ts.canHaveDecorators(childNode)
+      ? ts.getDecorators(childNode)
+      : [];
+    if (decorators?.length) {
+      decorators.forEach((decorator: any) => {
         let expression = decorator;
         while (expression.expression !== undefined) {
           expression = expression.expression;
